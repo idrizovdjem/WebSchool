@@ -3,6 +3,7 @@ using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using WebSchool.Services.Contracts;
+using System.Linq;
 
 namespace WebSchool.Services
 {
@@ -30,6 +31,12 @@ namespace WebSchool.Services
 
             await this.context.AddRangeAsync(links);
             await this.context.SaveChangesAsync();
+        }
+
+        public RegistrationLink GetLink(string registrationLinkId)
+        {
+            return this.context.RegistrationLinks
+                .FirstOrDefault(x => x.Id == registrationLinkId);
         }
     }
 }
