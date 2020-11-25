@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebSchool.Services.Contracts;
+using WebSchool.Services;
 
 namespace WebSchool
 {
@@ -30,6 +32,8 @@ namespace WebSchool
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddTransient<ILinksService, LinksService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,9 +1,9 @@
-﻿using WebSchool.Data;
+﻿using System.Linq;
+using WebSchool.Data;
 using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using WebSchool.Services.Contracts;
-using System.Linq;
 
 namespace WebSchool.Services
 {
@@ -16,7 +16,7 @@ namespace WebSchool.Services
             this.context = context;
         }
 
-        public async Task GenerateLinks(string roleName, int count)
+        public async Task<IEnumerable<RegistrationLink>> GenerateLinks(string roleName, int count)
         {
             var links = new List<RegistrationLink>();
             for(int i = 0; i < count; i++)
@@ -29,8 +29,10 @@ namespace WebSchool.Services
                 links.Add(link);
             }
 
-            await this.context.AddRangeAsync(links);
+            await this.context.RegistrationLinks.AddRangeAsync(links);
             await this.context.SaveChangesAsync();
+
+            return links;
         }
 
         public RegistrationLink GetLink(string registrationLinkId)
