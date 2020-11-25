@@ -16,6 +16,10 @@ namespace WebSchool.Data.Models
         [Required]
         public string RoleName { get; set; }
 
+        public string From { get; set; }
+
+        public string To { get; set; }
+
         public bool IsUsed { get; set; }
     }
 }

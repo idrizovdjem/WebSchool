@@ -6,7 +6,9 @@ namespace WebSchool.Services.Contracts
 {
     public interface ILinksService
     {
-        Task<IEnumerable<RegistrationLink>> GenerateLinks(string roleName, int count);
+        Task<RegistrationLink> GenerateAdminLink(string email);
+
+        Task<IEnumerable<RegistrationLink>> GenerateLinks(string roleName, string from, string[] toEmails);
 
         RegistrationLink GetLink(string registrationLinkId);
     }

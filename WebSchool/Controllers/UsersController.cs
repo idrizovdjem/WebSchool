@@ -5,10 +5,9 @@ namespace WebSchool.Controllers
 {
     public class UsersController : Controller
     {
-        [HttpPost]
-        public IActionResult RegisterForm(RegistrationLinkModel input)
+        public IActionResult Register(string id)
         {
-            return View(input);
+            return View();
         }
     }
 }

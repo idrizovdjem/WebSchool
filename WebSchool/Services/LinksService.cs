@@ -16,14 +16,31 @@ namespace WebSchool.Services
             this.context = context;
         }
 
-        public async Task<IEnumerable<RegistrationLink>> GenerateLinks(string roleName, int count)
+        public async Task<RegistrationLink> GenerateAdminLink(string email)
+        {
+            var link = new RegistrationLink()
+            { 
+                RoleName = "Admin",
+                From = "System",
+                To = email
+            };
+
+            await this.context.RegistrationLinks.AddAsync(link);
+            await this.context.SaveChangesAsync();
+
+            return link;
+        }
+
+        public async Task<IEnumerable<RegistrationLink>> GenerateLinks(string roleName, string from, string[] toEmails)
         {
             var links = new List<RegistrationLink>();
-            for(int i = 0; i < count; i++)
+            for(int i = 0; i < toEmails.Length; i++)
             {
                 var link = new RegistrationLink()
                 {
-                    RoleName = roleName
+                    RoleName = roleName,
+                    From = from,
+                    To = toEmails[i]
                 };
 
                 links.Add(link);

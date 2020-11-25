@@ -1,6 +1,5 @@
-﻿using System.Linq;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using WebSchool.Services.Contracts;
 
 namespace WebSchool.Controllers
@@ -14,10 +13,9 @@ namespace WebSchool.Controllers
             this.linksService = linksService;
         }
 
-        public async Task<IActionResult> VerifyPayment()
+        public IActionResult VerifyPayment()
         {
-            var link = await this.linksService.GenerateLinks("Admin", 1);
-            return View(link.FirstOrDefault());
+            return View();
         }
     }
 }

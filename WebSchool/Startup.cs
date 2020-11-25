@@ -34,6 +34,7 @@ namespace WebSchool
             services.AddRazorPages();
 
             services.AddTransient<ILinksService, LinksService>();
+            services.AddTransient<IEmailSenderService, EmailSenderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
