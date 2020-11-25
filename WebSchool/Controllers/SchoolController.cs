@@ -5,7 +5,7 @@ namespace WebSchool.Controllers
 {
     public class SchoolController : Controller
     {
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
