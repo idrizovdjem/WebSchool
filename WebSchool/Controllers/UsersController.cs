@@ -65,7 +65,17 @@ namespace WebSchool.Controllers
                UserName = input.Email
             };
 
-            await this.userManager.CreateAsync(user, input.Password);
+            var result = await this.userManager.CreateAsync(user, input.Password);
+            if(!result.Succeeded)
+            {
+                foreach(var error in result.Errors)
+                {
+                    this.ModelState.AddModelError("Invalid data", error.Description);
+                }
+
+                return View(input);
+            }    
+
             await this.userManager.AddToRoleAsync(user, registerLink.RoleName);
             await this.signInManager.PasswordSignInAsync(input.Email, input.Password, false, false);
 

@@ -51,10 +51,7 @@
 
     <script>
         const hiddenInput = document.getElementById('hiddenInput');
-        if (hiddenInput.value !== "") {
-            alert('Vsichko tochno')
-        }
-        else {
+        if (hiddenInput.value === "") {
             const urlParams = new URLSearchParams(window.location.search);
             const registrationLinkId = urlParams.get('registrationLinkId');
             hiddenInput.value = registrationLinkId;
