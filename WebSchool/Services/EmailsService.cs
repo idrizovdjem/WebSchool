@@ -21,7 +21,7 @@ namespace WebSchool.Services
 
         public bool IsEmailAvailable(string email)
         {
-            return this.context.RegistrationLinks.Any(x => x.To == email);
+            return !this.context.RegistrationLinks.Any(x => x.To == email);
         }
 
         public async Task SendRegistrationEmail(string registrationId, string recieverEmail)

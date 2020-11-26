@@ -8,10 +8,6 @@ namespace WebSchool.Models.User
         public string RegistrationLinkId { get; set; }
 
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        [Required]
         [MinLength(3)]
         [MaxLength(50)]
         public string FirstName { get; set; }
