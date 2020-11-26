@@ -1,18 +1,27 @@
-﻿using System.Threading.Tasks;
+﻿using SendGrid;
+using System.Linq;
+using WebSchool.Data;
+using SendGrid.Helpers.Mail;
+using System.Threading.Tasks;
 using WebSchool.Services.Contracts;
 using Microsoft.Extensions.Configuration;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 
 namespace WebSchool.Services
 {
-    public class EmailSenderService : IEmailSenderService
+    public class EmailsService : IEmailsService
     {
         private readonly IConfiguration configuration;
+        private readonly ApplicationDbContext context;
 
-        public EmailSenderService(IConfiguration configuration)
+        public EmailsService(IConfiguration configuration, ApplicationDbContext context)
         {
+            this.context = context;
             this.configuration = configuration;
+        }
+
+        public bool IsEmailAvailable(string email)
+        {
+            return this.context.RegistrationLinks.Any(x => x.To == email);
         }
 
         public async Task SendRegistrationEmail(string registrationId, string recieverEmail)

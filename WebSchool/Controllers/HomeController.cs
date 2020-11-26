@@ -7,13 +7,13 @@ namespace WebSchool.Controllers
     public class HomeController : Controller
     {
         private readonly ILinksService linksService;
-        private readonly IEmailSenderService emailSenderService;
+        private readonly IEmailsService emailsService;
 
         public HomeController(ILinksService linksService,
-            IEmailSenderService emailSenderService)
+            IEmailsService emailsService)
         {
             this.linksService = linksService;
-            this.emailSenderService = emailSenderService;
+            this.emailsService = emailsService;
         }
 
         public IActionResult Index()
@@ -44,8 +44,13 @@ namespace WebSchool.Controllers
                 return Redirect("/School/Forum");
             }
 
+            if(!this.emailsService.IsEmailAvailable(email))
+            {
+                this.ModelState.AddModelError("Email", "Email address is already in use");
+                return View();
+            }
             var link = await this.linksService.GenerateAdminLink(email);
-            await this.emailSenderService.SendRegistrationEmail(link.Id, email);
+            await this.emailsService.SendRegistrationEmail(link.Id, email);
 
             return View("SuccessfullEmail");
         }

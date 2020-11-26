@@ -2,8 +2,10 @@
 
 namespace WebSchool.Services.Contracts
 {
-    public interface IEmailSenderService
+    public interface IEmailsService
     {
         Task SendRegistrationEmail(string registrationId, string recieverEmail);
+
+        bool IsEmailAvailable(string email);
     }
 }

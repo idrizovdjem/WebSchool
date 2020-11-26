@@ -39,7 +39,7 @@ namespace WebSchool
             services.AddRazorPages();
 
             services.AddTransient<ILinksService, LinksService>();
-            services.AddTransient<IEmailSenderService, EmailSenderService>();
+            services.AddTransient<IEmailsService, EmailsService>();
             services.AddTransient<ISchoolService, SchoolService>();
         }
 

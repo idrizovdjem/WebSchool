@@ -78,7 +78,6 @@ namespace WebSchool.Controllers
 
             await this.userManager.AddToRoleAsync(user, registerLink.RoleName);
             await this.signInManager.PasswordSignInAsync(input.Email, input.Password, false, false);
-
             await this.linksService.UseLink(input.RegistrationLinkId);
 
             if (registerLink.RoleName == "Admin")
