@@ -5,7 +5,7 @@ namespace WebSchool.Models.User
     public class RegisterUserInputModel
     {
         [Required]
-        public string RegisterLinkId { get; set; }
+        public string RegistrationLinkId { get; set; }
 
         [Required]
         [EmailAddress]

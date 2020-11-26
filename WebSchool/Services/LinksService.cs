@@ -57,5 +57,17 @@ namespace WebSchool.Services
             return this.context.RegistrationLinks
                 .FirstOrDefault(x => x.Id == registrationLinkId);
         }
+
+        public async Task UseLink(string registrationLinkId)
+        {
+            var link = GetLink(registrationLinkId);
+            if(link == null)
+            {
+                return;
+            }
+
+            link.IsUsed = true;
+            await this.context.SaveChangesAsync();
+        }
     }
 }

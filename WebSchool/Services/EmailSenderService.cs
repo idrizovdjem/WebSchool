@@ -22,7 +22,7 @@ namespace WebSchool.Services
             var from = new EmailAddress("idrizovdjem@gmail.com", "WebSchoolAdmin");
             var subject = "WebSchool registration link";
             var to = new EmailAddress(recieverEmail, "Example User");
-            var plainTextContent = $"https://localhost:44349/Users/Register?id={registrationId}";
+            var plainTextContent = $"https://localhost:44349/Users/Register?registrationLinkId={registrationId}";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, string.Empty);
             await client.SendEmailAsync(msg);
         }

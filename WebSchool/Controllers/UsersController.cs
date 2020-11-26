@@ -1,5 +1,4 @@
-﻿using System;
-using WebSchool.Data.Models;
+﻿using WebSchool.Data.Models;
 using WebSchool.Models.User;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -11,38 +10,51 @@ namespace WebSchool.Controllers
     public class UsersController : Controller
     {
         private readonly ILinksService linksService;
+        private readonly ISchoolService schoolService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
 
-        public UsersController(ILinksService linksService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public UsersController(ILinksService linksService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ISchoolService schoolService)
         {
             this.userManager = userManager;
-            this.signInManager = signInManager;
             this.linksService = linksService;
+            this.signInManager = signInManager;
+            this.schoolService = schoolService;
         }
 
         public IActionResult Register()
         {
+            if(this.User.Identity.IsAuthenticated)
+            {
+                return Redirect("/School/Forum");
+            }
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterUserInputModel input)
         {
-            if(!this.ModelState.IsValid)
+            if(this.User.Identity.IsAuthenticated)
             {
-                throw new ArgumentException("Invalid user information");
+                return Redirect("/School/Forum");
             }
 
-            var registerLink = this.linksService.GetLink(input.RegisterLinkId);
+            if(!this.ModelState.IsValid)
+            {
+                return View(input);
+            }
+
+            var registerLink = this.linksService.GetLink(input.RegistrationLinkId);
             if(registerLink == null)
             {
-                throw new ArgumentException("Invalid registration link");
+                return NotFound();
             }
 
             if(input.Password != input.ConfirmPassword)
             {
-                throw new ArgumentException("Passwords doesn't match!");
+                this.ModelState.AddModelError("Password", "Passwords does not match");
+                return View(input);
             }
 
             var user = new ApplicationUser()
@@ -50,20 +62,26 @@ namespace WebSchool.Controllers
                FirstName = input.FirstName,
                LastName = input.LastName,
                Email = input.Email,
+               UserName = input.Email
             };
 
-            var createdUser = await this.userManager.CreateAsync(user, input.Password);
+            await this.userManager.CreateAsync(user, input.Password);
             await this.userManager.AddToRoleAsync(user, registerLink.RoleName);
+            await this.signInManager.PasswordSignInAsync(input.Email, input.Password, false, false);
 
-            if(registerLink.RoleName == "Admin")
+            await this.linksService.UseLink(input.RegistrationLinkId);
+
+            if (registerLink.RoleName == "Admin")
             {
-                // go and create new school
-                await this.signInManager.SignInAsync(user, false);
                 return Redirect("/School/Create");
             }
 
-            // assign the user to the school
-            // implement later
+            if(string.IsNullOrWhiteSpace(registerLink.SchoolId))
+            {
+                return BadRequest();
+            }
+
+            await this.schoolService.AssignUserToSchool(user.Id, registerLink.SchoolId);
             return Redirect("/School/Forum");
         }
     }

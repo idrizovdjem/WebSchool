@@ -20,6 +20,8 @@ namespace WebSchool.Data.Models
 
         public string To { get; set; }
 
+        public string SchoolId { get; set; }
+
         public bool IsUsed { get; set; }
     }
 }

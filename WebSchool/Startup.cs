@@ -1,13 +1,15 @@
 using WebSchool.Data;
+using WebSchool.Services;
 using WebSchool.Data.Models;
+using WebSchool.Data.Seeders;
 using Microsoft.AspNetCore.Builder;
+using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebSchool.Services.Contracts;
-using WebSchool.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebSchool
 {
@@ -28,17 +30,21 @@ namespace WebSchool
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
             services.AddTransient<ILinksService, LinksService>();
             services.AddTransient<IEmailSenderService, EmailSenderService>();
+            services.AddTransient<ISchoolService, SchoolService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<ApplicationRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -58,6 +64,8 @@ namespace WebSchool
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            new RoleSeeder(roleManager).Seed();
 
             app.UseEndpoints(endpoints =>
             {

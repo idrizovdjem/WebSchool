@@ -10,6 +10,8 @@
         <form method="post" asp-controller="Users" asp-action="Register" class="text-left">
             <div asp-validation-summary="All" class="text-danger"></div>
 
+            <input type="hidden" id="hiddenInput" asp-for="RegistrationLinkId"/>
+
             <div class="form-group">
                 <label asp-for="Email">Email</label>
                 <input asp-for="Email" placeholder="Email address" class="form-control" />
@@ -46,6 +48,18 @@
 </div>
  
 @section scripts{
+
+    <script>
+        const hiddenInput = document.getElementById('hiddenInput');
+        if (hiddenInput.value !== "") {
+            alert('Vsichko tochno')
+        }
+        else {
+            const urlParams = new URLSearchParams(window.location.search);
+            const registrationLinkId = urlParams.get('registrationLinkId');
+            hiddenInput.value = registrationLinkId;
+        }
+    </script>
 
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

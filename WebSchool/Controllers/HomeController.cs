@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using WebSchool.Services.Contracts;
 
 namespace WebSchool.Controllers
@@ -28,12 +28,22 @@ namespace WebSchool.Controllers
 
         public IActionResult CreateUser()
         {
+            if(this.User.Identity.IsAuthenticated)
+            {
+                return Redirect("/School/Forum");
+            }
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateUser(string email)
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return Redirect("/School/Forum");
+            }
+
             var link = await this.linksService.GenerateAdminLink(email);
             await this.emailSenderService.SendRegistrationEmail(link.Id, email);
 
