@@ -94,5 +94,15 @@ namespace WebSchool.Controllers
             await this.schoolService.AssignUserToSchool(user.Id, registerLink.SchoolId);
             return Redirect("/School/Forum");
         }
+
+        public IActionResult Login()
+        {
+            if(this.User.Identity.IsAuthenticated)
+            {
+                return Redirect("/School/Forum");
+            }
+
+            return View();
+        }
     }
 }
