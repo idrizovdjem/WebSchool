@@ -54,5 +54,12 @@ namespace WebSchool.Controllers
 
             return View("SuccessfullEmail");
         }
+
+        // remove
+        // just for testing
+        public IActionResult SuccessfullEmail()
+        {
+            return View();
+        }
     }
 }
