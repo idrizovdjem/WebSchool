@@ -8,5 +8,7 @@ namespace WebSchool.Services.Contracts
         Task CreateAsync(School school);
 
         Task AssignUserToSchool(string userId, string schoolId);
+
+        bool IsSchoolNameAvailable(string schoolName);
     }
 }

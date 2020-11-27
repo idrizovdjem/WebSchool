@@ -37,5 +37,10 @@ namespace WebSchool.Services
             await this.context.Schools.AddAsync(school);
             await this.context.SaveChangesAsync();
         }
+
+        public bool IsSchoolNameAvailable(string schoolName)
+        {
+            return !this.context.Schools.Any(s => s.Name == schoolName);
+        }
     }
 }

@@ -34,6 +34,12 @@ namespace WebSchool.Controllers
                 return View(input);
             }
 
+            if(!this.schoolService.IsSchoolNameAvailable(input.Name))
+            {
+                this.ModelState.AddModelError("School name", "School name is already in use");
+                return View(input);
+            }
+
             var school = new School()
             {
                 Name = input.Name,
