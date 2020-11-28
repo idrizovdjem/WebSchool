@@ -322,6 +322,8 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
+appsettings.Development.json
+
 # OpenCover UI analysis results
 OpenCover/
 
@@ -348,3 +350,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/WebSchool/appsettings.Production.json
+/WebSchool/appsettings.json
+/WebSchool/appsettings.Development.json
