@@ -10,15 +10,17 @@ namespace WebSchool.Services
     public class SchoolService : ISchoolService
     {
         private readonly ApplicationDbContext context;
+        private readonly IPostsService postsService;
 
-        public SchoolService(ApplicationDbContext context)
+        public SchoolService(ApplicationDbContext context, IPostsService postsService)
         {
             this.context = context;
+            this.postsService = postsService;
         }
 
         public async Task AssignUserToSchool(string userId, string schoolId)
         {
-            if(this.context.UserSchools.Any(x => x.UserId == userId && x.SchoolId == schoolId))
+            if (this.context.UserSchools.Any(x => x.UserId == userId && x.SchoolId == schoolId))
             {
                 return;
             }
@@ -52,7 +54,10 @@ namespace WebSchool.Services
             var schoolViewModel = new SchoolViewModel()
             {
                 Name = school.Name,
-                ImageUrl = school.ImageUrl
+                ImageUrl = school.ImageUrl,
+                Page = page,
+                Posts = this.postsService.GetPosts(schoolId, page),
+                MaxPages = this.GetMaxPage(schoolId),
             };
 
             return schoolViewModel;
@@ -61,6 +66,21 @@ namespace WebSchool.Services
         public bool IsSchoolNameAvailable(string schoolName)
         {
             return !this.context.Schools.Any(s => s.Name == schoolName);
+        }
+
+        private int GetMaxPage(string schoolId)
+        {
+            var postsCount = this.context.Schools
+                .FirstOrDefault(s => s.Id == schoolId)
+                .Posts.Count();
+
+            var maxPages = postsCount / 10;
+            if (postsCount % 10 > 0)
+            {
+                maxPages++;
+            }
+
+            return maxPages;
         }
     }
 }

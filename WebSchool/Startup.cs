@@ -42,6 +42,7 @@ namespace WebSchool
             services.AddTransient<IEmailsService, EmailsService>();
             services.AddTransient<ISchoolService, SchoolService>();
             services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IPostsService, PostsService>();
 
             services.AddAntiforgery();
         }
