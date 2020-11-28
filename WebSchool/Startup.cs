@@ -5,11 +5,11 @@ using WebSchool.Data.Seeders;
 using Microsoft.AspNetCore.Builder;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
 
 namespace WebSchool
 {
@@ -42,6 +42,8 @@ namespace WebSchool
             services.AddTransient<IEmailsService, EmailsService>();
             services.AddTransient<ISchoolService, SchoolService>();
             services.AddTransient<IUsersService, UsersService>();
+
+            services.AddAntiforgery();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -26,7 +26,7 @@ namespace WebSchool.Controllers
 
         public IActionResult Register()
         {
-            if(this.User.Identity.IsAuthenticated)
+            if (this.User.Identity.IsAuthenticated)
             {
                 return Redirect("/School/Forum");
             }
@@ -35,25 +35,26 @@ namespace WebSchool.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserInputModel input)
         {
-            if(this.User.Identity.IsAuthenticated)
+            if (this.User.Identity.IsAuthenticated)
             {
                 return Redirect("/School/Forum");
             }
 
-            if(!this.ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return View(input);
             }
 
             var registerLink = this.linksService.GetLink(input.RegistrationLinkId);
-            if(registerLink == null)
+            if (registerLink == null)
             {
                 return NotFound();
             }
 
-            if(input.Password != input.ConfirmPassword)
+            if (input.Password != input.ConfirmPassword)
             {
                 this.ModelState.AddModelError("Password", "Passwords does not match");
                 return View(input);
@@ -61,22 +62,22 @@ namespace WebSchool.Controllers
 
             var user = new ApplicationUser()
             {
-               FirstName = input.FirstName,
-               LastName = input.LastName,
-               Email = registerLink.To,
-               UserName = registerLink.To
+                FirstName = input.FirstName,
+                LastName = input.LastName,
+                Email = registerLink.To,
+                UserName = registerLink.To
             };
 
             var result = await this.usersService.CreateUserAsync(user, input.Password);
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     this.ModelState.AddModelError("Invalid data", error.Description);
                 }
 
                 return View(input);
-            }    
+            }
 
             await this.usersService.AddUserToRole(user, registerLink.RoleName);
             await this.usersService.Login(user.Email, input.Password);
@@ -87,7 +88,7 @@ namespace WebSchool.Controllers
                 return Redirect("/School/Create");
             }
 
-            if(string.IsNullOrWhiteSpace(registerLink.SchoolId))
+            if (string.IsNullOrWhiteSpace(registerLink.SchoolId))
             {
                 return BadRequest();
             }
@@ -98,7 +99,7 @@ namespace WebSchool.Controllers
 
         public IActionResult Login()
         {
-            if(this.User.Identity.IsAuthenticated)
+            if (this.User.Identity.IsAuthenticated)
             {
                 return Redirect("/School/Forum");
             }
@@ -107,20 +108,21 @@ namespace WebSchool.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginUserInputModel input)
         {
-            if(this.User.Identity.IsAuthenticated)
+            if (this.User.Identity.IsAuthenticated)
             {
                 return Redirect("/School/Forum");
             }
 
-            if(!this.ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return View(input);
             }
 
             var result = await this.usersService.Login(input.Email, input.Password);
-            if(!result)
+            if (!result)
             {
                 this.ModelState.AddModelError("Login failed", "Invalid username or password");
                 return View(input);

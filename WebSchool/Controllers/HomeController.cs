@@ -17,8 +17,8 @@ namespace WebSchool.Controllers
         }
 
         public IActionResult Index()
-        { 
-            if(this.User.Identity.IsAuthenticated)
+        {
+            if (this.User.Identity.IsAuthenticated)
             {
                 return Redirect("/School/Forum");
             }
@@ -28,7 +28,7 @@ namespace WebSchool.Controllers
 
         public IActionResult CreateUser()
         {
-            if(this.User.Identity.IsAuthenticated)
+            if (this.User.Identity.IsAuthenticated)
             {
                 return Redirect("/School/Forum");
             }
@@ -37,6 +37,7 @@ namespace WebSchool.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateUser(string email)
         {
             if (this.User.Identity.IsAuthenticated)
@@ -44,7 +45,7 @@ namespace WebSchool.Controllers
                 return Redirect("/School/Forum");
             }
 
-            if(!this.emailsService.IsEmailAvailable(email))
+            if (!this.emailsService.IsEmailAvailable(email))
             {
                 this.ModelState.AddModelError("Email", "Email address is already in use");
                 return View();

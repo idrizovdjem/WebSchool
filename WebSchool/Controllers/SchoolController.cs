@@ -26,15 +26,16 @@ namespace WebSchool.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreateSchoolInputModel input)
         {
-            if(!this.ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return View(input);
             }
 
-            if(!this.schoolService.IsSchoolNameAvailable(input.Name))
+            if (!this.schoolService.IsSchoolNameAvailable(input.Name))
             {
                 this.ModelState.AddModelError("School name", "School name is already in use");
                 return View(input);
