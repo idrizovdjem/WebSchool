@@ -1,8 +1,11 @@
-﻿using WebSchool.Models.Post;
-using System.Collections.Generic;
-using WebSchool.Services.Contracts;
+﻿using System;
 using System.Linq;
 using WebSchool.Data;
+using WebSchool.Data.Models;
+using WebSchool.Models.Post;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using WebSchool.Services.Contracts;
 
 namespace WebSchool.Services
 {
@@ -13,6 +16,20 @@ namespace WebSchool.Services
         public PostsService(ApplicationDbContext context)
         {
             this.context = context;
+        }
+
+        public async Task CreatePost(CreatePostInputModel input, ApplicationUser user, string schoolId)
+        {
+            var post = new Post()
+            {
+                Content = input.Content,
+                CreatedOn = DateTime.UtcNow,
+                SchoolId = schoolId,
+                Creator = user
+            };
+
+            await this.context.Posts.AddAsync(post);
+            await this.context.SaveChangesAsync();
         }
 
         public ICollection<PostViewModel> GetPosts(string schoolId, int page)
@@ -26,7 +43,7 @@ namespace WebSchool.Services
                     Content = x.Content,
                     CreatedOn = x.CreatedOn
                 })
-                .Skip(page * 10)
+                .Skip((page - 1) * 10)
                 .Take(10)
                 .ToList();
         }

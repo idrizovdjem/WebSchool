@@ -1,4 +1,5 @@
 ﻿using WebSchool.Data.Models;
+using WebSchool.Models.Post;
 using System.Threading.Tasks;
 using WebSchool.Models.School;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,13 @@ namespace WebSchool.Controllers
     {
         private readonly ISchoolService schoolService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IPostsService postsService;
 
-        public SchoolController(ISchoolService schoolService, UserManager<ApplicationUser> userManager)
+        public SchoolController(ISchoolService schoolService, UserManager<ApplicationUser> userManager, IPostsService postsService)
         {
             this.schoolService = schoolService;
             this.userManager = userManager;
+            this.postsService = postsService;
         }
 
         [Authorize(Roles = "Admin")]
@@ -61,6 +64,22 @@ namespace WebSchool.Controllers
             var school = this.schoolService.GetSchool(user, page);
 
             return View(school);
+        }
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreatePost(CreatePostInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return RedirectToAction("Forum");
+            }
+
+            var user = await this.userManager.GetUserAsync(this.User);
+            var schoolId = this.schoolService.GetSchoolIdByUser(user);
+            await this.postsService.CreatePost(input, user, schoolId);
+
+            return RedirectToAction("Forum");
         }
     }
 }

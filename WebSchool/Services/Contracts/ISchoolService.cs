@@ -13,5 +13,7 @@ namespace WebSchool.Services.Contracts
         bool IsSchoolNameAvailable(string schoolName);
 
         SchoolViewModel GetSchool(ApplicationUser user, int page);
+
+        string GetSchoolIdByUser(ApplicationUser user);
     }
 }

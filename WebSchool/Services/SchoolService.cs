@@ -41,12 +41,10 @@ namespace WebSchool.Services
             await this.context.SaveChangesAsync();
         }
 
+
         public SchoolViewModel GetSchool(ApplicationUser user, int page)
         {
-            var schoolId = this.context.UserSchools
-                .Where(x => x.UserId == user.Id)
-                .Select(x => x.SchoolId)
-                .FirstOrDefault();
+            var schoolId = this.GetSchoolIdByUser(user);
 
             var school = this.context.Schools
                 .FirstOrDefault(s => s.Id == schoolId);
@@ -61,6 +59,14 @@ namespace WebSchool.Services
             };
 
             return schoolViewModel;
+        }
+
+        public string GetSchoolIdByUser(ApplicationUser user)
+        {
+            return this.context.UserSchools
+                .Where(x => x.UserId == user.Id)
+                .Select(x => x.SchoolId)
+                .FirstOrDefault();
         }
 
         public bool IsSchoolNameAvailable(string schoolName)
