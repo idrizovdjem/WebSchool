@@ -41,6 +41,7 @@ namespace WebSchool
             services.AddTransient<ILinksService, LinksService>();
             services.AddTransient<IEmailsService, EmailsService>();
             services.AddTransient<ISchoolService, SchoolService>();
+            services.AddTransient<IUsersService, UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

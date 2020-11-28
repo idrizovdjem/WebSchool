@@ -10,13 +10,15 @@ namespace WebSchool.Controllers
     public class UsersController : Controller
     {
         private readonly ILinksService linksService;
+        private readonly IUsersService usersService;
         private readonly ISchoolService schoolService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
 
-        public UsersController(ILinksService linksService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ISchoolService schoolService)
+        public UsersController(ILinksService linksService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ISchoolService schoolService, IUsersService usersService)
         {
             this.userManager = userManager;
+            this.usersService = usersService;
             this.linksService = linksService;
             this.signInManager = signInManager;
             this.schoolService = schoolService;
@@ -102,6 +104,29 @@ namespace WebSchool.Controllers
             }
 
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginUserInputModel input)
+        {
+            if(this.User.Identity.IsAuthenticated)
+            {
+                return Redirect("/School/Forum");
+            }
+
+            if(!this.ModelState.IsValid)
+            {
+                return View(input);
+            }
+
+            var result = await this.usersService.Login(input.Email, input.Password);
+            if(!result)
+            {
+                this.ModelState.AddModelError("Login failed", "Invalid username or password");
+                return View(input);
+            }
+
+            return Redirect("/School/Forum");
         }
     }
 }
