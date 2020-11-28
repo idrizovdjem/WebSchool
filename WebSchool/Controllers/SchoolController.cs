@@ -54,9 +54,12 @@ namespace WebSchool.Controllers
         }
 
         [Authorize]
-        public IActionResult Forum()
+        public async Task<IActionResult> Forum(int page = 1)
         {
-            return View();
+            var user = await this.userManager.GetUserAsync(this.User);
+            var school = this.schoolService.GetSchool(user, page);
+
+            return View(school);
         }
     }
 }

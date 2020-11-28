@@ -20,7 +20,7 @@ namespace WebSchool.Controllers
         { 
             if(this.User.Identity.IsAuthenticated)
             {
-                return Redirect("/School/id=someSchoolId");
+                return Redirect("/School/Forum");
             }
 
             return View();

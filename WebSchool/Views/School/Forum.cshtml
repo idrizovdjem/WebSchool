@@ -1,3 +1,12 @@
-﻿@{ 
+﻿@{
     Layout = "_Layout";
 }
+
+@model WebSchool.Models.School.SchoolViewModel
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <img src="@Model.ImageUrl" height="200" class="w-100" />
+        <h2>@Model.Name</h2>
+    </div>
+</div>

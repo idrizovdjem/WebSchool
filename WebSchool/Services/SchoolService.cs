@@ -2,6 +2,7 @@
 using WebSchool.Data;
 using WebSchool.Data.Models;
 using System.Threading.Tasks;
+using WebSchool.Models.School;
 using WebSchool.Services.Contracts;
 
 namespace WebSchool.Services
@@ -36,6 +37,25 @@ namespace WebSchool.Services
         {
             await this.context.Schools.AddAsync(school);
             await this.context.SaveChangesAsync();
+        }
+
+        public SchoolViewModel GetSchool(ApplicationUser user, int page)
+        {
+            var schoolId = this.context.UserSchools
+                .Where(x => x.UserId == user.Id)
+                .Select(x => x.SchoolId)
+                .FirstOrDefault();
+
+            var school = this.context.Schools
+                .FirstOrDefault(s => s.Id == schoolId);
+
+            var schoolViewModel = new SchoolViewModel()
+            {
+                Name = school.Name,
+                ImageUrl = school.ImageUrl
+            };
+
+            return schoolViewModel;
         }
 
         public bool IsSchoolNameAvailable(string schoolName)

@@ -1,5 +1,6 @@
 ﻿using WebSchool.Data.Models;
 using System.Threading.Tasks;
+using WebSchool.Models.School;
 
 namespace WebSchool.Services.Contracts
 {
@@ -10,5 +11,7 @@ namespace WebSchool.Services.Contracts
         Task AssignUserToSchool(string userId, string schoolId);
 
         bool IsSchoolNameAvailable(string schoolName);
+
+        SchoolViewModel GetSchool(ApplicationUser user, int page);
     }
 }
