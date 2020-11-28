@@ -16,6 +16,16 @@ namespace WebSchool.Services
             this.signInManager = signInManager;
         }
 
+        public async Task<IdentityResult> AddUserToRole(ApplicationUser user, string roleName)
+        {
+            return await this.userManager.AddToRoleAsync(user, roleName);
+        }
+
+        public async Task<IdentityResult> CreateUserAsync(ApplicationUser user, string password)
+        {
+            return await this.userManager.CreateAsync(user, password);
+        }
+
         public async Task<bool> Login(string email, string password)
         {
             var user = await this.userManager.FindByEmailAsync(email);

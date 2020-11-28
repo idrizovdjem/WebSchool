@@ -1,9 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using WebSchool.Data.Models;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebSchool.Services.Contracts
 {
     public interface IUsersService
     {
         Task<bool> Login(string email, string password);
+
+        Task<IdentityResult> CreateUserAsync(ApplicationUser user, string password);
+
+        Task<IdentityResult> AddUserToRole(ApplicationUser user, string roleName);
     }
 }

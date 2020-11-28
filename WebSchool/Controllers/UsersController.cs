@@ -67,7 +67,7 @@ namespace WebSchool.Controllers
                UserName = registerLink.To
             };
 
-            var result = await this.userManager.CreateAsync(user, input.Password);
+            var result = await this.usersService.CreateUserAsync(user, input.Password);
             if(!result.Succeeded)
             {
                 foreach(var error in result.Errors)
@@ -78,8 +78,8 @@ namespace WebSchool.Controllers
                 return View(input);
             }    
 
-            await this.userManager.AddToRoleAsync(user, registerLink.RoleName);
-            await this.signInManager.PasswordSignInAsync(user.Email, input.Password, false, false);
+            await this.usersService.AddUserToRole(user, registerLink.RoleName);
+            await this.usersService.Login(user.Email, input.Password);
             await this.linksService.UseLink(input.RegistrationLinkId);
 
             if (registerLink.RoleName == "Admin")
