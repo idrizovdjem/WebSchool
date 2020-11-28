@@ -27,6 +27,22 @@
     </div>
 </div>
 
+<div>
+    <div class="media">
+        <img class="mr-3" src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" width="64" height="64" data-toggle="tooltip"
+             data-placement="left" title="Username">
+        <div class="media-body">
+            <h5 class="mt-0">Username</h5>
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/handlePost.js"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 }
