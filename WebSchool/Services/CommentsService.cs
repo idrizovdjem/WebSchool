@@ -43,7 +43,7 @@ namespace WebSchool.Services
                     Content = x.Content,
                     CreatedOn = x.CreatedOn,
                 })
-                .OrderBy(x => x.CreatedOn)
+                .OrderByDescending(x => x.CreatedOn)
                 .ToList();
         }
     }

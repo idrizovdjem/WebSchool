@@ -55,7 +55,7 @@ namespace WebSchool.Services
                 ImageUrl = school.ImageUrl,
                 Page = page,
                 Posts = this.postsService.GetPosts(schoolId, page),
-                MaxPages = this.GetMaxPage(schoolId),
+                MaxPages = this.postsService.GetMaxPages(schoolId),
             };
 
             return schoolViewModel;
@@ -72,21 +72,6 @@ namespace WebSchool.Services
         public bool IsSchoolNameAvailable(string schoolName)
         {
             return !this.context.Schools.Any(s => s.Name == schoolName);
-        }
-
-        private int GetMaxPage(string schoolId)
-        {
-            var postsCount = this.context.Schools
-                .FirstOrDefault(s => s.Id == schoolId)
-                .Posts.Count();
-
-            var maxPages = postsCount / 10;
-            if (postsCount % 10 > 0)
-            {
-                maxPages++;
-            }
-
-            return maxPages;
         }
     }
 }

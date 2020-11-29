@@ -38,7 +38,7 @@ namespace WebSchool.Services
         {
             return this.context.Posts
                 .Where(x => x.SchoolId == schoolId && x.IsDeleted == false)
-                .OrderBy(x => x.CreatedOn)
+                .OrderByDescending(x => x.CreatedOn)
                 .Select(x => new PostViewModel()
                 {
                     Id = x.Id,
@@ -56,6 +56,20 @@ namespace WebSchool.Services
         {
             return this.context.Posts
                 .FirstOrDefault(x => x.Id == postId && x.IsDeleted == false);
+        }
+
+        public int GetMaxPages(string schoolId)
+        {
+            var postsCount = this.context.Posts.
+                Count(x => x.SchoolId == schoolId);
+
+            var maxPages = postsCount / 10;
+            if (maxPages % 10 > 0)
+            {
+                maxPages++;
+            }
+
+            return maxPages;
         }
     }
 }

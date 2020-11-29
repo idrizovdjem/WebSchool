@@ -12,5 +12,7 @@ namespace WebSchool.Services.Contracts
         Task CreatePost(CreatePostInputModel input, ApplicationUser user, string schoolId);
 
         Post GetPost(string postId);
+
+        int GetMaxPages(string schoolId);
     }
 }
