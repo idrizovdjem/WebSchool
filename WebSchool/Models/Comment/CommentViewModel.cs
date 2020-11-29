@@ -1,5 +1,4 @@
 ﻿using System;
-using WebSchool.Data.Models;
 
 namespace WebSchool.Models.Comment
 {
@@ -7,7 +6,7 @@ namespace WebSchool.Models.Comment
     {
         public int Id { get; set; }
 
-        public ApplicationUser Creator { get; set; }
+        public string Creator { get; set; }
 
         public string Content { get; set; }
 

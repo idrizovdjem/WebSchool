@@ -39,7 +39,7 @@ namespace WebSchool.Services
                 .Select(x => new CommentViewModel()
                 {
                     Id = x.Id,
-                    Creator = x.Creator,
+                    Creator = x.Creator.Email,
                     Content = x.Content,
                     CreatedOn = x.CreatedOn,
                 })

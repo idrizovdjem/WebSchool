@@ -42,7 +42,7 @@ namespace WebSchool.Services
                 .Select(x => new PostViewModel()
                 {
                     Id = x.Id,
-                    Creator = x.Creator,
+                    Creator = x.Creator.Email,
                     Content = x.Content,
                     CreatedOn = x.CreatedOn,
                     Comments = this.commentsService.GetComments(x.Id),

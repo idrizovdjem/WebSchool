@@ -9,7 +9,7 @@ namespace WebSchool.Models.Post
     {
         public string Id { get; set; }
 
-        public ApplicationUser Creator { get; set; }
+        public string Creator { get; set; }
 
         public string Content { get; set; }
 

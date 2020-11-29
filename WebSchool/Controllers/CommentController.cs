@@ -49,5 +49,12 @@ namespace WebSchool.Controllers
 
             return Redirect("/School/Forum");
         }
+
+        [Authorize]
+        public IActionResult GetComments(string postId)
+        {
+            var comments = this.commentsService.GetComments(postId);
+            return Json(comments);
+        }
     }
 }
