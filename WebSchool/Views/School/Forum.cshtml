@@ -15,7 +15,7 @@
 
 <div class="row">
     <div class="col-md-6 offset-3 text-center mt-2">
-        <form method="post" asp-controller="School" asp-action="CreatePost">
+        <form method="post" asp-controller="Post" asp-action="CreatePost">
             <h3 onclick="handlePost()" id="addButton">Add new post</h3>
             <div id="postForm" style="display: none;">
                 <div class="form-group" id="postForm">
@@ -75,7 +75,7 @@
                 </ul>
             </div>
             <div class="modal-footer">
-                <form class="w-100" method="post" id="commentForm" asp-controller="School" asp-action="CreateComment">
+                <form class="w-100" method="post" id="commentForm" asp-controller="Comment" asp-action="CreateComment">
                     <input type="hidden" value="" id="formHidden" name="postId" />
                     <div class="form-group">
                         <textarea placeholder="Enter comment" class="form-control" rows="4" name="content"></textarea>
