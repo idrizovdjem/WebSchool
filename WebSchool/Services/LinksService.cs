@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using WebSchool.Data;
 using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using WebSchool.Services.Contracts;
+using WebSchool.Models.RegistrationLink;
 
 namespace WebSchool.Services
 {
@@ -19,7 +21,7 @@ namespace WebSchool.Services
         public async Task<RegistrationLink> GenerateAdminLink(string email)
         {
             var link = new RegistrationLink()
-            { 
+            {
                 RoleName = "Admin",
                 From = "System",
                 To = email
@@ -31,16 +33,19 @@ namespace WebSchool.Services
             return link;
         }
 
-        public async Task<IEnumerable<RegistrationLink>> GenerateLinks(string roleName, string from, string[] toEmails)
+        public async Task<IEnumerable<RegistrationLink>> GenerateLinks(string roleName, string from, string schoolId, string[] toEmails)
         {
             var links = new List<RegistrationLink>();
-            for(int i = 0; i < toEmails.Length; i++)
+            for (int i = 0; i < toEmails.Length; i++)
             {
                 var link = new RegistrationLink()
                 {
                     RoleName = roleName,
                     From = from,
-                    To = toEmails[i]
+                    To = toEmails[i],
+                    SchoolId = schoolId,
+                    CreatedOn = DateTime.UtcNow,
+                    IsUsed = false
                 };
 
                 links.Add(link);
@@ -52,16 +57,36 @@ namespace WebSchool.Services
             return links;
         }
 
+        public ICollection<RegistrationLinkViewModel> GetGeneratedLinks(string adminId)
+        {
+            return this.context.RegistrationLinks
+                .Where(x => x.From == adminId)
+                .Select(x => new RegistrationLinkViewModel()
+                {
+                    Email = x.To,
+                    CreatedOn = x.CreatedOn,
+                    IsUsed = x.IsUsed == true ? "Yes" : "No"
+                })
+                .OrderByDescending(x => x.CreatedOn)
+                .ToList();
+        }
+
         public RegistrationLink GetLink(string registrationLinkId)
         {
             return this.context.RegistrationLinks
                 .FirstOrDefault(x => x.Id == registrationLinkId);
         }
 
+        public bool IsRoleValid(string role)
+        {
+            return this.context.Roles
+                .Any(x => x.Name == role);
+        }
+
         public async Task UseLink(string registrationLinkId)
         {
             var link = GetLink(registrationLinkId);
-            if(link == null)
+            if (link == null)
             {
                 return;
             }

@@ -1,0 +1,40 @@
+﻿<div class="row mt-5">
+    <h3>Generated links:</h3>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Email</th>
+                <th scope="col">Created on</th>
+                <th scope="col">Is used</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody id="linksTable">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(this.responseText);
+            const table = document.getElementById("linksTable");
+            table.innerHTML = "";
+            let counter = 1;
+            for (let i = 0; i < data.length; i++) {
+                console.log(data[i]);
+                let textColor = data[i].isUsed == "Yes" ? "success" : "danger";
+                let disabled = data[i].isUsed == "Yes" ? "disabled" : "";
+                table.innerHTML += `<tr><th scope="row">` + (counter++) + `</th><td>` + data[i].email + `</td><td>` + data[i].createdOn + `</td>
+                <td class="text-` + textColor + `">` + data[i].isUsed + `</td>
+                <td><button ` + disabled + ` class="btn btn-danger w-50">Delete</button></td></tr>`;
+            }
+        }
+    };
+
+    xhttp.open("GET", "/Administration/GetLinks", true);
+    xhttp.send();
+</script>
