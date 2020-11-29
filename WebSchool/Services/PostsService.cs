@@ -12,10 +12,12 @@ namespace WebSchool.Services
     public class PostsService : IPostsService
     {
         private readonly ApplicationDbContext context;
+        private readonly ICommentsService commentsService;
 
-        public PostsService(ApplicationDbContext context)
+        public PostsService(ApplicationDbContext context, ICommentsService commentsService)
         {
             this.context = context;
+            this.commentsService = commentsService;
         }
 
         public async Task CreatePost(CreatePostInputModel input, ApplicationUser user, string schoolId)
@@ -35,17 +37,25 @@ namespace WebSchool.Services
         public ICollection<PostViewModel> GetPosts(string schoolId, int page)
         {
             return this.context.Posts
-                .Where(x => x.SchoolId == schoolId)
+                .Where(x => x.SchoolId == schoolId && x.IsDeleted == false)
                 .OrderBy(x => x.CreatedOn)
                 .Select(x => new PostViewModel()
                 {
+                    Id = x.Id,
                     Creator = x.Creator,
                     Content = x.Content,
-                    CreatedOn = x.CreatedOn
+                    CreatedOn = x.CreatedOn,
+                    Comments = this.commentsService.GetComments(x.Id),
                 })
                 .Skip((page - 1) * 10)
                 .Take(10)
                 .ToList();
+        }
+
+        public Post GetPost(string postId)
+        {
+            return this.context.Posts
+                .FirstOrDefault(x => x.Id == postId && x.IsDeleted == false);
         }
     }
 }

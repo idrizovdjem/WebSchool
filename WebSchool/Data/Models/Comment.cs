@@ -12,7 +12,8 @@ namespace WebSchool.Data.Models
         [MaxLength(500)]
         public string Content { get; set; }
 
-        public int PostId { get; set; }
+        [Required]
+        public string PostId { get; set; }
 
         public virtual Post Post { get; set; }
 

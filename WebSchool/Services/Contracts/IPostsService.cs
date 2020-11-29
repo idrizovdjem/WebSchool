@@ -10,5 +10,7 @@ namespace WebSchool.Services.Contracts
         ICollection<PostViewModel> GetPosts(string schoolId, int page);
 
         Task CreatePost(CreatePostInputModel input, ApplicationUser user, string schoolId);
+
+        Post GetPost(string postId);
     }
 }

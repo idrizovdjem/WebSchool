@@ -8,11 +8,11 @@ namespace WebSchool.Data.Models
     {
         public Post()
         {
+            this.Id = Guid.NewGuid().ToString();
             this.Comments = new HashSet<Comment>();
         }
 
-        [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public string Content { get; set; }
