@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using WebSchool.Data;
 using WebSchool.Data.Models;
+using System.Threading.Tasks;
+using WebSchool.Models.Classes;
+using System.Collections.Generic;
 using WebSchool.Services.Contracts;
 
 namespace WebSchool.Services
@@ -27,6 +29,19 @@ namespace WebSchool.Services
 
             await this.context.SchoolClasses.AddAsync(schoolClass);
             await this.context.SaveChangesAsync();
+        }
+
+        public ICollection<ClassViewModel> GetClasses(string schoolId)
+        {
+            return this.context.SchoolClasses
+                .Where(x => x.SchoolId == schoolId)
+                .Select(x => new ClassViewModel()
+                {
+                    Signature = x.Signature,
+                    SchoolId = x.SchoolId,
+                    CreatedOn = x.CreatedOn
+                })
+                .ToList();
         }
 
         public bool IsClassSignatureAvailable(string signature, string schoolId)

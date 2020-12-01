@@ -1,4 +1,6 @@
 ﻿using System.Threading.Tasks;
+using WebSchool.Models.Classes;
+using System.Collections.Generic;
 
 namespace WebSchool.Services.Contracts
 {
@@ -7,5 +9,7 @@ namespace WebSchool.Services.Contracts
         bool IsClassSignatureAvailable(string signature, string schoolId);
 
         Task CreateClass(string signature, string schoolId);
+
+        ICollection<ClassViewModel> GetClasses(string schoolId);
     }
 }

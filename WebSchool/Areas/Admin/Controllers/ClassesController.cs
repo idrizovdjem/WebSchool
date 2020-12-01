@@ -31,19 +31,27 @@ namespace WebSchool.Areas.Admin.Controllers
         {
             if (string.IsNullOrWhiteSpace(signature))
             {
-                return Redirect("/Administration/Classes");
+                return RedirectToAction("Index");
             }
 
             var user = await this.usersService.GetUser(this.User);
             var schoolId = this.schoolService.GetSchoolIdByUser(user);
             if (!this.classesService.IsClassSignatureAvailable(signature, schoolId))
             {
-                return Redirect("/Administration/Classes");
+                return RedirectToAction("Index");
             }
 
             await this.classesService.CreateClass(signature, schoolId);
 
-            return Redirect("/Administration/Classes");
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> GetClasses()
+        {
+            var user = await this.usersService.GetUser(this.User);
+            var schoolId = this.schoolService.GetSchoolIdByUser(user);
+            var classes = this.classesService.GetClasses(schoolId);
+            return Json(classes);
         }
     }
 }
