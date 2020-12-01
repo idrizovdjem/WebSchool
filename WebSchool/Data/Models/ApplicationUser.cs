@@ -17,7 +17,6 @@ namespace WebSchool.Data.Models
             this.Posts = new HashSet<Post>();
             this.Comments = new HashSet<Comment>();
             this.Classes = new HashSet<UserClass>();
-            this.Schools = new HashSet<UserSchool>();
             this.Subjects = new HashSet<UserSubject>();
         }
 
@@ -28,6 +27,10 @@ namespace WebSchool.Data.Models
         [Required]
         [MaxLength(50)]
         public string LastName { get; set; }
+
+        public string SchoolId { get; set; }
+
+        public virtual School School { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
@@ -42,8 +45,6 @@ namespace WebSchool.Data.Models
         public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ICollection<UserClass> Classes { get; set; }
-
-        public virtual ICollection<UserSchool> Schools { get; set; }
 
         public virtual ICollection<UserSubject> Subjects { get; set; }
 

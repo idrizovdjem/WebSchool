@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebSchool.Controllers
 {
@@ -93,7 +94,7 @@ namespace WebSchool.Controllers
                 return BadRequest();
             }
 
-            await this.schoolService.AssignUserToSchool(user.Id, registerLink.SchoolId);
+            await this.schoolService.AssignUserToSchool(user, registerLink.SchoolId);
             return Redirect("/School/Forum");
         }
 
@@ -129,6 +130,15 @@ namespace WebSchool.Controllers
             }
 
             return Redirect("/School/Forum");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetUser(string email, string signature)
+        {
+            var user = await this.usersService.GetUser(this.User);
+            var schoolId = this.schoolService.GetSchoolIdByUser(user);
+            var userEmails = this.usersService.GetUserWithEmailContains(email, signature, schoolId);
+            return Json(userEmails);
         }
     }
 }

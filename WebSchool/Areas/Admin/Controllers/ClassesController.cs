@@ -61,5 +61,10 @@ namespace WebSchool.Areas.Admin.Controllers
             var schoolClassModel = this.classesService.GetClassInformation(signature, schoolId);
             return View(schoolClassModel);
         }
+
+        public IActionResult AddStudents(string signature)
+        {
+            return View();
+        }
     }
 }

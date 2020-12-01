@@ -18,20 +18,9 @@ namespace WebSchool.Services
             this.postsService = postsService;
         }
 
-        public async Task AssignUserToSchool(string userId, string schoolId)
+        public async Task AssignUserToSchool(ApplicationUser user, string schoolId)
         {
-            if (this.context.UserSchools.Any(x => x.UserId == userId && x.SchoolId == schoolId))
-            {
-                return;
-            }
-
-            var userSchool = new UserSchool()
-            {
-                UserId = userId,
-                SchoolId = schoolId
-            };
-
-            await this.context.UserSchools.AddAsync(userSchool);
+            user.SchoolId = schoolId;
             await this.context.SaveChangesAsync();
         }
 
@@ -44,18 +33,16 @@ namespace WebSchool.Services
 
         public SchoolViewModel GetSchool(ApplicationUser user, int page)
         {
-            var schoolId = this.GetSchoolIdByUser(user);
-
             var school = this.context.Schools
-                .FirstOrDefault(s => s.Id == schoolId);
+                .FirstOrDefault(s => s.Id == user.SchoolId);
 
             var schoolViewModel = new SchoolViewModel()
             {
                 Name = school.Name,
                 ImageUrl = school.ImageUrl,
                 Page = page,
-                Posts = this.postsService.GetPosts(schoolId, page),
-                MaxPages = this.postsService.GetMaxPages(schoolId),
+                Posts = this.postsService.GetPosts(school.Id, page),
+                MaxPages = this.postsService.GetMaxPages(school.Id),
             };
 
             return schoolViewModel;
@@ -63,10 +50,7 @@ namespace WebSchool.Services
 
         public string GetSchoolIdByUser(ApplicationUser user)
         {
-            return this.context.UserSchools
-                .Where(x => x.UserId == user.Id)
-                .Select(x => x.SchoolId)
-                .FirstOrDefault();
+            return user.SchoolId;
         }
 
         public bool IsSchoolNameAvailable(string schoolName)

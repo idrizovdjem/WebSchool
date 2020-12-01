@@ -1,6 +1,7 @@
 ﻿using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace WebSchool.Services.Contracts
@@ -14,5 +15,7 @@ namespace WebSchool.Services.Contracts
         Task<IdentityResult> AddUserToRole(ApplicationUser user, string roleName);
 
         Task<ApplicationUser> GetUser(ClaimsPrincipal user);
+
+        ICollection<string> GetUserWithEmailContains(string email, string signature, string schoolId);
     }
 }

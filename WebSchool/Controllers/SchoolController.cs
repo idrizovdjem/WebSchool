@@ -51,7 +51,7 @@ namespace WebSchool.Controllers
 
             await this.schoolService.CreateAsync(school);
             var user = await this.userManager.GetUserAsync(this.User);
-            await this.schoolService.AssignUserToSchool(user.Id, school.Id);
+            await this.schoolService.AssignUserToSchool(user, school.Id);
 
             return RedirectToAction("Forum");
         }

@@ -11,7 +11,7 @@ namespace WebSchool.Data.Models
             this.Id = Guid.NewGuid().ToString();
 
             this.Posts = new HashSet<Post>();
-            this.Users = new HashSet<UserSchool>();
+            this.Users = new HashSet<ApplicationUser>();
             this.Classes = new HashSet<SchoolClass>();
         }
 
@@ -35,7 +35,7 @@ namespace WebSchool.Data.Models
 
         public virtual ICollection<Post> Posts { get; set; }
 
-        public virtual ICollection<UserSchool> Users { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
 
         public virtual ICollection<SchoolClass> Classes { get; set; }
     }

@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <input class="form-control" placeholder="Student email" id="searchBar" />
+        <div class="list-group" id="suggestBox">
+            <a href="#" class="list-group-item list-group-item-action">
+                Cras justo odio
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+            <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+            <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+            <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const suggestBox = document.getElementById('suggestBox');
+        const searchBar = document.getElementById("searchBar");
+        const urlParams = new URLSearchParams(window.location.search);
+        const xhttp = new XMLHttpRequest();
+
+        searchBar.addEventListener('input', (event) => {
+            let email = event.target.value;
+            let signature = urlParams.get('signature');
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    let data = JSON.parse(this.responseText);
+                    console.log(data);
+                }
+            }
+
+            xhttp.open("GET", "/Users/GetUser?email=" + email + "&signature=" + signature, true);
+            xhttp.send();
+        });
+
+    </script>
+}

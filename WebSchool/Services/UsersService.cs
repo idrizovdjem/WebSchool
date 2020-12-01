@@ -1,8 +1,11 @@
-﻿using WebSchool.Data.Models;
+﻿using System.Linq;
+using WebSchool.Data;
+using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace WebSchool.Services
 {
@@ -10,11 +13,13 @@ namespace WebSchool.Services
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly ApplicationDbContext context;
 
-        public UsersService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public UsersService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.context = context;
         }
 
         public async Task<IdentityResult> AddUserToRole(ApplicationUser user, string roleName)
@@ -30,6 +35,11 @@ namespace WebSchool.Services
         public async Task<ApplicationUser> GetUser(ClaimsPrincipal user)
         {
             return await this.userManager.GetUserAsync(user);
+        }
+
+        public ICollection<string> GetUserWithEmailContains(string email, string signature, string schoolId)
+        {
+            return null;
         }
 
         public async Task<bool> Login(string email, string password)
