@@ -6,21 +6,25 @@
     <div class="col-md-6 offset-3">
         <input class="form-control" placeholder="Student email" id="searchBar" />
         <div class="list-group" id="suggestBox">
-            <a href="#" class="list-group-item list-group-item-action">
-                Cras justo odio
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-            <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-            <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-            <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
         </div>
+    </div>
+</div>
+
+<div>
+    <div class="col-md-6 offset-3 mt-5">
+        <p>Added students</p>
+        <div class="list-group" id="addedBox">
+        </div>
+        <button class="btn btn-primary w-100">Add students</button>
     </div>
 </div>
 
 @section Scripts {
     <script>
+        let addedEmails = [];
         const suggestBox = document.getElementById('suggestBox');
         const searchBar = document.getElementById("searchBar");
+        const addedBox = document.getElementById('addedBox');
         const urlParams = new URLSearchParams(window.location.search);
         const xhttp = new XMLHttpRequest();
 
@@ -30,13 +34,44 @@
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     let data = JSON.parse(this.responseText);
-                    console.log(data);
+                    suggestBox.innerHTML = "";
+                    for (let i = 0; i < data.length; i++) {
+                        if (addedEmails.includes(data[i])) {
+                            continue;
+                        }
+                        suggestBox.innerHTML += `<a href="#" class="list-group-item list-group-item-action" onclick='addStudent("` + data[i] + `")'>` + data[i] + `</a>`;
+                    }
                 }
             }
 
             xhttp.open("GET", "/Users/GetUser?email=" + email + "&signature=" + signature, true);
             xhttp.send();
         });
+
+        function addStudent(email) {
+            if (addedEmails.includes(email)) {
+                return;
+            }
+            addedEmails.push(email);
+            searchBar.value = "";
+            suggestBox.innerHTML = "";
+
+            renderAddedStudents();
+        }
+
+        function removeStudent(email) {
+            let index = addedEmails.indexOf(email);
+            addedEmails.splice(index, 1);
+            renderAddedStudents();
+        }
+
+        function renderAddedStudents() {
+            addedBox.innerHTML = "";
+
+            for (let i = 0; i < addedEmails.length; i++) {
+                addedBox.innerHTML += `<a href="#" class="list-group-item list-group-item-action" onclick='removeStudent("` + addedEmails[i] + `")'>` + addedEmails[i] + `</a>`;
+            }
+        }
 
     </script>
 }

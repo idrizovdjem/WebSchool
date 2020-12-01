@@ -3,9 +3,9 @@ using WebSchool.Data;
 using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using System.Collections.Generic;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
 
 namespace WebSchool.Services
 {
@@ -37,9 +37,23 @@ namespace WebSchool.Services
             return await this.userManager.GetUserAsync(user);
         }
 
-        public ICollection<string> GetUserWithEmailContains(string email, string signature, string schoolId)
+        public List<string> GetUserWithEmailContains(string email, string signature, string schoolId)
         {
-            return null;
+            var users = this.context.Users
+                .Where(x => x.SchoolId == schoolId && x.Email.Contains(email))
+                .Select(x => new
+                {
+                    ActiveClass = x.Classes
+                                        .Where(x => x.IsActive)
+                                        .Select(x => x.SchoolClass)
+                                        .FirstOrDefault(),
+                    Email = x.Email
+                });
+
+            return users
+                .Where(x => x.ActiveClass.Signature != signature)
+                .Select(x => x.Email)
+                .ToList();
         }
 
         public async Task<bool> Login(string email, string password)
