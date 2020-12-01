@@ -30,6 +30,7 @@
         const form = document.getElementById('addStudentsForm');
         const urlParams = new URLSearchParams(window.location.search);
         const xhttp = new XMLHttpRequest();
+        form.innerHTML += `<input type="hidden" value="` + urlParams.get('signature') + `" name='signature' />`;
 
         searchBar.addEventListener('input', (event) => {
             let email = event.target.value;
@@ -47,7 +48,7 @@
                 }
             }
 
-            xhttp.open("GET", "/Users/GetUser?email=" + email + "&signature=" + signature, true);
+            xhttp.open("GET", "/Users/GetUser?email=" + email, true);
             xhttp.send();
         });
 

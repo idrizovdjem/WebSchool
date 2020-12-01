@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
 
 namespace WebSchool.Areas.Admin.Controllers
 {
@@ -70,9 +70,16 @@ namespace WebSchool.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddStudents(string signature, List<string> emails)
+        public async Task<IActionResult> AddStudents(string signature, List<string> emails)
         {
-            return null;
+            if (emails == null || emails.Count == 0)
+            {
+                return Redirect("/Admin/Classes/Information?signature=" + signature);
+            }
+            var user = await this.usersService.GetUser(this.User);
+            var schoolId = this.schoolService.GetSchoolIdByUser(user);
+            await this.classesService.AddStudentsToClass(signature, emails, schoolId);
+            return Redirect("/Admin/Classes/Information?signature=" + signature);
         }
     }
 }

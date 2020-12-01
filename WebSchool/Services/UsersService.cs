@@ -37,23 +37,32 @@ namespace WebSchool.Services
             return await this.userManager.GetUserAsync(user);
         }
 
+        public ApplicationUser GetUserByEmail(string email)
+        {
+            return this.context.Users.FirstOrDefault(x => x.Email == email);
+        }
+
         public List<string> GetUserWithEmailContains(string email, string signature, string schoolId)
         {
             var users = this.context.Users
                 .Where(x => x.SchoolId == schoolId && x.Email.Contains(email))
-                .Select(x => new
-                {
-                    ActiveClass = x.Classes
-                                        .Where(x => x.IsActive)
-                                        .Select(x => x.SchoolClass)
-                                        .FirstOrDefault(),
-                    Email = x.Email
-                });
-
-            return users
-                .Where(x => x.ActiveClass.Signature != signature)
-                .Select(x => x.Email)
                 .ToList();
+
+            var schoolClass = this.context.SchoolClasses
+                .FirstOrDefault(x => x.SchoolId == schoolId && x.Signature == x.Signature);
+
+            var filteredUsers = new List<string>();
+            foreach (var user in users)
+            {
+                if (this.context.UserClasses.Any(x => x.UserId == user.Id && x.SchoolClassId == schoolClass.Id))
+                {
+                    continue;
+                }
+
+                filteredUsers.Add(user.Email);
+            }
+
+            return filteredUsers;
         }
 
         public async Task<bool> Login(string email, string password)
