@@ -15,6 +15,7 @@
     </table>
 </div>
 
+
 <script>
     const xhttp = new XMLHttpRequest();
 
@@ -25,7 +26,6 @@
             table.innerHTML = "";
             let counter = 1;
             for (let i = 0; i < data.length; i++) {
-                console.log(data[i]);
                 let textColor = data[i].isUsed == "Yes" ? "success" : "danger";
                 let disabled = data[i].isUsed == "Yes" ? "disabled" : "";
                 table.innerHTML += `<tr><th scope="row">` + (counter++) + `</th><td>` + data[i].email + `</td><td>` + data[i].createdOn + `</td>
@@ -35,6 +35,6 @@
         }
     };
 
-    xhttp.open("GET", "/Administration/GetLinks", true);
+    xhttp.open("GET", "/Admin/Administration/GetLinks", true);
     xhttp.send();
 </script>

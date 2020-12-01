@@ -1,5 +1,6 @@
 ﻿using WebSchool.Data.Models;
 using System.Threading.Tasks;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 
 namespace WebSchool.Services.Contracts
@@ -11,5 +12,7 @@ namespace WebSchool.Services.Contracts
         Task<IdentityResult> CreateUserAsync(ApplicationUser user, string password);
 
         Task<IdentityResult> AddUserToRole(ApplicationUser user, string roleName);
+
+        Task<ApplicationUser> GetUser(ClaimsPrincipal user);
     }
 }

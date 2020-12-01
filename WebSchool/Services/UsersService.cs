@@ -1,5 +1,6 @@
 ﻿using WebSchool.Data.Models;
 using System.Threading.Tasks;
+using System.Security.Claims;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 
@@ -26,10 +27,15 @@ namespace WebSchool.Services
             return await this.userManager.CreateAsync(user, password);
         }
 
+        public async Task<ApplicationUser> GetUser(ClaimsPrincipal user)
+        {
+            return await this.userManager.GetUserAsync(user);
+        }
+
         public async Task<bool> Login(string email, string password)
         {
             var user = await this.userManager.FindByEmailAsync(email);
-            if(user == null)
+            if (user == null)
             {
                 return false;
             }

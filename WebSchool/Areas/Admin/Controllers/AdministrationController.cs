@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebSchool.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdministrationController : Controller
     {
         private readonly ILinksService linksService;
@@ -23,13 +25,10 @@ namespace WebSchool.Areas.Admin.Controllers
             this.emailsService = emailsService;
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult Panel()
         {
             return View();
         }
-
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> GenerateLinks(GenerateLinksInputModel input)
         {
@@ -60,7 +59,6 @@ namespace WebSchool.Areas.Admin.Controllers
             return RedirectToAction("Panel");
         }
 
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetLinks()
         {
             var user = await this.userManager.GetUserAsync(this.User);
