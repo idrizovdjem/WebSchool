@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 
 namespace WebSchool.Areas.Admin.Controllers
 {
@@ -26,7 +27,7 @@ namespace WebSchool.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateClass(string signature)
         {
             if (string.IsNullOrWhiteSpace(signature))
@@ -65,6 +66,13 @@ namespace WebSchool.Areas.Admin.Controllers
         public IActionResult AddStudents(string signature)
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddStudents(string signature, List<string> emails)
+        {
+            return null;
         }
     }
 }

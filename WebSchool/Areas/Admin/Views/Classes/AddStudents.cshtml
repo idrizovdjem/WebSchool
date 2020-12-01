@@ -15,7 +15,9 @@
         <p>Added students</p>
         <div class="list-group" id="addedBox">
         </div>
-        <button class="btn btn-primary w-100">Add students</button>
+        <form method="post" asp-area="Admin" asp-controller="Classes" asp-action="AddStudents" id="addStudentsForm">
+            <button class="btn btn-primary w-100" type="submit">Add students</button>
+        </form>
     </div>
 </div>
 
@@ -25,6 +27,7 @@
         const suggestBox = document.getElementById('suggestBox');
         const searchBar = document.getElementById("searchBar");
         const addedBox = document.getElementById('addedBox');
+        const form = document.getElementById('addStudentsForm');
         const urlParams = new URLSearchParams(window.location.search);
         const xhttp = new XMLHttpRequest();
 
@@ -56,21 +59,29 @@
             searchBar.value = "";
             suggestBox.innerHTML = "";
 
-            renderAddedStudents();
+            updateStudents();
         }
 
         function removeStudent(email) {
             let index = addedEmails.indexOf(email);
             addedEmails.splice(index, 1);
-            renderAddedStudents();
+
+            updateStudents();
         }
 
-        function renderAddedStudents() {
+        function updateStudents() {
             addedBox.innerHTML = "";
+            let token = document.getElementsByName('__RequestVerificationToken');
+            form.innerHTML = `<input type="hidden" value="` + urlParams.get('signature') + `" name='signature' />`;
+            let tokenValue = token[0].value;
+            form.innerHTML += `<input name='__RequestVerificationToken' type='hidden' value="` + tokenValue + `" />`;
 
             for (let i = 0; i < addedEmails.length; i++) {
                 addedBox.innerHTML += `<a href="#" class="list-group-item list-group-item-action" onclick='removeStudent("` + addedEmails[i] + `")'>` + addedEmails[i] + `</a>`;
+                form.innerHTML += `<input type='hidden' value="` + addedEmails + `" name="emails" />`;
             }
+
+            form.innerHTML += `<button class="btn btn-primary w-100" type="submit">Add students</button>`;
         }
 
     </script>
