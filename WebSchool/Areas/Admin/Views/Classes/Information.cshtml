@@ -17,6 +17,7 @@
                     <th scope="col">Firstname</th>
                     <th scope="col">Lastname</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Remove</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +31,7 @@
                         <td>@student.FirstName</td>
                         <td>@student.LastName</td>
                         <td>@student.Email</td>
+                        <td><a href="/Admin/Classes/Remove?signature=@Model.Signature&email=@student.Email" class="btn btn-danger w-50 text-white">Remove</a></td>
                     </tr>
                 }
             </tbody>

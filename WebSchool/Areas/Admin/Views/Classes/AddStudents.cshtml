@@ -34,7 +34,6 @@
 
         searchBar.addEventListener('input', (event) => {
             let email = event.target.value;
-            let signature = urlParams.get('signature');
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     let data = JSON.parse(this.responseText);
@@ -79,7 +78,7 @@
 
             for (let i = 0; i < addedEmails.length; i++) {
                 addedBox.innerHTML += `<a href="#" class="list-group-item list-group-item-action" onclick='removeStudent("` + addedEmails[i] + `")'>` + addedEmails[i] + `</a>`;
-                form.innerHTML += `<input type='hidden' value="` + addedEmails + `" name="emails" />`;
+                form.innerHTML += `<input type='hidden' value="` + addedEmails[i] + `" name="emails" />`;
             }
 
             form.innerHTML += `<button class="btn btn-primary w-100" type="submit">Add students</button>`;

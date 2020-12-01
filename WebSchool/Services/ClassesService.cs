@@ -30,7 +30,6 @@ namespace WebSchool.Services
                 {
                     UserId = this.usersService.GetUserByEmail(email).Id,
                     SchoolClassId = this.GetClassInformation(signature, schoolId).Id,
-                    CreatedOn = DateTime.UtcNow,
                 };
 
                 userClasses.Add(userClass);
@@ -95,6 +94,18 @@ namespace WebSchool.Services
         public bool IsClassSignatureAvailable(string signature, string schoolId)
         {
             return !this.context.SchoolClasses.Any(x => x.Signature == signature && x.SchoolId == schoolId);
+        }
+
+        public async Task Remove(string signature, string email, string schoolId)
+        {
+            var schoolClass = this.context.SchoolClasses
+                .FirstOrDefault(x => x.Signature == signature && x.SchoolId == schoolId);
+
+            var userClass = this.context.UserClasses
+                .FirstOrDefault(x => x.SchoolClassId == schoolClass.Id && x.User.Email == email);
+
+            this.context.UserClasses.Remove(userClass);
+            await this.context.SaveChangesAsync();
         }
     }
 }

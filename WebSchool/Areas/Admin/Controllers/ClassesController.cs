@@ -81,5 +81,13 @@ namespace WebSchool.Areas.Admin.Controllers
             await this.classesService.AddStudentsToClass(signature, emails, schoolId);
             return Redirect("/Admin/Classes/Information?signature=" + signature);
         }
+
+        public async Task<IActionResult> Remove(string signature, string email)
+        {
+            var user = await this.usersService.GetUser(this.User);
+            var schoolId = this.schoolService.GetSchoolIdByUser(user);
+            await this.classesService.Remove(signature, email, schoolId);
+            return Redirect($"/Admin/Classes/Information?signature={signature}");
+        }
     }
 }

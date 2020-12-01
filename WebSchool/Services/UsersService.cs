@@ -54,7 +54,7 @@ namespace WebSchool.Services
             var filteredUsers = new List<string>();
             foreach (var user in users)
             {
-                if (this.context.UserClasses.Any(x => x.UserId == user.Id && x.SchoolClassId == schoolClass.Id))
+                if (this.context.UserClasses.Any(x => x.UserId == user.Id))
                 {
                     continue;
                 }

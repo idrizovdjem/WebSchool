@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebSchool.Data.Models
 {
@@ -17,11 +16,5 @@ namespace WebSchool.Data.Models
         public string SchoolClassId { get; set; }
 
         public virtual SchoolClass SchoolClass { get; set; }
-
-        public bool IsActive { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
     }
 }
