@@ -53,5 +53,13 @@ namespace WebSchool.Areas.Admin.Controllers
             var classes = this.classesService.GetClasses(schoolId);
             return Json(classes);
         }
+
+        public async Task<IActionResult> Information(string signature)
+        {
+            var user = await this.usersService.GetUser(this.User);
+            var schoolId = this.schoolService.GetSchoolIdByUser(user);
+            var schoolClassModel = this.classesService.GetClassInformation(signature, schoolId);
+            return View(schoolClassModel);
+        }
     }
 }

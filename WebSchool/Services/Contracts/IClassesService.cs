@@ -11,5 +11,7 @@ namespace WebSchool.Services.Contracts
         Task CreateClass(string signature, string schoolId);
 
         ICollection<ClassViewModel> GetClasses(string schoolId);
+
+        SchoolClassViewModel GetClassInformation(string signature, string schoolId);
     }
 }

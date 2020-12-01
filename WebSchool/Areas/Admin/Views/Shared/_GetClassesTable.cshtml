@@ -25,7 +25,7 @@
             table.innerHTML = "";
             let counter = 1;
             for (let i = 0; i < data.length; i++) {
-                table.innerHTML += `<tr><td>` + (counter++) + `</td><td>` + data[i].signature + `</td><td>` + data[i].createdOn + `</td><td><button class='btn btn-primary'>Edit</button></td></tr>`;
+                table.innerHTML += `<tr><td>` + (counter++) + `</td><td>` + data[i].signature + `</td><td>` + data[i].createdOn + `</td><td><a href='/Admin/Classes/Information?signature=` + data[i].signature + `' class='btn btn-primary text-white'>Edit</a></td></tr>`;
             }
         }
     };
