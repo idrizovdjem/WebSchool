@@ -24,7 +24,7 @@
                         <td scope="col">@(counter++)</td>
                         <td scope="col">@teacher.FirstName</td>
                         <td scope="col">@teacher.LastName</td>
-                        <td scope="col"><a asp-area="" asp-controller="Users" asp-action="AssignClass" asp-route-id="@teacher.Id" class="btn btn-primary w-50 text-white">Assign</a></td>
+                        <td scope="col"><a asp-area="Admin" asp-controller="Classes" asp-action="AssignToClass" asp-route-id="@teacher.Id" class="btn btn-primary w-50 text-white">Edit</a></td>
                     </tr>
                 }
             </tbody>

@@ -91,6 +91,22 @@ namespace WebSchool.Services
             return schoolClass;
         }
 
+        public ICollection<TeacherClassViewModel> GetUserClasses(string userId)
+        {
+            var userClasses = this.context.UserClasses
+                .Where(x => x.UserId == userId)
+                .Select(x => x.SchoolClassId)
+                .ToList();
+            return this.context.SchoolClasses
+                .Where(x => userClasses.Contains(x.Id))
+                .Select(x => new TeacherClassViewModel()
+                {
+                    Id = x.Id,
+                    Signature = x.Signature,
+                })
+                .ToList();
+        }
+
         public bool IsClassSignatureAvailable(string signature, string schoolId)
         {
             return !this.context.SchoolClasses.Any(x => x.Signature == signature && x.SchoolId == schoolId);
@@ -103,6 +119,20 @@ namespace WebSchool.Services
 
             var userClass = this.context.UserClasses
                 .FirstOrDefault(x => x.SchoolClassId == schoolClass.Id && x.User.Email == email);
+
+            this.context.UserClasses.Remove(userClass);
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task RemoveClassFromUser(string classId, string userId)
+        {
+            var userClass = this.context.UserClasses
+                .FirstOrDefault(x => x.UserId == userId && x.SchoolClassId == classId);
+
+            if (userClass == null)
+            {
+                return;
+            }
 
             this.context.UserClasses.Remove(userClass);
             await this.context.SaveChangesAsync();

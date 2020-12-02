@@ -13,12 +13,14 @@ namespace WebSchool.Areas.Admin.Controllers
         private readonly IUsersService usersService;
         private readonly IClassesService classesService;
         private readonly ISchoolService schoolService;
+        private readonly ITeacherService teacherService;
 
-        public ClassesController(IUsersService usersService, IClassesService classesService, ISchoolService schoolService)
+        public ClassesController(IUsersService usersService, IClassesService classesService, ISchoolService schoolService, ITeacherService teacherService)
         {
             this.usersService = usersService;
             this.classesService = classesService;
             this.schoolService = schoolService;
+            this.teacherService = teacherService;
         }
 
         public IActionResult Index()
@@ -84,6 +86,18 @@ namespace WebSchool.Areas.Admin.Controllers
             var schoolId = await this.schoolService.GetSchoolId(this.User);
             await this.classesService.Remove(signature, email, schoolId);
             return Redirect($"/Admin/Classes/Information?signature={signature}");
+        }
+
+        public IActionResult AssignToClass(string id)
+        {
+            var teacher = this.teacherService.GetTeacher(id);
+            return View(teacher);
+        }
+
+        public async Task<IActionResult> RemoveClass(string classId, string teacherId)
+        {
+            await this.classesService.RemoveClassFromUser(classId, teacherId);
+            return Redirect("/Admin/Administration/Teachers");
         }
     }
 }

@@ -40,6 +40,11 @@ namespace WebSchool.Services
                 .FirstOrDefault();
         }
 
+        public ApplicationUser GetUserById(string id)
+        {
+            return this.context.Users.FirstOrDefault(x => x.Id == id);
+        }
+
         public async Task UpdateUser(UsersViewModel user)
         {
             var oldUser = this.context.Users

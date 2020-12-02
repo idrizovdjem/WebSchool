@@ -17,5 +17,9 @@ namespace WebSchool.Services.Contracts
         Task AddStudentsToClass(string signature, List<string> emails, string schoolId);
 
         Task Remove(string signature, string email, string schoolId);
+
+        ICollection<TeacherClassViewModel> GetUserClasses(string userId);
+
+        Task RemoveClassFromUser(string classId, string userId);
     }
 }

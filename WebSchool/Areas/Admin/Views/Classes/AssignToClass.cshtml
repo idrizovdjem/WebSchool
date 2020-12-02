@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "_Layout";
+    int counter = 1;
+}
+
+@model WebSchool.Models.User.TeacherViewModel
+
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <form>
+            <input type="hidden" value="@Model.Id" name="id" />
+            <div class="form-group">
+                <label asp-for="FirstName">Firstname</label>
+                <input asp-for="FirstName" disabled class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName">Lastname</label>
+                <input asp-for="LastName" disabled class="form-control" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-10 offset-1">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Signature</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody id="linksTable">
+                @foreach (var classes in Model.Classes)
+                {
+                    <tr>
+                        <td scope="col">@(counter++)</td>
+                        <td scope="col">@classes.Signature</td>
+                        <td scope="col"><a asp-area="Admin" asp-controller="Classes" asp-action="RemoveClass" asp-route-classId="@classes.Id" asp-route-teacherId="@Model.Id" class="btn btn-primary w-50 text-white">Remove</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

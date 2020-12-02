@@ -16,15 +16,17 @@ namespace WebSchool.Areas.Admin.Controllers
         private readonly ISchoolService schoolService;
         private readonly IEmailsService emailsService;
         private readonly IUsersService usersService;
+        private readonly ITeacherService teacherService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public AdministrationController(ILinksService linksService, UserManager<ApplicationUser> userManager, ISchoolService schoolService, IEmailsService emailsService, IUsersService usersService)
+        public AdministrationController(ILinksService linksService, UserManager<ApplicationUser> userManager, ISchoolService schoolService, IEmailsService emailsService, IUsersService usersService, ITeacherService teacherService)
         {
             this.linksService = linksService;
             this.userManager = userManager;
             this.schoolService = schoolService;
             this.emailsService = emailsService;
             this.usersService = usersService;
+            this.teacherService = teacherService;
         }
 
         public IActionResult Panel()
@@ -32,6 +34,7 @@ namespace WebSchool.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> GenerateLinks(GenerateLinksInputModel input)
         {
             if (!this.ModelState.IsValid)

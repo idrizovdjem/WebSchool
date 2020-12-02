@@ -47,6 +47,7 @@ namespace WebSchool
             services.AddTransient<IClassesService, ClassesService>();
             services.AddTransient<ISubjectService, SubjectService>();
             services.AddTransient<IRolesService, RolesService>();
+            services.AddTransient<ITeacherService, TeacherService>();
 
             services.AddAntiforgery();
         }
