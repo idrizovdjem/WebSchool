@@ -80,5 +80,12 @@ namespace WebSchool.Areas.Admin.Controllers
             var users = this.usersService.GetUsersTable(schoolId);
             return View(users);
         }
+
+        public async Task<IActionResult> Teachers()
+        {
+            var schoolId = await this.schoolService.GetSchoolId(this.User);
+            var teachers = this.usersService.GetTeachers(schoolId);
+            return View(teachers);
+        }
     }
 }
