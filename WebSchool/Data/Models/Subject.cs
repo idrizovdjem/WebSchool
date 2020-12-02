@@ -20,6 +20,9 @@ namespace WebSchool.Data.Models
         [MaxLength(150)]
         public string Title { get; set; }
 
+        [Required]
+        public string SchoolId { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
