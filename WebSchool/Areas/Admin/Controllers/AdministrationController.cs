@@ -15,14 +15,16 @@ namespace WebSchool.Areas.Admin.Controllers
         private readonly ILinksService linksService;
         private readonly ISchoolService schoolService;
         private readonly IEmailsService emailsService;
+        private readonly IUsersService usersService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public AdministrationController(ILinksService linksService, UserManager<ApplicationUser> userManager, ISchoolService schoolService, IEmailsService emailsService)
+        public AdministrationController(ILinksService linksService, UserManager<ApplicationUser> userManager, ISchoolService schoolService, IEmailsService emailsService, IUsersService usersService)
         {
             this.linksService = linksService;
             this.userManager = userManager;
             this.schoolService = schoolService;
             this.emailsService = emailsService;
+            this.usersService = usersService;
         }
 
         public IActionResult Panel()
@@ -70,6 +72,13 @@ namespace WebSchool.Areas.Admin.Controllers
         {
             await this.linksService.Delete(id);
             return RedirectToAction("Panel");
+        }
+
+        public async Task<IActionResult> Users()
+        {
+            var schoolId = await this.schoolService.GetSchoolId(this.User);
+            var users = this.usersService.GetUsersTable(schoolId);
+            return View(users);
         }
     }
 }

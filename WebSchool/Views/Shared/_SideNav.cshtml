@@ -7,8 +7,7 @@
         <a asp-area="Admin" asp-controller="Administration" asp-action="Panel">Administration</a>
         <a asp-area="Admin" asp-controller="Classes" asp-action="Index">Classes</a>
         <a asp-area="Admin" asp-controller="Subject" asp-action="Index">Subjects</a>
-        <a href="#">Users</a>
-        <a href="#">Results</a>
+        <a asp-area="Admin" asp-controller="Administration" asp-action="Users">Users</a>
     }
     else if (this.User.IsInRole("Teacher"))
     {

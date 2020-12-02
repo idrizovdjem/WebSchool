@@ -1,4 +1,5 @@
 ﻿using WebSchool.Data.Models;
+using WebSchool.Models.User;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using System.Collections.Generic;
@@ -19,5 +20,7 @@ namespace WebSchool.Services.Contracts
         List<string> GetUserWithEmailContains(string email, string signature, string schoolId);
 
         ApplicationUser GetUserByEmail(string email);
+
+        ICollection<UsersViewModel> GetUsersTable(string schoolId);
     }
 }

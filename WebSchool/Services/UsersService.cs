@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using WebSchool.Data;
+using WebSchool.Models.User;
 using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using System.Security.Claims;
@@ -14,12 +15,14 @@ namespace WebSchool.Services
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ApplicationDbContext context;
+        private readonly IRolesService rolesService;
 
-        public UsersService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
+        public UsersService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context, IRolesService rolesService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.context = context;
+            this.rolesService = rolesService;
         }
 
         public async Task<IdentityResult> AddUserToRole(ApplicationUser user, string roleName)
@@ -40,6 +43,22 @@ namespace WebSchool.Services
         public ApplicationUser GetUserByEmail(string email)
         {
             return this.context.Users.FirstOrDefault(x => x.Email == email);
+        }
+
+        public ICollection<UsersViewModel> GetUsersTable(string schoolId)
+        {
+            return this.context.Users
+                .Where(x => x.SchoolId == schoolId)
+                .Select(x => new UsersViewModel()
+                {
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Email = x.Email,
+                    Role = this.rolesService.GetUserRole(x.Id)
+                })
+                .ToList()
+                .Where(x => x.Role != "Admin")
+                .ToList();
         }
 
         public List<string> GetUserWithEmailContains(string email, string signature, string schoolId)
