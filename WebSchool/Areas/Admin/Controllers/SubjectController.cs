@@ -43,5 +43,18 @@ namespace WebSchool.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> GetSubjects()
+        {
+            var schoolId = await this.schoolService.GetSchoolId(this.User);
+            var subjects = this.subjectService.GetSubjects(schoolId);
+            return Json(subjects);
+        }
+
+        public async Task<IActionResult> Remove(string id)
+        {
+            await this.subjectService.Remove(id);
+            return RedirectToAction("Index");
+        }
     }
 }
