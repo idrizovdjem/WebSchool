@@ -110,5 +110,29 @@ namespace WebSchool.Services
             var result = this.signInManager.PasswordSignInAsync(user, password, false, false);
             return result.Result.Succeeded;
         }
+
+        public async Task UpdateUser(UsersViewModel user)
+        {
+            var oldUser = this.context.Users
+                .FirstOrDefault(x => x.Id == user.Id);
+            if (oldUser == null)
+            {
+                return;
+            }
+
+            oldUser.FirstName = user.FirstName;
+            oldUser.LastName = user.LastName;
+            oldUser.Email = user.Email;
+
+            var oldRole = await this.userManager.GetRolesAsync(oldUser);
+            if (oldRole.First() != user.Role)
+            {
+                await this.userManager.RemoveFromRoleAsync(oldUser, oldRole.First());
+                await this.AddUserToRole(oldUser, user.Role);
+            }
+
+            this.context.Users.Update(oldUser);
+            await this.context.SaveChangesAsync();
+        }
     }
 }

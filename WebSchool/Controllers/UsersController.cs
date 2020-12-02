@@ -150,5 +150,20 @@ namespace WebSchool.Controllers
             }
             return View(user);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> EditUser(UsersViewModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return View();
+            }
+
+            await this.usersService.UpdateUser(input);
+
+            return Redirect("/Admin/Administration/Users");
+        }
     }
 }

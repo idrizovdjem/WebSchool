@@ -24,5 +24,7 @@ namespace WebSchool.Services.Contracts
         ICollection<UsersViewModel> GetUsersTable(string schoolId);
 
         UsersViewModel GetUserEdit(string id);
+
+        Task UpdateUser(UsersViewModel user);
     }
 }
