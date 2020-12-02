@@ -65,5 +65,11 @@ namespace WebSchool.Areas.Admin.Controllers
             var links = this.linksService.GetGeneratedLinks(user.Email);
             return Json(links);
         }
+
+        public async Task<IActionResult> DeleteLink(string id)
+        {
+            await this.linksService.Delete(id);
+            return RedirectToAction("Panel");
+        }
     }
 }

@@ -18,6 +18,20 @@ namespace WebSchool.Services
             this.context = context;
         }
 
+        public async Task Delete(string id)
+        {
+            var link = this.context.RegistrationLinks
+                .FirstOrDefault(x => x.Id == id);
+
+            if (link == null)
+            {
+                return;
+            }
+
+            this.context.RegistrationLinks.Remove(link);
+            await this.context.SaveChangesAsync();
+        }
+
         public async Task<RegistrationLink> GenerateAdminLink(string email)
         {
             var link = new RegistrationLink()
@@ -63,8 +77,10 @@ namespace WebSchool.Services
                 .Where(x => x.From == adminId)
                 .Select(x => new RegistrationLinkViewModel()
                 {
+                    Id = x.Id,
                     Email = x.To,
                     CreatedOn = x.CreatedOn,
+                    Role = x.RoleName,
                     IsUsed = x.IsUsed == true ? "Yes" : "No"
                 })
                 .OrderByDescending(x => x.CreatedOn)

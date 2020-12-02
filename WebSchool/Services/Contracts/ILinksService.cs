@@ -18,5 +18,7 @@ namespace WebSchool.Services.Contracts
         bool IsRoleValid(string role);
 
         ICollection<RegistrationLinkViewModel> GetGeneratedLinks(string adminId);
+
+        Task Delete(string id);
     }
 }
