@@ -65,6 +65,27 @@ namespace WebSchool.Services
                 .ToList();
         }
 
+        public ICollection<TeacherClassViewModel> GetClassesWithoutTeacher(string teacherId, string schoolId)
+        {
+            var teacherClasses = this.context.UserClasses
+                .Where(x => x.UserId == teacherId)
+                .Select(x => x.SchoolClassId)
+                .ToList();
+
+            var schoolClasses = this.context.SchoolClasses
+                .Where(x => x.SchoolId == schoolId)
+                .Select(x => new TeacherClassViewModel()
+                {
+                    Id = x.Id,
+                    Signature = x.Signature
+                })
+                .ToList();
+
+            return schoolClasses
+                .Where(x => !teacherClasses.Contains(x.Id))
+                .ToList();
+        }
+
         public SchoolClassViewModel GetClassInformation(string signature, string schoolId)
         {
             var schoolClass = this.context.SchoolClasses
@@ -91,10 +112,10 @@ namespace WebSchool.Services
             return schoolClass;
         }
 
-        public ICollection<TeacherClassViewModel> GetUserClasses(string userId)
+        public ICollection<TeacherClassViewModel> GetTeacherAssignedClasses(string teacherId)
         {
             var userClasses = this.context.UserClasses
-                .Where(x => x.UserId == userId)
+                .Where(x => x.UserId == teacherId)
                 .Select(x => x.SchoolClassId)
                 .ToList();
             return this.context.SchoolClasses

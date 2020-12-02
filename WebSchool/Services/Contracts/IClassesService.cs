@@ -18,8 +18,10 @@ namespace WebSchool.Services.Contracts
 
         Task Remove(string signature, string email, string schoolId);
 
-        ICollection<TeacherClassViewModel> GetUserClasses(string userId);
-
         Task RemoveClassFromUser(string classId, string userId);
+
+        ICollection<TeacherClassViewModel> GetTeacherAssignedClasses(string teacherId);
+
+        ICollection<TeacherClassViewModel> GetClassesWithoutTeacher(string teacherId, string schoolId);
     }
 }

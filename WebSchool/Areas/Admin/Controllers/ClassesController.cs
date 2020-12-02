@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using WebSchool.Models.Classes;
+using System.Linq;
 
 namespace WebSchool.Areas.Admin.Controllers
 {
@@ -10,14 +12,12 @@ namespace WebSchool.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class ClassesController : Controller
     {
-        private readonly IUsersService usersService;
         private readonly IClassesService classesService;
         private readonly ISchoolService schoolService;
         private readonly ITeacherService teacherService;
 
-        public ClassesController(IUsersService usersService, IClassesService classesService, ISchoolService schoolService, ITeacherService teacherService)
+        public ClassesController(IClassesService classesService, ISchoolService schoolService, ITeacherService teacherService)
         {
-            this.usersService = usersService;
             this.classesService = classesService;
             this.schoolService = schoolService;
             this.teacherService = teacherService;
@@ -98,6 +98,14 @@ namespace WebSchool.Areas.Admin.Controllers
         {
             await this.classesService.RemoveClassFromUser(classId, teacherId);
             return Redirect("/Admin/Administration/Teachers");
+        }
+
+        public async Task<IActionResult> GetTeacherClasses(string teacherId)
+        {
+            var schoolId = await this.schoolService.GetSchoolId(this.User);
+            var classes = this.classesService.GetClassesWithoutTeacher(teacherId, schoolId);
+
+            return Json(classes);
         }
     }
 }

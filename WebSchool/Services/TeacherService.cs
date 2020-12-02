@@ -25,7 +25,7 @@ namespace WebSchool.Services
                     Id = x.Id,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
-                    Classes = this.classesService.GetUserClasses(x.Id)
+                    Classes = this.classesService.GetTeacherAssignedClasses(x.Id)
                 })
                 .FirstOrDefault();
         }
