@@ -135,8 +135,7 @@ namespace WebSchool.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetUser(string email, string signature)
         {
-            var user = await this.usersService.GetUser(this.User);
-            var schoolId = this.schoolService.GetSchoolIdByUser(user);
+            var schoolId = await this.schoolService.GetSchoolId(this.User);
             var userEmails = this.usersService.GetUserWithEmailContains(email, signature, schoolId);
             return Json(userEmails);
         }

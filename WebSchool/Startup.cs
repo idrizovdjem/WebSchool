@@ -45,6 +45,7 @@ namespace WebSchool
             services.AddTransient<IPostsService, PostsService>();
             services.AddTransient<ICommentsService, CommentsService>();
             services.AddTransient<IClassesService, ClassesService>();
+            services.AddTransient<ISubjectService, SubjectService>();
 
             services.AddAntiforgery();
         }

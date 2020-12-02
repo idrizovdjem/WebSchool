@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-3 text-center">
+        <h3>Create subject</h3>
+        <form method="post" asp-area="Admin" asp-controller="Subject" asp-action="CreateSubject">
+            <div class="form-group mt-4">
+                <input required placeholder="Subject name" class="form-control" name="subject" />
+            </div>
+            <button class="btn btn-primary w-100">Create Subject</button>
+        </form>
+    </div>
+</div>

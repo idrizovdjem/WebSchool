@@ -49,7 +49,7 @@ namespace WebSchool.Areas.Admin.Controllers
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
-            var school = this.schoolService.GetSchoolIdByUser(user);
+            var school = await this.schoolService.GetSchoolId(this.User);
             var links = await this.linksService.GenerateLinks(input.Role, user.Email, school, emails);
             foreach (var link in links)
             {

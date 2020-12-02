@@ -1,5 +1,6 @@
 ﻿using WebSchool.Data.Models;
 using System.Threading.Tasks;
+using System.Security.Claims;
 using WebSchool.Models.School;
 
 namespace WebSchool.Services.Contracts
@@ -14,6 +15,6 @@ namespace WebSchool.Services.Contracts
 
         SchoolViewModel GetSchool(ApplicationUser user, int page);
 
-        string GetSchoolIdByUser(ApplicationUser user);
+        Task<string> GetSchoolId(ClaimsPrincipal applicationUser);
     }
 }

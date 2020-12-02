@@ -4,6 +4,7 @@ using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using WebSchool.Models.School;
 using WebSchool.Services.Contracts;
+using System.Security.Claims;
 
 namespace WebSchool.Services
 {
@@ -11,11 +12,13 @@ namespace WebSchool.Services
     {
         private readonly ApplicationDbContext context;
         private readonly IPostsService postsService;
+        private readonly IUsersService usersService;
 
-        public SchoolService(ApplicationDbContext context, IPostsService postsService)
+        public SchoolService(ApplicationDbContext context, IPostsService postsService, IUsersService usersService)
         {
             this.context = context;
             this.postsService = postsService;
+            this.usersService = usersService;
         }
 
         public async Task AssignUserToSchool(ApplicationUser user, string schoolId)
@@ -48,8 +51,9 @@ namespace WebSchool.Services
             return schoolViewModel;
         }
 
-        public string GetSchoolIdByUser(ApplicationUser user)
+        public async Task<string> GetSchoolId(ClaimsPrincipal applicationUser)
         {
+            var user = await this.usersService.GetUser(applicationUser);
             return user.SchoolId;
         }
 

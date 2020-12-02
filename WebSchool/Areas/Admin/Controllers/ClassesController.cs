@@ -35,8 +35,7 @@ namespace WebSchool.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            var user = await this.usersService.GetUser(this.User);
-            var schoolId = this.schoolService.GetSchoolIdByUser(user);
+            var schoolId = await this.schoolService.GetSchoolId(this.User);
             if (!this.classesService.IsClassSignatureAvailable(signature, schoolId))
             {
                 return RedirectToAction("Index");
@@ -49,16 +48,14 @@ namespace WebSchool.Areas.Admin.Controllers
 
         public async Task<IActionResult> GetClasses()
         {
-            var user = await this.usersService.GetUser(this.User);
-            var schoolId = this.schoolService.GetSchoolIdByUser(user);
+            var schoolId = await this.schoolService.GetSchoolId(this.User);
             var classes = this.classesService.GetClasses(schoolId);
             return Json(classes);
         }
 
         public async Task<IActionResult> Information(string signature)
         {
-            var user = await this.usersService.GetUser(this.User);
-            var schoolId = this.schoolService.GetSchoolIdByUser(user);
+            var schoolId = await this.schoolService.GetSchoolId(this.User);
             var schoolClassModel = this.classesService.GetClassInformation(signature, schoolId);
             return View(schoolClassModel);
         }
@@ -76,16 +73,15 @@ namespace WebSchool.Areas.Admin.Controllers
             {
                 return Redirect("/Admin/Classes/Information?signature=" + signature);
             }
-            var user = await this.usersService.GetUser(this.User);
-            var schoolId = this.schoolService.GetSchoolIdByUser(user);
+
+            var schoolId = await this.schoolService.GetSchoolId(this.User);
             await this.classesService.AddStudentsToClass(signature, emails, schoolId);
             return Redirect("/Admin/Classes/Information?signature=" + signature);
         }
 
         public async Task<IActionResult> Remove(string signature, string email)
         {
-            var user = await this.usersService.GetUser(this.User);
-            var schoolId = this.schoolService.GetSchoolIdByUser(user);
+            var schoolId = await this.schoolService.GetSchoolId(this.User);
             await this.classesService.Remove(signature, email, schoolId);
             return Redirect($"/Admin/Classes/Information?signature={signature}");
         }
