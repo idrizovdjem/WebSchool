@@ -139,5 +139,16 @@ namespace WebSchool.Controllers
             var userEmails = this.usersService.GetUserWithEmailContains(email, signature, schoolId);
             return Json(userEmails);
         }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult EditUser(string id)
+        {
+            var user = this.usersService.GetUserEdit(id);
+            if (user == null)
+            {
+                return Redirect("/Admin/Administration/Users");
+            }
+            return View(user);
+        }
     }
 }

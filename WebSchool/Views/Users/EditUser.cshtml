@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model WebSchool.Models.User.UsersViewModel
+
+<div class="row">
+    <div class="col-md-6 offset-3 text-center">
+        <h3>Edit user</h3>
+        <form method="post" class="text-left">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <div class="form-group">
+                <label asp-for="FirstName">Firstname</label>
+                <input asp-for="FirstName" required class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName">Lastname</label>
+                <input asp-for="LastName" required class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="email" required class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Role">Role</label>
+                <select class="custom-select" asp-for="Role" name="role">
+                    <option value="Teacher">Teacher</option>
+                    <option value="Student">Student</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary w-100">Edit</button>
+        </form>
+    </div>
+</div>

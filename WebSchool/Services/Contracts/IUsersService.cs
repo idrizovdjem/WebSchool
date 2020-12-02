@@ -22,5 +22,7 @@ namespace WebSchool.Services.Contracts
         ApplicationUser GetUserByEmail(string email);
 
         ICollection<UsersViewModel> GetUsersTable(string schoolId);
+
+        UsersViewModel GetUserEdit(string id);
     }
 }

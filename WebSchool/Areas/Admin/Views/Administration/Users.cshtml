@@ -26,7 +26,7 @@
                         <td scope="col">@user.FirstName</td>
                         <td scope="col">@user.LastName</td>
                         <td scope="col">@user.Role</td>
-                        <td scope="col"><a class="btn btn-primary w-50 text-white">Edit</a></td>
+                        <td scope="col"><a asp-area="" asp-controller="Users" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary w-50 text-white">Edit</a></td>
                     </tr>
                 }
             </tbody>

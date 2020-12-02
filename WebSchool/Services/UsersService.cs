@@ -19,9 +19,9 @@ namespace WebSchool.Services
 
         public UsersService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context, IRolesService rolesService)
         {
+            this.context = context;
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.context = context;
             this.rolesService = rolesService;
         }
 
@@ -45,12 +45,28 @@ namespace WebSchool.Services
             return this.context.Users.FirstOrDefault(x => x.Email == email);
         }
 
+        public UsersViewModel GetUserEdit(string id)
+        {
+            return this.context.Users
+                .Where(x => x.Id == id)
+                .Select(x => new UsersViewModel()
+                {
+                    Id = x.Id,
+                    Email = x.Email,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Role = this.rolesService.GetUserRole(x.Id)
+                })
+                .FirstOrDefault();
+        }
+
         public ICollection<UsersViewModel> GetUsersTable(string schoolId)
         {
             return this.context.Users
                 .Where(x => x.SchoolId == schoolId)
                 .Select(x => new UsersViewModel()
                 {
+                    Id = x.Id,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     Email = x.Email,
