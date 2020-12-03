@@ -17,7 +17,7 @@ namespace WebSchool.Services.Contracts
 
         Task<ApplicationUser> GetUser(ClaimsPrincipal user);
 
-        List<string> GetUserWithEmailContains(string email, string signature, string schoolId);
+        List<string> GetStudentsWithEmailContains(string email, string signature, string schoolId);
 
         ApplicationUser GetUserByEmail(string email);
 

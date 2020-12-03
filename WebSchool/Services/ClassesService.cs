@@ -14,11 +14,13 @@ namespace WebSchool.Services
     {
         private readonly ApplicationDbContext context;
         private readonly IUsersService usersService;
+        private readonly IRolesService rolesService;
 
-        public ClassesService(ApplicationDbContext context, IUsersService usersService)
+        public ClassesService(ApplicationDbContext context, IUsersService usersService, IRolesService rolesService)
         {
             this.context = context;
             this.usersService = usersService;
+            this.rolesService = rolesService;
         }
 
         public async Task AddStudentsToClass(string signature, List<string> emails, string schoolId)
@@ -126,10 +128,13 @@ namespace WebSchool.Services
                 .Where(x => x.SchoolClassId == schoolClass.Id)
                 .Select(x => new StudentClassViewModel()
                 {
+                    Id = x.User.Id,
                     FirstName = x.User.FirstName,
                     LastName = x.User.LastName,
                     Email = x.User.Email
                 })
+                .ToList()
+                .Where(x => this.rolesService.GetUserRole(x.Id) == "Student")
                 .ToList();
 
             schoolClass.Students = students;

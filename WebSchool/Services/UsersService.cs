@@ -16,13 +16,20 @@ namespace WebSchool.Services
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ApplicationDbContext context;
         private readonly IRolesService rolesService;
+        private readonly ILinksService linksService;
 
-        public UsersService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context, IRolesService rolesService)
+        public UsersService(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            ApplicationDbContext context,
+            IRolesService rolesService,
+            ILinksService linksService)
         {
             this.context = context;
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.rolesService = rolesService;
+            this.linksService = linksService;
         }
 
         public UsersViewModel GetUserEdit(string id)
@@ -61,6 +68,7 @@ namespace WebSchool.Services
             var oldRole = await this.userManager.GetRolesAsync(oldUser);
             if (oldRole.First() != user.Role)
             {
+                await this.linksService.UpdateLinkRole(oldUser.Email, user.Role);
                 await this.userManager.RemoveFromRoleAsync(oldUser, oldRole.First());
                 await this.AddUserToRole(oldUser, user.Role);
             }
@@ -134,7 +142,7 @@ namespace WebSchool.Services
             return await this.userManager.CreateAsync(user, password);
         }
 
-        public List<string> GetUserWithEmailContains(string email, string signature, string schoolId)
+        public List<string> GetStudentsWithEmailContains(string email, string signature, string schoolId)
         {
             var users = this.context.Users
                 .Where(x => x.SchoolId == schoolId && x.Email.Contains(email))
@@ -147,6 +155,11 @@ namespace WebSchool.Services
             foreach (var user in users)
             {
                 if (this.context.UserClasses.Any(x => x.UserId == user.Id))
+                {
+                    continue;
+                }
+
+                if (this.rolesService.GetUserRole(user.Id) != "Student")
                 {
                     continue;
                 }

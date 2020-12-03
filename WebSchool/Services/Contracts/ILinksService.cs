@@ -20,5 +20,7 @@ namespace WebSchool.Services.Contracts
         ICollection<RegistrationLinkViewModel> GetGeneratedLinks(string adminId);
 
         Task Delete(string id);
+
+        Task UpdateLinkRole(string userEmail, string role);
     }
 }

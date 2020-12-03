@@ -99,6 +99,16 @@ namespace WebSchool.Services
                 .Any(x => x.Name == role);
         }
 
+        public async Task UpdateLinkRole(string userEmail, string role)
+        {
+            var link = this.context.RegistrationLinks
+                .FirstOrDefault(x => x.To == userEmail);
+
+            link.RoleName = role;
+            this.context.RegistrationLinks.Update(link);
+            await this.context.SaveChangesAsync();
+        }
+
         public async Task UseLink(string registrationLinkId)
         {
             var link = GetLink(registrationLinkId);

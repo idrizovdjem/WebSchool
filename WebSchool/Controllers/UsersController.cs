@@ -133,10 +133,10 @@ namespace WebSchool.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetUser(string email, string signature)
+        public async Task<IActionResult> GetStudentsWithEmail(string email, string signature)
         {
             var schoolId = await this.schoolService.GetSchoolId(this.User);
-            var userEmails = this.usersService.GetUserWithEmailContains(email, signature, schoolId);
+            var userEmails = this.usersService.GetStudentsWithEmailContains(email, signature, schoolId);
             return Json(userEmails);
         }
 
