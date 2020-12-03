@@ -7,7 +7,7 @@
 
 <div class="row">
     <div class="col-md-6 offset-3">
-        <form>
+        <form method="post">
             <input type="hidden" value="@Model.Id" name="id" />
             <div class="form-group">
                 <label asp-for="FirstName">Firstname</label>
@@ -18,9 +18,10 @@
                 <input asp-for="LastName" disabled class="form-control" />
             </div>
             <div class="form-group">
-                <select class="custom-select" name="role" id="classesSelect">
+                <select class="custom-select" name="signature" id="classesSelect">
                 </select>
             </div>
+            <button class="btn btn-primary w-100">Assign</button>
         </form>
     </div>
 </div>

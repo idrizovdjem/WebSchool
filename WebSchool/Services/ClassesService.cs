@@ -39,6 +39,31 @@ namespace WebSchool.Services
             await this.context.SaveChangesAsync();
         }
 
+        public async Task AssignUserToClass(string userId, string signature, string schoolId)
+        {
+            var schoolClass = this.context.SchoolClasses
+                .FirstOrDefault(x => x.Signature == signature && x.SchoolId == schoolId);
+
+            if (schoolClass == null)
+            {
+                return;
+            }
+
+            var userClass = new UserClass()
+            {
+                SchoolClassId = schoolClass.Id,
+                UserId = userId
+            };
+
+            await this.context.UserClasses.AddAsync(userClass);
+            await this.context.SaveChangesAsync();
+        }
+
+        public bool ClassExists(string signature, string schoolId)
+        {
+            return this.context.SchoolClasses.Any(x => x.SchoolId == schoolId && x.Signature == signature);
+        }
+
         public async Task CreateClass(string signature, string schoolId)
         {
             var schoolClass = new SchoolClass()

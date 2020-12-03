@@ -5,6 +5,7 @@ using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using WebSchool.Models.Classes;
 using System.Linq;
+using WebSchool.Models.User;
 
 namespace WebSchool.Areas.Admin.Controllers
 {
@@ -92,6 +93,26 @@ namespace WebSchool.Areas.Admin.Controllers
         {
             var teacher = this.teacherService.GetTeacher(id);
             return View(teacher);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignToClass(AssignClassToTeacherInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return Redirect("/Admin/Administration/Teachers");
+            }
+
+            var schoolId = await this.schoolService.GetSchoolId(this.User);
+            if (!this.classesService.ClassExists(input.Signature, schoolId))
+            {
+                return Redirect("/Admin/Administration/Teachers");
+            }
+
+            await this.classesService.AssignUserToClass(input.Id, input.Signature, schoolId);
+
+            return Redirect("/Admin/Administration/Teachers");
         }
 
         public async Task<IActionResult> RemoveClass(string classId, string teacherId)

@@ -23,5 +23,9 @@ namespace WebSchool.Services.Contracts
         ICollection<TeacherClassViewModel> GetTeacherAssignedClasses(string teacherId);
 
         ICollection<TeacherClassViewModel> GetClassesWithoutTeacher(string teacherId, string schoolId);
+
+        bool ClassExists(string signature, string schoolId);
+
+        Task AssignUserToClass(string userId, string signature, string schoolId);
     }
 }
