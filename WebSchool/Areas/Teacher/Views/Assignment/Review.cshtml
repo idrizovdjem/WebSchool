@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model WebSchool.Models.Assignment.AssignmentResultViewModel
+
+<div class="row">
+    <div class="col-md-6 offset-3 text-center">
+        <form method="post" asp-area="Teacher" asp-controller="Assignment" asp-action="Review">
+            <input type="hidden" value="@Model.AssignmentId" name="AssignmentId" />
+            <input type="hidden" value="@Model.StudentId" name="studentId" />
+
+            <p>@Model.AnswerContent</p>
+            <div class="form-group">
+                <input type="number" name="points" required placeholder="Points" class="form-control" />
+            </div>
+            <button class="btn btn-primary w-100">Review</button>
+        </form>
+    </div>
+</div>

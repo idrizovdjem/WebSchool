@@ -36,15 +36,15 @@
                                 }
                                 else if (student.Stage == 2)
                                 {
-                                    <a class="btn btn-warning w-75 text-white">Review</a>
+                                    <a asp-area="Teacher" asp-controller="Assignment" asp-action="Review" asp-route-StudentId="@student.StudentId" asp-route-AssignmentId="@student.AssignmentId" class="btn btn-warning w-75 text-white">Review</a>
                                 }
                                 else if (student.Stage == 3)
                                 {
-                                    <button class="btn btn-success w-75">Rated</button>
+                                    <button class="btn btn-success w-75" disabled>Rated</button>
                                 }
                                 else if (student.Stage == 4)
                                 {
-                                    <button class="btn btn-danger w-75">Late</button>
+                                    <button class="btn btn-danger w-75" disabled>Late</button>
                                 }
                             }
                         </td>

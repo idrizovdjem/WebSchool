@@ -20,5 +20,9 @@ namespace WebSchool.Services.Contracts
         SolveAssignmentViewModel GetAssignment(string id);
 
         Task Solve(string userId, string assignmentId, string answerContent);
+
+        AssignmentResultViewModel GetAssignmentResult(string studentId, string assignmentId);
+
+        Task Review(AssignmentReviewInputModel input);
     }
 }

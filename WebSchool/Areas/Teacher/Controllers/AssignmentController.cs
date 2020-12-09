@@ -65,5 +65,29 @@ namespace WebSchool.Areas.Teacher.Controllers
 
             return View(studentResults);
         }
+
+        public IActionResult Review(string studentId, string assignmentId)
+        {
+            var assignmentResult = this.assignmentService.GetAssignmentResult(studentId, assignmentId);
+            if (assignmentResult == null)
+            {
+                return RedirectToAction("Results");
+            }
+
+            return View(assignmentResult);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Review(AssignmentReviewInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return RedirectToAction("Results");
+            }
+
+            await this.assignmentService.Review(input);
+
+            return RedirectToAction("Results");
+        }
     }
 }

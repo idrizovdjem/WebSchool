@@ -14,6 +14,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Assignment name</th>
                     <th scope="col">Due Date</th>
+                    <th scope="col">Points</th>
                     <th scope="col">Solve</th>
                 </tr>
             </thead>
@@ -24,6 +25,7 @@
                         <td>@(counter++)</td>
                         <td>@assignments.AssignmentName</td>
                         <td>@assignments.DueDate</td>
+                        <td>@assignments.Points</td>
                         <td>
                             @{
                                 if (assignments.Stage == 1)
@@ -32,7 +34,7 @@
                                 }
                                 else if (assignments.Stage == 2)
                                 {
-                                    <a class="btn btn-warning w-75 text-white" disabled>For Review</a>
+                                    <button class="btn btn-warning w-75 text-white" disabled>For Review</button>
                                 }
                                 else if (assignments.Stage == 3)
                                 {

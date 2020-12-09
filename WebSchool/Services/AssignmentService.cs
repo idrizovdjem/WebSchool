@@ -86,7 +86,8 @@ namespace WebSchool.Services
                     StudentId = x.StudentId,
                     Points = x.Points,
                     DueDate = x.DueDate,
-                    Stage = x.Stage
+                    Stage = x.Stage,
+                    AssignmentId = x.AssignmentId
                 })
                 .ToList();
 
@@ -108,7 +109,8 @@ namespace WebSchool.Services
                 .Select(x => new StudentAssignmentInputModel()
                 {
                     Id = x.AssignmentId,
-                    Stage = x.Stage
+                    Stage = x.Stage,
+                    Points = x.Points
                 })
                 .ToList();
 
@@ -129,7 +131,8 @@ namespace WebSchool.Services
                     DueDate = assignment.DueDate,
                     Id = assignment.Id,
                     Signature = assignment.Signature,
-                    Stage = assignmentId.Stage
+                    Stage = assignmentId.Stage,
+                    Points = assignmentId.Points
                 };
 
                 assignments.Add(assignmentModel);
@@ -158,6 +161,44 @@ namespace WebSchool.Services
 
             assignmentResult.Content = answerContent;
             assignmentResult.Stage = 2;
+
+            this.context.AssignmentResults.Update(assignmentResult);
+            await this.context.SaveChangesAsync();
+        }
+
+        public AssignmentResultViewModel GetAssignmentResult(string studentId, string assignmentId)
+        {
+            return this.context.AssignmentResults
+                .Where(x => x.StudentId == studentId && x.AssignmentId == assignmentId)
+                .Select(x => new AssignmentResultViewModel()
+                {
+                    AssignmentId = x.AssignmentId,
+                    StudentId = x.StudentId,
+                    AnswerContent = x.Content
+                })
+                .FirstOrDefault();
+        }
+
+        public async Task Review(AssignmentReviewInputModel input)
+        {
+            var assignmentResult = this.context.AssignmentResults
+                .FirstOrDefault(x => x.AssignmentId == input.AssignmentId && x.StudentId == input.StudentId);
+
+            var assignment = this.context.Assignments
+                .FirstOrDefault(x => x.Id == input.AssignmentId);
+
+            if (assignment == null)
+            {
+                return;
+            }
+
+            if (input.Points < 0 || input.Points > assignment.Points)
+            {
+                return;
+            }
+
+            assignmentResult.Points = input.Points;
+            assignmentResult.Stage = 3;
 
             this.context.AssignmentResults.Update(assignmentResult);
             await this.context.SaveChangesAsync();

@@ -6,6 +6,8 @@ namespace WebSchool.Models.User
     {
         public string StudentId { get; set; }
 
+        public string AssignmentId { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
