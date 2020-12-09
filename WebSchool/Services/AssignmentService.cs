@@ -14,13 +14,11 @@ namespace WebSchool.Services
     {
         private readonly ApplicationDbContext context;
         private readonly IClassesService classesService;
-        private readonly IUsersService usersService;
 
-        public AssignmentService(ApplicationDbContext context, IClassesService classesService, IUsersService usersService)
+        public AssignmentService(ApplicationDbContext context, IClassesService classesService)
         {
             this.context = context;
             this.classesService = classesService;
-            this.usersService = usersService;
         }
 
         public async Task CreateAssignment(CreateAssignmentInputModel input, string teacherId, string schoolId)
@@ -53,6 +51,7 @@ namespace WebSchool.Services
                     AssignmentId = assignmentId,
                     DueDate = DateTime.UtcNow,
                     Points = 0,
+                    Content = string.Empty,
                     Stage = 1
                 };
 
@@ -63,7 +62,7 @@ namespace WebSchool.Services
             await this.context.SaveChangesAsync();
         }
 
-        public ICollection<AssignmentInformationViewModel> GetAssignments(string teacherId)
+        public ICollection<AssignmentInformationViewModel> GetTeacherAssignments(string teacherId)
         {
             return this.context.Assignments
                 .Where(x => x.TeacherId == teacherId)
@@ -100,6 +99,68 @@ namespace WebSchool.Services
             }
 
             return students;
+        }
+
+        public ICollection<StudentAssignmentInputModel> GetStudentAssignments(string studentId)
+        {
+            var assignmentIds = this.context.AssignmentResults
+                .Where(x => x.StudentId == studentId)
+                .Select(x => new StudentAssignmentInputModel()
+                {
+                    Id = x.AssignmentId,
+                    Stage = x.Stage
+                })
+                .ToList();
+
+            var assignments = new List<StudentAssignmentInputModel>();
+            foreach (var assignmentId in assignmentIds)
+            {
+                var assignment = this.context.Assignments
+                    .FirstOrDefault(x => x.Id == assignmentId.Id);
+
+                if (assignment == null)
+                {
+                    continue;
+                }
+
+                var assignmentModel = new StudentAssignmentInputModel()
+                {
+                    AssignmentName = assignment.AssignmentTitle,
+                    DueDate = assignment.DueDate,
+                    Id = assignment.Id,
+                    Signature = assignment.Signature,
+                    Stage = assignmentId.Stage
+                };
+
+                assignments.Add(assignmentModel);
+            }
+
+            return assignments;
+        }
+
+        public SolveAssignmentViewModel GetAssignment(string id)
+        {
+            return this.context.Assignments
+                .Where(x => x.Id == id)
+                .Select(x => new SolveAssignmentViewModel()
+                {
+                    Id = x.Id,
+                    AssignmentName = x.AssignmentTitle,
+                    AssignmentContent = x.AssignmentContent
+                })
+                .FirstOrDefault();
+        }
+
+        public async Task Solve(string userId, string assignmentId, string answerContent)
+        {
+            var assignmentResult = this.context.AssignmentResults
+                .FirstOrDefault(x => x.AssignmentId == assignmentId && x.StudentId == userId);
+
+            assignmentResult.Content = answerContent;
+            assignmentResult.Stage = 2;
+
+            this.context.AssignmentResults.Update(assignmentResult);
+            await this.context.SaveChangesAsync();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using WebSchool.Models.User;
 using System.Threading.Tasks;
-using WebSchool.Models.Assignment;
 using System.Collections.Generic;
+using WebSchool.Models.Assignment;
 
 namespace WebSchool.Services.Contracts
 {
@@ -9,10 +9,16 @@ namespace WebSchool.Services.Contracts
     {
         Task CreateAssignment(CreateAssignmentInputModel input, string teacherId, string schoolId);
 
-        ICollection<AssignmentInformationViewModel> GetAssignments(string teacherId);
+        ICollection<AssignmentInformationViewModel> GetTeacherAssignments(string teacherId);
 
         Task GenerateResults(string signature, string schoolId, string assignmentId);
 
         ICollection<StudentResultViewModel> GetResults(string assignmentId);
+
+        ICollection<StudentAssignmentInputModel> GetStudentAssignments(string studentId);
+
+        SolveAssignmentViewModel GetAssignment(string id);
+
+        Task Solve(string userId, string assignmentId, string answerContent);
     }
 }

@@ -54,7 +54,7 @@ namespace WebSchool.Areas.Teacher.Controllers
         public async Task<IActionResult> GetAssignments()
         {
             var user = await this.usersService.GetUser(this.User);
-            var assignments = this.assignmentService.GetAssignments(user.Id);
+            var assignments = this.assignmentService.GetTeacherAssignments(user.Id);
 
             return Json(assignments);
         }
