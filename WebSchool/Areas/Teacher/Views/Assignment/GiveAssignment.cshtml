@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model WebSchool.Models.Assignment.CreateAssignmentInputModel
+
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <form method="post" asp-area="Teacher" asp-controller="Assignment" asp-action="GiveAssignment">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <input class="form-control" placeholder="Assignment Name" asp-for="AssignmentName" required />
+                <span asp-validation-for="AssignmentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select class="custom-select" asp-for="Signature" id="classesSelect">
+                </select>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" rows="5" asp-for="AssignmentContent" placeholder="Assignment content"></textarea>
+                <span asp-validation-for="AssignmentContent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control" asp-for="DueDate" required />
+                <span asp-validation-for="DueDate" class="text-danger"></span>
+            </div>
+            <button class="btn btn-primary w-100">Give Assignment</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const select = document.getElementById('classesSelect');
+        const xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let data = JSON.parse(this.responseText);
+                console.log(data);
+                for (let i = 0; i < data.length; i++) {
+                    select.innerHTML += `<option value='` + data[i].signature + `'>` + data[i].signature + `</option>`;
+                }
+            }
+        }
+
+        xhttp.open("GET", "/Teacher/Classes/GetClasses", true);
+        xhttp.send();
+    </script>
+}
