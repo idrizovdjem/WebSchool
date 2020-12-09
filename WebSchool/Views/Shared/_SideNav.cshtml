@@ -13,7 +13,7 @@
     else if (this.User.IsInRole("Teacher"))
     {
         <a asp-area="Teacher" asp-controller="Assignment" asp-action="GiveAssignment">Give Assignment</a>
-        <a href="#">Results</a>
+        <a asp-area="Teacher" asp-controller="Assignment" asp-action="Results">Results</a>
     }
     else
     {

@@ -1,8 +1,10 @@
-﻿using WebSchool.Data;
+﻿using System.Linq;
+using WebSchool.Data;
 using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using WebSchool.Models.Assignment;
 using WebSchool.Services.Contracts;
+using System.Collections.Generic;
 
 namespace WebSchool.Services
 {
@@ -29,6 +31,21 @@ namespace WebSchool.Services
 
             await this.context.Assignments.AddAsync(assignment);
             await this.context.SaveChangesAsync();
+        }
+
+        public ICollection<AssignmentInformationViewModel> GetAssignments(string teacherId)
+        {
+            return this.context.Assignments
+                .Where(x => x.TeacherId == teacherId)
+                .Select(x => new AssignmentInformationViewModel()
+                {
+                    Id = x.Id,
+                    AssignmentName = x.AssignmentTitle,
+                    Signature = x.Signature,
+                    DueDate = x.DueDate
+                })
+                .OrderByDescending(x => x.DueDate)
+                .ToList();
         }
     }
 }

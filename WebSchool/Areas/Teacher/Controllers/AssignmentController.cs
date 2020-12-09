@@ -11,13 +11,13 @@ namespace WebSchool.Areas.Teacher.Controllers
     [Authorize(Roles = "Teacher")]
     public class AssignmentController : Controller
     {
-        private readonly IAssignmentService assignmentService;
         private readonly IUsersService usersService;
+        private readonly IAssignmentService assignmentService;
 
         public AssignmentController(IAssignmentService assignmentService, IUsersService usersService)
         {
-            this.assignmentService = assignmentService;
             this.usersService = usersService;
+            this.assignmentService = assignmentService;
         }
 
         public IActionResult GiveAssignment()
@@ -26,6 +26,7 @@ namespace WebSchool.Areas.Teacher.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> GiveAssignment(CreateAssignmentInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -48,6 +49,14 @@ namespace WebSchool.Areas.Teacher.Controllers
         public IActionResult Results()
         {
             return View();
+        }
+
+        public async Task<IActionResult> GetAssignments()
+        {
+            var user = await this.usersService.GetUser(this.User);
+            var assignments = this.assignmentService.GetAssignments(user.Id);
+
+            return Json(assignments);
         }
     }
 }
