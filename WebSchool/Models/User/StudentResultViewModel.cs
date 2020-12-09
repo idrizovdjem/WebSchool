@@ -13,5 +13,7 @@ namespace WebSchool.Models.User
         public DateTime DueDate { get; set; }
 
         public int Points { get; set; }
+
+        public byte Stage { get; set; }
     }
 }

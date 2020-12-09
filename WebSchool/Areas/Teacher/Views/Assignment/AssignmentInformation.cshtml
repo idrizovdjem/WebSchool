@@ -16,6 +16,7 @@
                     <th scope="col">Lastname</th>
                     <th scope="col">DueDate</th>
                     <th scope="col">Points</th>
+                    <th scope="col">Stage</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +28,26 @@
                         <td>@student.LastName</td>
                         <td>@student.DueDate</td>
                         <td>@student.Points</td>
+                        <td>
+                            @{
+                                if (student.Stage == 1)
+                                {
+                                    <button class="btn btn-primary w-75" disabled>Not Solved</button>
+                                }
+                                else if (student.Stage == 2)
+                                {
+                                    <a class="btn btn-primary w-75 text-white">Review</a>
+                                }
+                                else if (student.Stage == 3)
+                                {
+                                    <button class="btn btn-success w-75">Rated</button>
+                                }
+                                else if (student.Stage == 4)
+                                {
+                                    <button class="btn btn-danger w-75">Late</button>
+                                }
+                            }
+                        </td>
                     </tr>
                 }
             </tbody>

@@ -22,5 +22,10 @@ namespace WebSchool.Data.Models
         public int Points { get; set; }
 
         public DateTime DueDate { get; set; }
+
+        [Required]
+        public string Content { get; set; }
+
+        public byte Stage { get; set; }
     }
 }

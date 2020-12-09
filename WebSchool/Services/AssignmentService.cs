@@ -52,7 +52,8 @@ namespace WebSchool.Services
                     StudentId = studentId,
                     AssignmentId = assignmentId,
                     DueDate = DateTime.UtcNow,
-                    Points = 0
+                    Points = 0,
+                    Stage = 1
                 };
 
                 firstResults.Add(result);
@@ -85,7 +86,8 @@ namespace WebSchool.Services
                 {
                     StudentId = x.StudentId,
                     Points = x.Points,
-                    DueDate = x.DueDate
+                    DueDate = x.DueDate,
+                    Stage = x.Stage
                 })
                 .ToList();
 
