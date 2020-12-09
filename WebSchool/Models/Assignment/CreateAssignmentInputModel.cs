@@ -17,5 +17,8 @@ namespace WebSchool.Models.Assignment
 
         [Required]
         public DateTime DueDate { get; set; }
+
+        [Range(0, 500)]
+        public int Points { get; set; }
     }
 }

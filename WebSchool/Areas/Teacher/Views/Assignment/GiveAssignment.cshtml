@@ -24,6 +24,10 @@
                 <input type="date" class="form-control" asp-for="DueDate" required />
                 <span asp-validation-for="DueDate" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Points">Max Points</label>
+                <input asp-for="Points" name="points" class="form-control" />
+            </div>
             <button class="btn btn-primary w-100">Give Assignment</button>
         </form>
     </div>

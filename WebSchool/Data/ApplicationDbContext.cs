@@ -31,6 +31,8 @@ namespace WebSchool.Data
 
         public DbSet<RegistrationLink> RegistrationLinks { get; set; }
 
+        public DbSet<Assignment> Assignments { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
