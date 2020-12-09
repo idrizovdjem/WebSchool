@@ -41,7 +41,7 @@ namespace WebSchool.Areas.Teacher.Controllers
             }
 
             var user = await this.usersService.GetUser(this.User);
-            await this.assignmentService.CreateTask(input, user.Id);
+            await this.assignmentService.CreateAssignment(input, user.Id, user.SchoolId);
 
             return RedirectToAction("Results");
         }
@@ -57,6 +57,13 @@ namespace WebSchool.Areas.Teacher.Controllers
             var assignments = this.assignmentService.GetAssignments(user.Id);
 
             return Json(assignments);
+        }
+
+        public IActionResult AssignmentInformation(string assignmentId)
+        {
+            var studentResults = this.assignmentService.GetResults(assignmentId);
+
+            return View(studentResults);
         }
     }
 }

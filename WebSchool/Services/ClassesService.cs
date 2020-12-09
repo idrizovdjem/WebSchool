@@ -142,6 +142,33 @@ namespace WebSchool.Services
             return schoolClass;
         }
 
+        public ICollection<string> GetStudentsFromClass(string signature, string schoolId)
+        {
+            var schoolClass = this.context.SchoolClasses
+                .FirstOrDefault(x => x.SchoolId == schoolId && x.Signature == signature);
+
+            if (schoolClass == null)
+            {
+                return new List<string>();
+            }
+
+            var userIds = this.context.UserClasses
+                .Where(x => x.SchoolClassId == schoolClass.Id)
+                .Select(x => x.UserId)
+                .ToList();
+
+            var students = new List<string>();
+            foreach (var userId in userIds)
+            {
+                if (this.rolesService.GetUserRole(userId) == "Student")
+                {
+                    students.Add(userId);
+                }
+            }
+
+            return students;
+        }
+
         public ICollection<TeacherClassViewModel> GetTeacherAssignedClasses(string teacherId)
         {
             var userClasses = this.context.UserClasses

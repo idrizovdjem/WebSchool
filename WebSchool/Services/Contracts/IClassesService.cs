@@ -27,5 +27,7 @@ namespace WebSchool.Services.Contracts
         bool ClassExists(string signature, string schoolId);
 
         Task AssignUserToClass(string userId, string signature, string schoolId);
+
+        ICollection<string> GetStudentsFromClass(string signature, string schoolId);
     }
 }

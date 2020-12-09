@@ -46,7 +46,7 @@
                         <td>` + data[i].assignmentName + `</td>
                         <td>` + data[i].signature + `</td>
                         <td>` + data[i].dueDate + `</td>
-                        <td><a class="btn btn-primary w-75 text-white">Information</a></td>
+                        <td><a href='/Teacher/Assignment/AssignmentInformation?assignmentId=` + data[i].id + `' class="btn btn-primary w-75 text-white">Information</a></td>
                     </tr>`;
                 }
             }

@@ -33,6 +33,8 @@ namespace WebSchool.Data
 
         public DbSet<Assignment> Assignments { get; set; }
 
+        public DbSet<AssignmentResult> AssignmentResults { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebSchool.Data;
 
-namespace WebSchool.Data.Migrations
+namespace WebSchool.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201202113604_AddSchoolIdToSubjectTable")]
-    partial class AddSchoolIdToSubjectTable
+    [Migration("20201209153033_RemoveApplicationUserIdFromAssignmentResults")]
+    partial class RemoveApplicationUserIdFromAssignmentResults
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -269,6 +269,65 @@ namespace WebSchool.Data.Migrations
                     b.HasIndex("SchoolId");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("WebSchool.Data.Models.Assignment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AssignmentContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssignmentTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Signature")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TeacherId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Assignments");
+                });
+
+            modelBuilder.Entity("WebSchool.Data.Models.AssignmentResult", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AssignmentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StudentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssignmentResults");
                 });
 
             modelBuilder.Entity("WebSchool.Data.Models.Comment", b =>
@@ -577,6 +636,15 @@ namespace WebSchool.Data.Migrations
                     b.HasOne("WebSchool.Data.Models.School", "School")
                         .WithMany("Users")
                         .HasForeignKey("SchoolId");
+                });
+
+            modelBuilder.Entity("WebSchool.Data.Models.Assignment", b =>
+                {
+                    b.HasOne("WebSchool.Data.Models.ApplicationUser", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebSchool.Data.Models.Comment", b =>
