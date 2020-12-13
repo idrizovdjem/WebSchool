@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using WebSchool.Models.User;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebSchool.Services.Contracts;
-using WebSchool.Areas.Admin.Models.User;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebSchool.Areas.Admin.Controllers

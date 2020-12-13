@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebSchool.Areas.Admin.Models.RegistrationLink
+namespace WebSchool.Models.RegistrationLink
 {
     public class RegistrationLinkViewModel
     {

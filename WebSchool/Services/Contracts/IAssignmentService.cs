@@ -15,7 +15,7 @@ namespace WebSchool.Services.Contracts
 
         ICollection<StudentResultViewModel> GetResults(string assignmentId);
 
-        ICollection<StudentAssignmentInputModel> GetStudentAssignments(string studentId);
+        ICollection<StudentAssignmentViewModel> GetStudentAssignments(string studentId);
 
         SolveAssignmentViewModel GetAssignment(string id);
 

@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-8 offset-2 text-center">
         <h3>@Model.AssignmentName</h3>
-        <p>@Model.AssignmentContent</p>
+        <p class="text-break">@Model.AssignmentContent</p>
 
         <form method="post" asp-area="Student" asp-controller="Assignment" asp-action="Solve">
             <input type="hidden" value="@Model.Id" name="assignmentId" />

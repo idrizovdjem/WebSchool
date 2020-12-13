@@ -3,7 +3,6 @@ using WebSchool.Data;
 using WebSchool.Models.User;
 using System.Collections.Generic;
 using WebSchool.Services.Contracts;
-using WebSchool.Areas.Admin.Models.User;
 
 namespace WebSchool.Services
 {

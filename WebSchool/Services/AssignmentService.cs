@@ -102,11 +102,11 @@ namespace WebSchool.Services
             return students;
         }
 
-        public ICollection<StudentAssignmentInputModel> GetStudentAssignments(string studentId)
+        public ICollection<StudentAssignmentViewModel> GetStudentAssignments(string studentId)
         {
             var assignmentIds = this.context.AssignmentResults
                 .Where(x => x.StudentId == studentId)
-                .Select(x => new StudentAssignmentInputModel()
+                .Select(x => new StudentAssignmentViewModel()
                 {
                     Id = x.AssignmentId,
                     Stage = x.Stage,
@@ -114,7 +114,7 @@ namespace WebSchool.Services
                 })
                 .ToList();
 
-            var assignments = new List<StudentAssignmentInputModel>();
+            var assignments = new List<StudentAssignmentViewModel>();
             foreach (var assignmentId in assignmentIds)
             {
                 var assignment = this.context.Assignments
@@ -125,7 +125,7 @@ namespace WebSchool.Services
                     continue;
                 }
 
-                var assignmentModel = new StudentAssignmentInputModel()
+                var assignmentModel = new StudentAssignmentViewModel()
                 {
                     AssignmentName = assignment.AssignmentTitle,
                     DueDate = assignment.DueDate,
