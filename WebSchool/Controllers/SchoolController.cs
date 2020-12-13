@@ -1,8 +1,6 @@
 ﻿using WebSchool.Data.Models;
-using WebSchool.Models.Post;
 using System.Threading.Tasks;
 using WebSchool.Models.School;
-using WebSchool.Models.Comment;
 using Microsoft.AspNetCore.Mvc;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Identity;

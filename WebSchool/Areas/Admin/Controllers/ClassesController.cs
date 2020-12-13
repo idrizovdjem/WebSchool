@@ -2,10 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebSchool.Services.Contracts;
+using WebSchool.Areas.Admin.Models.User;
 using Microsoft.AspNetCore.Authorization;
-using WebSchool.Models.Classes;
-using System.Linq;
-using WebSchool.Models.User;
 
 namespace WebSchool.Areas.Admin.Controllers
 {

@@ -53,14 +53,7 @@ namespace WebSchool.Controllers
             var link = await this.linksService.GenerateAdminLink(email);
             await this.emailsService.SendRegistrationEmail(link.Id, email);
 
-            return View("SuccessfullEmail");
-        }
-
-        // remove
-        // just for testing
-        public IActionResult SuccessfullEmail()
-        {
-            return View();
+            return View("SuccessRegistration");
         }
     }
 }

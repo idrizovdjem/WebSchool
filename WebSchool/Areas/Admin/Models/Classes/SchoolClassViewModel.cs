@@ -1,7 +1,7 @@
 ﻿using WebSchool.Models.User;
 using System.Collections.Generic;
 
-namespace WebSchool.Models.Classes
+namespace WebSchool.Areas.Admin.Models.Classes
 {
     public class SchoolClassViewModel
     {

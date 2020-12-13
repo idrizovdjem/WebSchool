@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebSchool.Models.User
+namespace WebSchool.Areas.Admin.Models.User
 {
     public class AssignClassToTeacherInputModel
     {

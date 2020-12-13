@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
-using WebSchool.Models.RegistrationLink;
 using Microsoft.AspNetCore.Authorization;
+using WebSchool.Areas.Admin.Models.RegistrationLink;
 
 namespace WebSchool.Areas.Admin.Controllers
 {
@@ -33,6 +33,7 @@ namespace WebSchool.Areas.Admin.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GenerateLinks(GenerateLinksInputModel input)

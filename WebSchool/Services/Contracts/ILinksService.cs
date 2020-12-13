@@ -1,7 +1,7 @@
 ﻿using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using WebSchool.Models.RegistrationLink;
+using WebSchool.Areas.Admin.Models.RegistrationLink;
 
 namespace WebSchool.Services.Contracts
 {

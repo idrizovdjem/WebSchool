@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebSchool.Models.RegistrationLink
+namespace WebSchool.Areas.Admin.Models.RegistrationLink
 {
     public class GenerateLinksInputModel
     {

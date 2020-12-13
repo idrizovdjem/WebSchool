@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using WebSchool.Models.Classes;
 using System.Collections.Generic;
+using WebSchool.Areas.Admin.Models.Classes;
 
 namespace WebSchool.Services.Contracts
 {

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebSchool.Controllers
 {
+    [Authorize]
     public class CommentController : Controller
     {
         private readonly IPostsService postsService;
@@ -23,7 +24,6 @@ namespace WebSchool.Controllers
             this.commentsService = commentsService;
         }
 
-        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateComment(CreateCommentInputModel input)
         {
@@ -50,7 +50,6 @@ namespace WebSchool.Controllers
             return Redirect("/School/Forum");
         }
 
-        [Authorize]
         public IActionResult GetComments(string postId)
         {
             var comments = this.commentsService.GetComments(postId);

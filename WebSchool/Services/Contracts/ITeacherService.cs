@@ -1,5 +1,6 @@
 ﻿using WebSchool.Models.User;
 using System.Collections.Generic;
+using WebSchool.Areas.Admin.Models.User;
 
 namespace WebSchool.Services.Contracts
 {
