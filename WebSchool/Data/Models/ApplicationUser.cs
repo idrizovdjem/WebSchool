@@ -17,7 +17,6 @@ namespace WebSchool.Data.Models
             this.Posts = new HashSet<Post>();
             this.Comments = new HashSet<Comment>();
             this.Classes = new HashSet<UserClass>();
-            this.Subjects = new HashSet<UserSubject>();
         }
 
         [Required]
@@ -45,8 +44,6 @@ namespace WebSchool.Data.Models
         public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ICollection<UserClass> Classes { get; set; }
-
-        public virtual ICollection<UserSubject> Subjects { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

@@ -3,7 +3,6 @@ using WebSchool.Models.User;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
 
 namespace WebSchool.Services.Contracts
 {
@@ -11,22 +10,16 @@ namespace WebSchool.Services.Contracts
     {
         Task<bool> Login(string email, string password);
 
-        Task<IdentityResult> CreateUserAsync(ApplicationUser user, string password);
+        ApplicationUser GetUserByEmail(string email);
 
-        Task<IdentityResult> AddUserToRole(ApplicationUser user, string roleName);
+        ApplicationUser GetUserById(string id);
 
         Task<ApplicationUser> GetUser(ClaimsPrincipal user);
 
-        List<string> GetStudentsWithEmailContains(string email, string signature, string schoolId);
-
-        ApplicationUser GetUserByEmail(string email);
-
         ICollection<UsersViewModel> GetUsersTable(string schoolId);
 
-        UsersViewModel GetUserEdit(string id);
+        UsersViewModel GetUserForEdit(string id);
 
         Task UpdateUser(UsersViewModel user);
-
-        ICollection<UsersViewModel> GetTeachers(string schoolId);
     }
 }

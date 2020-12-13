@@ -13,7 +13,6 @@ namespace WebSchool.Data.Models
             this.Posts = new HashSet<Post>();
             this.Users = new HashSet<ApplicationUser>();
             this.Classes = new HashSet<SchoolClass>();
-            this.Subjects = new HashSet<Subject>();
         }
 
         [Key]
@@ -39,7 +38,5 @@ namespace WebSchool.Data.Models
         public virtual ICollection<ApplicationUser> Users { get; set; }
 
         public virtual ICollection<SchoolClass> Classes { get; set; }
-
-        public virtual ICollection<Subject> Subjects { get; set; }
     }
 }

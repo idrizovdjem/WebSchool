@@ -12,14 +12,18 @@ namespace WebSchool.Controllers
     {
         private readonly ILinksService linksService;
         private readonly IUsersService usersService;
+        private readonly IRolesService rolesService;
+        private readonly IStudentsService studentsService;
         private readonly ISchoolService schoolService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
 
-        public UsersController(ILinksService linksService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ISchoolService schoolService, IUsersService usersService)
+        public UsersController(ILinksService linksService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ISchoolService schoolService, IUsersService usersService, IRolesService rolesService, IStudentsService studentsService)
         {
             this.userManager = userManager;
             this.usersService = usersService;
+            this.rolesService = rolesService;
+            this.studentsService = studentsService;
             this.linksService = linksService;
             this.signInManager = signInManager;
             this.schoolService = schoolService;
@@ -69,7 +73,7 @@ namespace WebSchool.Controllers
                 UserName = registerLink.To
             };
 
-            var result = await this.usersService.CreateUserAsync(user, input.Password);
+            var result = await this.userManager.CreateAsync(user, input.Password);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
@@ -80,7 +84,7 @@ namespace WebSchool.Controllers
                 return View(input);
             }
 
-            await this.usersService.AddUserToRole(user, registerLink.RoleName);
+            await this.rolesService.AddUserToRole(user, registerLink.RoleName);
             await this.usersService.Login(user.Email, input.Password);
             await this.linksService.UseLink(input.RegistrationLinkId);
 
@@ -136,14 +140,14 @@ namespace WebSchool.Controllers
         public async Task<IActionResult> GetStudentsWithEmail(string email, string signature)
         {
             var schoolId = await this.schoolService.GetSchoolId(this.User);
-            var userEmails = this.usersService.GetStudentsWithEmailContains(email, signature, schoolId);
+            var userEmails = this.studentsService.GetStudentIdsWithMatchingEmail(email, signature, schoolId);
             return Json(userEmails);
         }
 
         [Authorize(Roles = "Admin")]
         public IActionResult EditUser(string id)
         {
-            var user = this.usersService.GetUserEdit(id);
+            var user = this.usersService.GetUserForEdit(id);
             if (user == null)
             {
                 return Redirect("/Admin/Administration/Users");

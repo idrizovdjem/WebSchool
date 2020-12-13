@@ -19,13 +19,9 @@ namespace WebSchool.Data
 
         public DbSet<School> Schools { get; set; }
 
-        public DbSet<Subject> Subjects { get; set; }
-
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<UserClass> UserClasses { get; set; }
-
-        public DbSet<UserSubject> UserSubjects { get; set; }
 
         public DbSet<SchoolClass> SchoolClasses { get; set; }
 
@@ -84,19 +80,6 @@ namespace WebSchool.Data
                 entity
                     .HasOne(us => us.User)
                     .WithMany(u => u.Classes)
-                    .OnDelete(DeleteBehavior.NoAction);
-            });
-
-            builder.Entity<UserSubject>(entity =>
-            {
-                entity
-                    .HasOne(us => us.User)
-                    .WithMany(u => u.Subjects)
-                    .OnDelete(DeleteBehavior.NoAction);
-
-                entity
-                    .HasOne(us => us.Subject)
-                    .WithMany(s => s.Users)
                     .OnDelete(DeleteBehavior.NoAction);
             });
 
