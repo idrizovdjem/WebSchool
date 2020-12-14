@@ -1,5 +1,4 @@
 ﻿using WebSchool.Data.Models;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
 namespace WebSchool.Data.Seeders
