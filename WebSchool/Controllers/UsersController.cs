@@ -1,7 +1,7 @@
 ﻿using WebSchool.Data.Models;
-using WebSchool.ViewModels.User;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebSchool.ViewModels.User;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -85,7 +85,7 @@ namespace WebSchool.Controllers
             }
 
             await this.rolesService.AddUserToRole(user, registerLink.RoleName);
-            await this.usersService.Login(user.Email, input.Password);
+            await this.signInManager.SignInAsync(user, false);
             await this.linksService.UseLink(input.RegistrationLinkId);
 
             if (registerLink.RoleName == "Admin")
@@ -126,8 +126,14 @@ namespace WebSchool.Controllers
                 return View(input);
             }
 
-            var result = await this.usersService.Login(input.Email, input.Password);
-            if (!result)
+            var user = this.usersService.GetUserByEmail(input.Email);
+            if (user == null)
+            {
+                this.ModelState.AddModelError("Wrong Email", "Invalid email");
+                return View(input);
+            }
+            var result = await this.signInManager.PasswordSignInAsync(user, input.Password, false, false);
+            if (!result.Succeeded)
             {
                 this.ModelState.AddModelError("Login failed", "Invalid username or password");
                 return View(input);
@@ -139,8 +145,8 @@ namespace WebSchool.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetStudentsWithEmail(string email, string signature)
         {
-            var schoolId = await this.schoolService.GetSchoolId(this.User);
-            var userEmails = this.studentsService.GetStudentIdsWithMatchingEmail(email, signature, schoolId);
+            var user = await this.userManager.GetUserAsync(this.User);
+            var userEmails = this.studentsService.GetStudentIdsWithMatchingEmail(email, signature, user.SchoolId);
             return Json(userEmails);
         }
 

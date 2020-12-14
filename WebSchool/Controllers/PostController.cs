@@ -32,8 +32,7 @@ namespace WebSchool.Controllers
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
-            var schoolId = await this.schoolService.GetSchoolId(this.User);
-            await this.postsService.CreatePost(input, user, schoolId);
+            await this.postsService.CreatePost(input, user, user.SchoolId);
 
             return Redirect("/School/Forum");
         }

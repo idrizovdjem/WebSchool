@@ -1,6 +1,5 @@
 ﻿using WebSchool.Data.Models;
 using System.Threading.Tasks;
-using System.Security.Claims;
 using WebSchool.ViewModels.School;
 
 namespace WebSchool.Services.Contracts
@@ -14,7 +13,5 @@ namespace WebSchool.Services.Contracts
         bool IsSchoolNameAvailable(string schoolName);
 
         SchoolViewModel GetSchool(ApplicationUser user, int page);
-
-        Task<string> GetSchoolId(ClaimsPrincipal applicationUser);
     }
 }

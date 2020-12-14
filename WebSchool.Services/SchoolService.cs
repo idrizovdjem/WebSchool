@@ -4,7 +4,6 @@ using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using WebSchool.ViewModels.School;
 using WebSchool.Services.Contracts;
-using System.Security.Claims;
 
 namespace WebSchool.Services
 {
@@ -49,12 +48,6 @@ namespace WebSchool.Services
             };
 
             return schoolViewModel;
-        }
-
-        public async Task<string> GetSchoolId(ClaimsPrincipal applicationUser)
-        {
-            var user = await this.usersService.GetUser(applicationUser);
-            return user.SchoolId;
         }
 
         public bool IsSchoolNameAvailable(string schoolName)

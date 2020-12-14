@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using WebSchool.ViewModels.Assignment;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using WebSchool.Data.Models;
 
 namespace WebSchool.Areas.Teacher.Controllers
 {
@@ -12,11 +14,13 @@ namespace WebSchool.Areas.Teacher.Controllers
     public class AssignmentController : Controller
     {
         private readonly IUsersService usersService;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly IAssignmentService assignmentService;
 
-        public AssignmentController(IAssignmentService assignmentService, IUsersService usersService)
+        public AssignmentController(IAssignmentService assignmentService, IUsersService usersService, UserManager<ApplicationUser> userManager)
         {
             this.usersService = usersService;
+            this.userManager = userManager;
             this.assignmentService = assignmentService;
         }
 
@@ -40,7 +44,7 @@ namespace WebSchool.Areas.Teacher.Controllers
                 return View(input);
             }
 
-            var user = await this.usersService.GetUser(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
             await this.assignmentService.CreateAssignment(input, user.Id, user.SchoolId);
 
             return RedirectToAction("Results");
@@ -53,7 +57,7 @@ namespace WebSchool.Areas.Teacher.Controllers
 
         public async Task<IActionResult> GetAssignments()
         {
-            var user = await this.usersService.GetUser(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
             var assignments = this.assignmentService.GetTeacherAssignments(user.Id);
 
             return Json(assignments);

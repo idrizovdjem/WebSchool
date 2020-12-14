@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using WebSchool.Data.Models;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebSchool.Services.Contracts;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebSchool.Areas.Student.Controllers
@@ -9,20 +11,20 @@ namespace WebSchool.Areas.Student.Controllers
     [Authorize(Roles = "Student")]
     public class AssignmentController : Controller
     {
-        private readonly IUsersService usersService;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly ISchoolService schoolService;
         private readonly IAssignmentService assignmentService;
 
-        public AssignmentController(IUsersService usersService, ISchoolService schoolService, IAssignmentService assignmentService)
+        public AssignmentController(UserManager<ApplicationUser> userManager, ISchoolService schoolService, IAssignmentService assignmentService)
         {
-            this.usersService = usersService;
+            this.userManager = userManager;
             this.schoolService = schoolService;
             this.assignmentService = assignmentService;
         }
 
         public async Task<IActionResult> Assignments()
         {
-            var user = await this.usersService.GetUser(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
             var assignments = this.assignmentService.GetStudentAssignments(user.Id);
 
             return View(assignments);
@@ -53,7 +55,7 @@ namespace WebSchool.Areas.Student.Controllers
                 return RedirectToAction("Assignments");
             }
 
-            var user = await this.usersService.GetUser(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
             await this.assignmentService.Solve(user.Id, assignmentId, answerContent);
 
             return RedirectToAction("Assignments");

@@ -55,8 +55,7 @@ namespace WebSchool.Areas.Admin.Controllers
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
-            var school = await this.schoolService.GetSchoolId(this.User);
-            var links = await this.linksService.GenerateLinks(input.Role, user.Email, school, emails);
+            var links = await this.linksService.GenerateLinks(input.Role, user.Email, user.SchoolId, emails);
             foreach (var link in links)
             {
                 await this.emailsService.SendRegistrationEmail(link.Id, link.To);
@@ -80,15 +79,15 @@ namespace WebSchool.Areas.Admin.Controllers
 
         public async Task<IActionResult> Users()
         {
-            var schoolId = await this.schoolService.GetSchoolId(this.User);
-            var users = this.usersService.GetUsersTable(schoolId);
+            var user = await this.userManager.GetUserAsync(this.User);
+            var users = this.usersService.GetUsersTable(user.SchoolId);
             return View(users);
         }
 
         public async Task<IActionResult> Teachers()
         {
-            var schoolId = await this.schoolService.GetSchoolId(this.User);
-            var teachers = this.teacherService.GetTeachers(schoolId);
+            var user = await this.userManager.GetUserAsync(this.User);
+            var teachers = this.teacherService.GetTeachers(user.SchoolId);
             return View(teachers);
         }
     }

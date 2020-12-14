@@ -32,5 +32,15 @@ namespace WebSchool.Services
                 .FirstOrDefault(x => x.Id == userRole.RoleId)
                 .Name;
         }
+
+        public async Task UpdateUserRole(ApplicationUser user, string newRoleId)
+        {
+            var userRole = this.context.UserRoles
+                .FirstOrDefault(x => x.UserId == user.Id);
+
+            userRole.RoleId = newRoleId;
+            this.context.UserRoles.Update(userRole);
+            await this.context.SaveChangesAsync();
+        }
     }
 }

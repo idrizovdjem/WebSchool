@@ -9,5 +9,7 @@ namespace WebSchool.Services.Contracts
         string GetUserRole(string userId);
 
         Task<IdentityResult> AddUserToRole(ApplicationUser user, string roleName);
+
+        Task UpdateUserRole(ApplicationUser user, string newRoleId);
     }
 }

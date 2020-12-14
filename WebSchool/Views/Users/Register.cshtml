@@ -2,7 +2,7 @@
     Layout = "_Layout";
 }
 
-@model WebSchool.Models.User.RegisterUserInputModel
+@model WebSchool.ViewModels.User.RegisterUserInputModel
 
 <div class="row">
     <div class="col-md-6 offset-3 text-center">
@@ -10,7 +10,7 @@
         <form method="post" asp-controller="Users" asp-action="Register" class="text-left">
             <div asp-validation-summary="All" class="text-danger"></div>
 
-            <input type="hidden" id="hiddenInput" asp-for="RegistrationLinkId"/>
+            <input type="hidden" id="hiddenInput" asp-for="RegistrationLinkId" />
 
             <div class="form-group">
                 <label asp-for="FirstName">Firstname</label>
@@ -40,7 +40,7 @@
         </form>
     </div>
 </div>
- 
+
 @section scripts{
 
     <script>

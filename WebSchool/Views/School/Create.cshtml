@@ -1,11 +1,11 @@
-﻿@{ 
+﻿@{
     Layout = "_Layout";
 }
 
-@model WebSchool.Models.School.CreateSchoolInputModel
+@model WebSchool.ViewModels.School.CreateSchoolInputModel
 
 <div class="row">
-    <img src="https://www.solidbackgrounds.com/images/2560x1440/2560x1440-dark-gray-solid-color-background.jpg" class="w-100" height="200" id="schoolImage"/>
+    <img src="https://www.solidbackgrounds.com/images/2560x1440/2560x1440-dark-gray-solid-color-background.jpg" class="w-100" height="200" id="schoolImage" />
 
     <form method="post" class="col-md-6 offset-3">
         <div asp-validation-summary="All" class="text-danger"></div>
@@ -27,7 +27,7 @@
 </div>
 
 <script>
-    
+
     let imageUrl = document.getElementById("imageUrl");
     imageUrl.addEventListener("input", (event) => {
         let imageElement = document.getElementById("schoolImage");
