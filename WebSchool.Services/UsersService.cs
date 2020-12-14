@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using WebSchool.Data;
-using WebSchool.ViewModels.User;
 using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using WebSchool.ViewModels.User;
 using WebSchool.Services.Contracts;
-using Microsoft.AspNetCore.Identity;
 
 namespace WebSchool.Services
 {
