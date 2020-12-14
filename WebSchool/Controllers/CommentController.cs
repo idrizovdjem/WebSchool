@@ -1,7 +1,7 @@
 ﻿using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebSchool.Models.Comment;
+using WebSchool.ViewModels.Comment;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;

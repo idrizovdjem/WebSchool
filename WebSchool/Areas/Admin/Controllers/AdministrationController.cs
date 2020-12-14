@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-using WebSchool.Models.RegistrationLink;
+using WebSchool.ViewModels.RegistrationLink;
 
 namespace WebSchool.Areas.Admin.Controllers
 {

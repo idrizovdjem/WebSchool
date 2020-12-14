@@ -28,6 +28,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebSchool.Data\WebSchool.Data.csproj" />
+    <ProjectReference Include="..\WebSchool.Services\WebSchool.Services.csproj" />
+    <ProjectReference Include="..\WebSchool.ViewModels\WebSchool.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

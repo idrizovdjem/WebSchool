@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebSchool.Models.Assignment;
+using WebSchool.ViewModels.Assignment;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 

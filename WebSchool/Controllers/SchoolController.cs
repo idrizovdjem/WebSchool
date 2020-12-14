@@ -1,6 +1,6 @@
 ﻿using WebSchool.Data.Models;
 using System.Threading.Tasks;
-using WebSchool.Models.School;
+using WebSchool.ViewModels.School;
 using Microsoft.AspNetCore.Mvc;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Identity;

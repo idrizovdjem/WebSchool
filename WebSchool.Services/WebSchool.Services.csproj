@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="SendGrid" Version="9.21.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebSchool.Data\WebSchool.Data.csproj" />
+    <ProjectReference Include="..\WebSchool.ViewModels\WebSchool.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

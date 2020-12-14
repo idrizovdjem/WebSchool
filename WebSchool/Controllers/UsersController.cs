@@ -1,5 +1,5 @@
 ﻿using WebSchool.Data.Models;
-using WebSchool.Models.User;
+using WebSchool.ViewModels.User;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebSchool.Services.Contracts;
