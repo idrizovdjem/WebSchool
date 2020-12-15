@@ -1,6 +1,6 @@
 ﻿using WebSchool.Data.Models;
-using WebSchool.ViewModels.Post;
 using System.Threading.Tasks;
+using WebSchool.ViewModels.Post;
 using System.Collections.Generic;
 
 namespace WebSchool.Services.Contracts
@@ -9,7 +9,7 @@ namespace WebSchool.Services.Contracts
     {
         ICollection<PostViewModel> GetPosts(string schoolId, int page);
 
-        Task CreatePost(CreatePostInputModel input, ApplicationUser user, string schoolId);
+        Task CreatePost(string content, ApplicationUser user, string schoolId);
 
         Post GetPost(string postId);
 

@@ -1,5 +1,4 @@
 ﻿using WebSchool.Data.Models;
-using WebSchool.ViewModels.Post;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebSchool.Services.Contracts;
@@ -24,15 +23,15 @@ namespace WebSchool.Controllers
 
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreatePost(CreatePostInputModel input)
+        public async Task<IActionResult> CreatePost(string content)
         {
-            if (!this.ModelState.IsValid)
+            if (string.IsNullOrWhiteSpace(content))
             {
                 return Redirect("/School/Forum");
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
-            await this.postsService.CreatePost(input, user, user.SchoolId);
+            await this.postsService.CreatePost(content, user, user.SchoolId);
 
             return Redirect("/School/Forum");
         }

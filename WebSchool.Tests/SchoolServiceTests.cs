@@ -21,7 +21,7 @@ namespace WebSchool.Tests
             var schoolService = new SchoolService(context, null);
             await schoolService.CreateAsync(school);
 
-            Assert.That(context.Schools.Count() == 1);
+            Assert.That(school != null);
         }
 
         [Test]

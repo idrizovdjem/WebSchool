@@ -2,8 +2,8 @@
 using System.Linq;
 using WebSchool.Data;
 using WebSchool.Data.Models;
-using WebSchool.ViewModels.Post;
 using System.Threading.Tasks;
+using WebSchool.ViewModels.Post;
 using System.Collections.Generic;
 using WebSchool.Services.Contracts;
 
@@ -20,11 +20,11 @@ namespace WebSchool.Services
             this.commentsService = commentsService;
         }
 
-        public async Task CreatePost(CreatePostInputModel input, ApplicationUser user, string schoolId)
+        public async Task CreatePost(string content, ApplicationUser user, string schoolId)
         {
             var post = new Post()
             {
-                Content = input.Content,
+                Content = content,
                 CreatedOn = DateTime.UtcNow,
                 SchoolId = schoolId,
                 Creator = user
@@ -64,7 +64,7 @@ namespace WebSchool.Services
                 Count(x => x.SchoolId == schoolId);
 
             var maxPages = postsCount / 10;
-            if (maxPages % 10 > 0)
+            if (maxPages % 10 > 0 || postsCount < 10)
             {
                 maxPages++;
             }
