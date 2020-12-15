@@ -172,6 +172,8 @@ namespace WebSchool.Controllers
             }
 
             await this.usersService.UpdateUser(input);
+            var user = this.usersService.GetUserById(input.Id);
+            await this.userManager.AddToRoleAsync(user, input.Role);
 
             return Redirect("/Admin/Administration/Users");
         }

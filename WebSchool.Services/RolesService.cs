@@ -30,18 +30,17 @@ namespace WebSchool.Services
                 .Name;
         }
 
-        public async Task UpdateUserRole(ApplicationUser user, string newRoleId)
+        public async Task RemoveUserFromRole(ApplicationUser user)
         {
             var userRole = this.context.UserRoles
                 .FirstOrDefault(x => x.UserId == user.Id);
 
-            if(userRole == null)
+            if (userRole == null)
             {
                 return;
             }
 
-            userRole.RoleId = newRoleId;
-            this.context.UserRoles.Update(userRole);
+            this.context.UserRoles.Remove(userRole);
             await this.context.SaveChangesAsync();
         }
     }

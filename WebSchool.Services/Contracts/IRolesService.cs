@@ -1,6 +1,5 @@
 ﻿using WebSchool.Data.Models;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 
 namespace WebSchool.Services.Contracts
 {
@@ -8,6 +7,6 @@ namespace WebSchool.Services.Contracts
     {
         string GetUserRole(string userId);
 
-        Task UpdateUserRole(ApplicationUser user, string newRoleId);
+        Task RemoveUserFromRole(ApplicationUser user);
     }
 }

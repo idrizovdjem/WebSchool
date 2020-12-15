@@ -65,7 +65,7 @@ namespace WebSchool.Areas.Admin.Controllers
             return View(schoolClassModel);
         }
 
-        public IActionResult AddStudents(string signature)
+        public IActionResult AddStudents()
         {
             return View();
         }

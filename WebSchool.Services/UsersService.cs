@@ -72,10 +72,7 @@ namespace WebSchool.Services
             if (realOldRole.Name != userModel.Role)
             {
                 await this.linksService.UpdateLinkRole(user.Email, userModel.Role);
-
-                var newRole = this.context.Roles
-                    .FirstOrDefault(x => x.Name == userModel.Role);
-                await this.rolesService.UpdateUserRole(user, newRole.Id);
+                await this.rolesService.RemoveUserFromRole(user);
             }
 
             this.context.Users.Update(user);
