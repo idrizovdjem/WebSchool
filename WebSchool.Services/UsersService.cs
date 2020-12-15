@@ -63,11 +63,11 @@ namespace WebSchool.Services
             user.LastName = userModel.LastName;
             user.Email = userModel.Email;
 
-            var oldRole = this.context.UserRoles
+            var oldUserRole = this.context.UserRoles
                 .FirstOrDefault(x => x.UserId == user.Id);
 
             var realOldRole = this.context.Roles
-                .FirstOrDefault(x => x.Id == oldRole.RoleId);
+                .FirstOrDefault(x => x.Id == oldUserRole.RoleId);
 
             if (realOldRole.Name != userModel.Role)
             {

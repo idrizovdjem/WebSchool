@@ -3,6 +3,7 @@ using NUnit.Framework;
 using WebSchool.Services;
 using WebSchool.Data.Models;
 using System.Threading.Tasks;
+using WebSchool.ViewModels.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebSchool.Tests
@@ -100,6 +101,60 @@ namespace WebSchool.Tests
             var result = usersService.GetUserForEdit(user.Id);
 
             Assert.That(result.Id != null);
+        }
+
+        [Test]
+        public async Task UpdateUserShouldNotThrowExceptionWhenUserDoesNotExists()
+        {
+            var dbOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+                    .UseInMemoryDatabase("test");
+            var context = new ApplicationDbContext(dbOptions.Options);
+
+            var user = new UsersViewModel()
+            {
+                Id = "test"
+            };
+
+            var usersService = new UsersService(context, null, null);
+            await usersService.UpdateUser(user);
+        }
+
+        [Test]
+        public async Task UpdateUserShouldChangeUserProperties()
+        {
+            var dbOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+                    .UseInMemoryDatabase("test");
+            var context = new ApplicationDbContext(dbOptions.Options);
+
+            var role = new ApplicationRole()
+            {
+                Name = "Teacher"
+            };
+            await context.Roles.AddAsync(role);
+            await context.SaveChangesAsync();
+
+            var applicationUser = new ApplicationUser();
+
+            var user = new UsersViewModel()
+            {
+                Id = applicationUser.Id,
+                Role = "Student"
+            };
+
+            var usersService = new UsersService(context, null, null);
+            await usersService.UpdateUser(user);
+        }
+
+        [Test]
+        public void GetUsersTableReturnsEmptyCollection()
+        {
+            var dbOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+                    .UseInMemoryDatabase("test");
+            var context = new ApplicationDbContext(dbOptions.Options);
+
+            var usersService = new UsersService(context, null, null);
+            var result = usersService.GetUsersTable("some school id");
+            Assert.That(result.Count == 0);
         }
     }
 }
