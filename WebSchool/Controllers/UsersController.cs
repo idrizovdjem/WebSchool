@@ -84,7 +84,7 @@ namespace WebSchool.Controllers
                 return View(input);
             }
 
-            await this.rolesService.AddUserToRole(user, registerLink.RoleName);
+            await userManager.AddToRoleAsync(user, registerLink.RoleName);
             await this.signInManager.SignInAsync(user, false);
             await this.linksService.UseLink(input.RegistrationLinkId);
 

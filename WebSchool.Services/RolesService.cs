@@ -3,30 +3,27 @@ using WebSchool.Data;
 using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using WebSchool.Services.Contracts;
-using Microsoft.AspNetCore.Identity;
 
 namespace WebSchool.Services
 {
     public class RolesService : IRolesService
     {
         private readonly ApplicationDbContext context;
-        private readonly UserManager<ApplicationUser> userManager;
 
-        public RolesService(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public RolesService(ApplicationDbContext context)
         {
             this.context = context;
-            this.userManager = userManager;
-        }
-
-        public async Task<IdentityResult> AddUserToRole(ApplicationUser user, string roleName)
-        {
-            return await this.userManager.AddToRoleAsync(user, roleName);
         }
 
         public string GetUserRole(string userId)
         {
             var userRole = this.context.UserRoles
                 .FirstOrDefault(x => x.UserId == userId);
+
+            if (userRole == null)
+            {
+                return null;
+            }
 
             return this.context.Roles
                 .FirstOrDefault(x => x.Id == userRole.RoleId)
@@ -37,6 +34,11 @@ namespace WebSchool.Services
         {
             var userRole = this.context.UserRoles
                 .FirstOrDefault(x => x.UserId == user.Id);
+
+            if(userRole == null)
+            {
+                return;
+            }
 
             userRole.RoleId = newRoleId;
             this.context.UserRoles.Update(userRole);
