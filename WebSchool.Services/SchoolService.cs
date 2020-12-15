@@ -11,13 +11,11 @@ namespace WebSchool.Services
     {
         private readonly ApplicationDbContext context;
         private readonly IPostsService postsService;
-        private readonly IUsersService usersService;
 
-        public SchoolService(ApplicationDbContext context, IPostsService postsService, IUsersService usersService)
+        public SchoolService(ApplicationDbContext context, IPostsService postsService)
         {
             this.context = context;
             this.postsService = postsService;
-            this.usersService = usersService;
         }
 
         public async Task AssignUserToSchool(ApplicationUser user, string schoolId)
@@ -32,11 +30,15 @@ namespace WebSchool.Services
             await this.context.SaveChangesAsync();
         }
 
-
         public SchoolViewModel GetSchool(ApplicationUser user, int page)
         {
             var school = this.context.Schools
                 .FirstOrDefault(s => s.Id == user.SchoolId);
+
+            if (school == null)
+            {
+                return null;
+            }
 
             var schoolViewModel = new SchoolViewModel()
             {
