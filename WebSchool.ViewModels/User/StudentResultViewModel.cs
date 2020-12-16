@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebSchool.ViewModels.User
 {
@@ -15,6 +16,8 @@ namespace WebSchool.ViewModels.User
         public DateTime DueDate { get; set; }
 
         public int Points { get; set; }
+
+        public int MaxPoints { get; set; }
 
         public byte Stage { get; set; }
     }

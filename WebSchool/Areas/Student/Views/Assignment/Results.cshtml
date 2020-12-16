@@ -24,8 +24,8 @@
                     <tr>
                         <td>@(counter++)</td>
                         <td>@assignments.AssignmentName</td>
-                        <td>@assignments.DueDate.Date</td>
-                        <td>@assignments.Points</td>
+                        <td>@assignments.DueDate.Date.ToShortDateString()</td>
+                        <td>@assignments.Points / @assignments.MaxPoints</td>
                         <td>
                             @{
                                 if (assignments.Stage == 2)

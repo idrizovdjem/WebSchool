@@ -1,11 +1,11 @@
 ﻿using System;
+using WebSchool.Data.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebSchool.ViewModels.Assignment;
 using WebSchool.Services.Contracts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using WebSchool.Data.Models;
+using WebSchool.ViewModels.Assignment;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebSchool.Areas.Teacher.Controllers
 {
@@ -85,6 +85,12 @@ namespace WebSchool.Areas.Teacher.Controllers
         public async Task<IActionResult> Review(AssignmentReviewInputModel input)
         {
             if (!this.ModelState.IsValid)
+            {
+                return RedirectToAction("Results");
+            }
+
+            var maxPoints = this.assignmentService.GetMaxPoints(input.AssignmentId);
+            if (input.Points > maxPoints)
             {
                 return RedirectToAction("Results");
             }

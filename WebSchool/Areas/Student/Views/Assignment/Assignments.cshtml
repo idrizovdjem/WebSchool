@@ -24,8 +24,8 @@
                     <tr>
                         <td>@(counter++)</td>
                         <td>@assignments.AssignmentName</td>
-                        <td>@assignments.DueDate</td>
-                        <td>@assignments.Points</td>
+                        <td>@assignments.DueDate.Date.ToShortDateString()</td>
+                        <td>@assignments.Points / @assignments.MaxPoints</td>
                         <td>
                             <a asp-area="Student" asp-controller="Assignment" asp-action="Solve" asp-route-Id="@assignments.Id" class="btn btn-primary w-75 text-white">Solve</a>
                         </td>

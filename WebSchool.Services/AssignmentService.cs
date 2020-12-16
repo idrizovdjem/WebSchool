@@ -64,13 +64,19 @@ namespace WebSchool.Services
 
         public ICollection<StudentResultViewModel> GetResults(string assignmentId)
         {
+            var maxPoints = this.context.Assignments
+                .Where(x => x.Id == assignmentId)
+                .Select(x => x.Points)
+                .FirstOrDefault();
+
             var students = this.context.AssignmentResults
                 .Where(x => x.AssignmentId == assignmentId)
                 .Select(x => new StudentResultViewModel()
                 {
                     StudentId = x.StudentId,
                     Points = x.Points,
-                    DueDate = x.DueDate,
+                    MaxPoints = maxPoints,
+                    DueDate = x.DueDate.Date,
                     Stage = x.Stage,
                     AssignmentId = x.AssignmentId
                 })
@@ -129,13 +135,19 @@ namespace WebSchool.Services
 
         public AssignmentSolveResultViewModel GetAssignmentResult(string studentId, string assignmentId)
         {
+            var maxPoints = this.context.Assignments
+                .Where(x => x.Id == assignmentId)
+                .Select(x => x.Points)
+                .FirstOrDefault();
+
             return this.context.AssignmentResults
                 .Where(x => x.StudentId == studentId && x.AssignmentId == assignmentId)
                 .Select(x => new AssignmentSolveResultViewModel()
                 {
                     AssignmentId = x.AssignmentId,
                     StudentId = x.StudentId,
-                    AnswerContent = x.Content
+                    AnswerContent = x.Content,
+                    MaxPoints = maxPoints
                 })
                 .FirstOrDefault();
         }
@@ -163,6 +175,14 @@ namespace WebSchool.Services
 
             this.context.AssignmentResults.Update(assignmentResult);
             await this.context.SaveChangesAsync();
+        }
+
+        public int GetMaxPoints(string id)
+        {
+            return this.context.Assignments
+                .Where(x => x.Id == id)
+                .Select(x => x.Points)
+                .FirstOrDefault();
         }
     }
 }

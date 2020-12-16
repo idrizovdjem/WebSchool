@@ -1,5 +1,5 @@
-﻿using WebSchool.ViewModels.User;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using WebSchool.ViewModels.User;
 using System.Collections.Generic;
 using WebSchool.ViewModels.Assignment;
 
@@ -22,5 +22,7 @@ namespace WebSchool.Services.Contracts
         AssignmentSolveResultViewModel GetAssignmentResult(string studentId, string assignmentId);
 
         Task Review(AssignmentReviewInputModel input);
+
+        int GetMaxPoints(string id);
     }
 }

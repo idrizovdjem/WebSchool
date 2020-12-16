@@ -11,7 +11,9 @@ namespace WebSchool.Services
         private readonly ApplicationDbContext context;
         private readonly IRolesService rolesService;
 
-        public StudentsService(ApplicationDbContext context, IRolesService rolesService)
+        public StudentsService
+            (ApplicationDbContext context,
+            IRolesService rolesService)
         {
             this.context = context;
             this.rolesService = rolesService;
@@ -49,11 +51,12 @@ namespace WebSchool.Services
         {
             var assignmentIds = this.context.AssignmentResults
                 .Where(x => x.StudentId == studentId && x.Stage == 1)
+                .OrderByDescending(x => x.DueDate)
                 .Select(x => new StudentAssignmentViewModel()
                 {
                     Id = x.AssignmentId,
                     Stage = x.Stage,
-                    Points = x.Points
+                    Points = x.Points,
                 })
                 .ToList();
 
@@ -75,7 +78,8 @@ namespace WebSchool.Services
                     Id = assignment.Id,
                     Signature = assignment.Signature,
                     Stage = assignmentId.Stage,
-                    Points = assignmentId.Points
+                    Points = assignmentId.Points,
+                    MaxPoints = assignment.Points
                 };
 
                 assignments.Add(assignmentModel);
@@ -92,7 +96,11 @@ namespace WebSchool.Services
                 {
                     Id = x.AssignmentId,
                     Stage = x.Stage,
-                    Points = x.Points
+                    Points = x.Points,
+                    MaxPoints = this.context.Assignments
+                        .Where(a => a.Id == x.AssignmentId)
+                        .Select(a => a.Points)
+                        .FirstOrDefault()
                 })
                 .ToList();
 
@@ -114,7 +122,8 @@ namespace WebSchool.Services
                     Id = assignment.Id,
                     Signature = assignment.Signature,
                     Stage = assignmentId.Stage,
-                    Points = assignmentId.Points
+                    Points = assignmentId.Points,
+                    MaxPoints = assignment.Points
                 };
 
                 assignments.Add(assignmentModel);

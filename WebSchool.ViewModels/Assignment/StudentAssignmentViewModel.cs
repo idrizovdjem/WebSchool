@@ -14,6 +14,8 @@ namespace WebSchool.ViewModels.Assignment
 
         public int Points { get; set; }
 
+        public int MaxPoints { get; set; }
+
         public byte Stage { get; set; }
     }
 }

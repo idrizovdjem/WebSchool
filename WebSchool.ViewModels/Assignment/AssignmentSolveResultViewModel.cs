@@ -7,5 +7,7 @@
         public string StudentId { get; set; }
 
         public string AnswerContent { get; set; }
+
+        public int MaxPoints { get; set; }
     }
 }

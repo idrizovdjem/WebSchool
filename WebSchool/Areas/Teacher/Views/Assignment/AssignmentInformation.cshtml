@@ -26,8 +26,8 @@
                         <td>@(counter++)</td>
                         <td>@student.FirstName</td>
                         <td>@student.LastName</td>
-                        <td>@student.DueDate</td>
-                        <td>@student.Points</td>
+                        <td>@student.DueDate.Date.ToShortDateString()</td>
+                        <td>@student.Points / @student.MaxPoints</td>
                         <td>
                             @{
                                 if (student.Stage == 1)
