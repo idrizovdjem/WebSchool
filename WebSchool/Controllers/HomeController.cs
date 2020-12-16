@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebSchool.Services.Contracts;
+using Microsoft.Extensions.Configuration;
 
 namespace WebSchool.Controllers
 {
@@ -8,12 +9,15 @@ namespace WebSchool.Controllers
     {
         private readonly ILinksService linksService;
         private readonly IEmailsService emailsService;
+        private readonly IConfiguration configuration;
 
         public HomeController(ILinksService linksService,
-            IEmailsService emailsService)
+            IEmailsService emailsService,
+            IConfiguration configuration)
         {
             this.linksService = linksService;
             this.emailsService = emailsService;
+            this.configuration = configuration;
         }
 
         public IActionResult Index()
@@ -51,7 +55,7 @@ namespace WebSchool.Controllers
                 return View();
             }
             var link = await this.linksService.GenerateAdminLink(email);
-            await this.emailsService.SendRegistrationEmail(link.Id, email);
+            await this.emailsService.SendRegistrationEmail(link.Id, email, this.configuration["SendGripApi"]);
 
             return View("SuccessRegistration");
         }

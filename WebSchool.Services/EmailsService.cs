@@ -10,13 +10,11 @@ namespace WebSchool.Services
 {
     public class EmailsService : IEmailsService
     {
-        private readonly IConfiguration configuration;
         private readonly ApplicationDbContext context;
 
         public EmailsService(IConfiguration configuration, ApplicationDbContext context)
         {
             this.context = context;
-            this.configuration = configuration;
         }
 
         public bool IsEmailAvailable(string email)
@@ -24,9 +22,8 @@ namespace WebSchool.Services
             return !this.context.RegistrationLinks.Any(x => x.To == email);
         }
 
-        public async Task SendRegistrationEmail(string registrationId, string recieverEmail)
+        public async Task SendRegistrationEmail(string registrationId, string recieverEmail, string apiKey)
         {
-            var apiKey = this.configuration["SendGridApi"];
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("idrizovdjem@gmail.com", "WebSchoolAdmin");
             var subject = "WebSchool registration link";

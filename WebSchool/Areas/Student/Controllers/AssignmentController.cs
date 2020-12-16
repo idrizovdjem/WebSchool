@@ -14,18 +14,24 @@ namespace WebSchool.Areas.Student.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ISchoolService schoolService;
         private readonly IAssignmentService assignmentService;
+        private readonly IStudentsService studentsService;
 
-        public AssignmentController(UserManager<ApplicationUser> userManager, ISchoolService schoolService, IAssignmentService assignmentService)
+        public AssignmentController(
+            UserManager<ApplicationUser> userManager,
+            ISchoolService schoolService,
+            IAssignmentService assignmentService,
+            IStudentsService studentsService)
         {
             this.userManager = userManager;
             this.schoolService = schoolService;
             this.assignmentService = assignmentService;
+            this.studentsService = studentsService;
         }
 
         public async Task<IActionResult> Assignments()
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            var assignments = this.assignmentService.GetStudentAssignments(user.Id);
+            var assignments = this.studentsService.GetStudentAssignments(user.Id);
 
             return View(assignments);
         }
@@ -59,6 +65,13 @@ namespace WebSchool.Areas.Student.Controllers
             await this.assignmentService.Solve(user.Id, assignmentId, answerContent);
 
             return RedirectToAction("Assignments");
+        }
+
+        public async Task<IActionResult> Results()
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            var results = this.studentsService.GetStudentResults(user.Id);
+            return View(results);
         }
     }
 }

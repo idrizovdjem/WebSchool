@@ -15,13 +15,11 @@ namespace WebSchool.Services.Contracts
 
         ICollection<StudentResultViewModel> GetResults(string assignmentId);
 
-        ICollection<StudentAssignmentViewModel> GetStudentAssignments(string studentId);
-
         SolveAssignmentViewModel GetAssignment(string id);
 
         Task Solve(string userId, string assignmentId, string answerContent);
 
-        AssignmentResultViewModel GetAssignmentResult(string studentId, string assignmentId);
+        AssignmentSolveResultViewModel GetAssignmentResult(string studentId, string assignmentId);
 
         Task Review(AssignmentReviewInputModel input);
     }

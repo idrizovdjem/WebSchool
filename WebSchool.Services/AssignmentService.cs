@@ -62,21 +62,6 @@ namespace WebSchool.Services
             await this.context.SaveChangesAsync();
         }
 
-        public ICollection<AssignmentInformationViewModel> GetTeacherAssignments(string teacherId)
-        {
-            return this.context.Assignments
-                .Where(x => x.TeacherId == teacherId)
-                .Select(x => new AssignmentInformationViewModel()
-                {
-                    Id = x.Id,
-                    AssignmentName = x.AssignmentTitle,
-                    Signature = x.Signature,
-                    DueDate = x.DueDate
-                })
-                .OrderByDescending(x => x.DueDate)
-                .ToList();
-        }
-
         public ICollection<StudentResultViewModel> GetResults(string assignmentId)
         {
             var students = this.context.AssignmentResults
@@ -102,43 +87,19 @@ namespace WebSchool.Services
             return students;
         }
 
-        public ICollection<StudentAssignmentViewModel> GetStudentAssignments(string studentId)
+        public ICollection<AssignmentInformationViewModel> GetTeacherAssignments(string teacherId)
         {
-            var assignmentIds = this.context.AssignmentResults
-                .Where(x => x.StudentId == studentId)
-                .Select(x => new StudentAssignmentViewModel()
+            return this.context.Assignments
+                .Where(x => x.TeacherId == teacherId)
+                .Select(x => new AssignmentInformationViewModel()
                 {
-                    Id = x.AssignmentId,
-                    Stage = x.Stage,
-                    Points = x.Points
+                    Id = x.Id,
+                    AssignmentName = x.AssignmentTitle,
+                    Signature = x.Signature,
+                    DueDate = x.DueDate
                 })
+                .OrderByDescending(x => x.DueDate)
                 .ToList();
-
-            var assignments = new List<StudentAssignmentViewModel>();
-            foreach (var assignmentId in assignmentIds)
-            {
-                var assignment = this.context.Assignments
-                    .FirstOrDefault(x => x.Id == assignmentId.Id);
-
-                if (assignment == null)
-                {
-                    continue;
-                }
-
-                var assignmentModel = new StudentAssignmentViewModel()
-                {
-                    AssignmentName = assignment.AssignmentTitle,
-                    DueDate = assignment.DueDate,
-                    Id = assignment.Id,
-                    Signature = assignment.Signature,
-                    Stage = assignmentId.Stage,
-                    Points = assignmentId.Points
-                };
-
-                assignments.Add(assignmentModel);
-            }
-
-            return assignments;
         }
 
         public SolveAssignmentViewModel GetAssignment(string id)
@@ -166,11 +127,11 @@ namespace WebSchool.Services
             await this.context.SaveChangesAsync();
         }
 
-        public AssignmentResultViewModel GetAssignmentResult(string studentId, string assignmentId)
+        public AssignmentSolveResultViewModel GetAssignmentResult(string studentId, string assignmentId)
         {
             return this.context.AssignmentResults
                 .Where(x => x.StudentId == studentId && x.AssignmentId == assignmentId)
-                .Select(x => new AssignmentResultViewModel()
+                .Select(x => new AssignmentSolveResultViewModel()
                 {
                     AssignmentId = x.AssignmentId,
                     StudentId = x.StudentId,

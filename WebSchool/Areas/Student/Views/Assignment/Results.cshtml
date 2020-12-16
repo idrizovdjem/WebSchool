@@ -24,10 +24,23 @@
                     <tr>
                         <td>@(counter++)</td>
                         <td>@assignments.AssignmentName</td>
-                        <td>@assignments.DueDate</td>
+                        <td>@assignments.DueDate.Date</td>
                         <td>@assignments.Points</td>
                         <td>
-                            <a asp-area="Student" asp-controller="Assignment" asp-action="Solve" asp-route-Id="@assignments.Id" class="btn btn-primary w-75 text-white">Solve</a>
+                            @{
+                                if (assignments.Stage == 2)
+                                {
+                                    <button class="btn btn-warning w-75 text-white" disabled>For Review</button>
+                                }
+                                else if (assignments.Stage == 3)
+                                {
+                                    <button class="btn btn-success w-75" disabled>Rated</button>
+                                }
+                                else if (assignments.Stage == 4)
+                                {
+                                    <button class="btn btn-danger w-75" disabled>Late</button>
+                                }
+                            }
                         </td>
                     </tr>
                 }

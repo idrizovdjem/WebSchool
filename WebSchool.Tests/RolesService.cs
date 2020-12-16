@@ -18,20 +18,5 @@ namespace WebSchool.Tests
 
             Assert.Null(rolesService.GetUserRole(""));
         }
-
-        [Test]
-        public async Task UpdateUserRoleShouldUpdateTheUserRoleId()
-        {
-            var dbOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
-                    .UseInMemoryDatabase("test");
-            var context = new ApplicationDbContext(dbOptions.Options);
-            var rolesService = new WebSchool.Services.RolesService(context);
-            var user = new ApplicationUser();
-            await context.Users.AddAsync(user);
-            await context.SaveChangesAsync();
-
-            await rolesService.UpdateUserRole(user, "new");
-            Assert.True(true);
-        }
     }
 }

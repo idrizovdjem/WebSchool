@@ -1,6 +1,6 @@
 ﻿namespace WebSchool.ViewModels.Assignment
 {
-    public class AssignmentResultViewModel
+    public class AssignmentSolveResultViewModel
     {
         public string AssignmentId { get; set; }
 

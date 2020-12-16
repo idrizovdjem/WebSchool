@@ -2,6 +2,7 @@
 using WebSchool.Data;
 using System.Collections.Generic;
 using WebSchool.Services.Contracts;
+using WebSchool.ViewModels.Assignment;
 
 namespace WebSchool.Services
 {
@@ -42,6 +43,84 @@ namespace WebSchool.Services
             }
 
             return filteredUsers;
+        }
+
+        public ICollection<StudentAssignmentViewModel> GetStudentAssignments(string studentId)
+        {
+            var assignmentIds = this.context.AssignmentResults
+                .Where(x => x.StudentId == studentId && x.Stage == 1)
+                .Select(x => new StudentAssignmentViewModel()
+                {
+                    Id = x.AssignmentId,
+                    Stage = x.Stage,
+                    Points = x.Points
+                })
+                .ToList();
+
+            var assignments = new List<StudentAssignmentViewModel>();
+            foreach (var assignmentId in assignmentIds)
+            {
+                var assignment = this.context.Assignments
+                    .FirstOrDefault(x => x.Id == assignmentId.Id);
+
+                if (assignment == null)
+                {
+                    continue;
+                }
+
+                var assignmentModel = new StudentAssignmentViewModel()
+                {
+                    AssignmentName = assignment.AssignmentTitle,
+                    DueDate = assignment.DueDate,
+                    Id = assignment.Id,
+                    Signature = assignment.Signature,
+                    Stage = assignmentId.Stage,
+                    Points = assignmentId.Points
+                };
+
+                assignments.Add(assignmentModel);
+            }
+
+            return assignments;
+        }
+
+        public ICollection<StudentAssignmentViewModel> GetStudentResults(string studentId)
+        {
+            var assignmentIds = this.context.AssignmentResults
+                .Where(x => x.StudentId == studentId && x.Stage != 1)
+                .Select(x => new StudentAssignmentViewModel()
+                {
+                    Id = x.AssignmentId,
+                    Stage = x.Stage,
+                    Points = x.Points
+                })
+                .ToList();
+
+            var assignments = new List<StudentAssignmentViewModel>();
+            foreach (var assignmentId in assignmentIds)
+            {
+                var assignment = this.context.Assignments
+                    .FirstOrDefault(x => x.Id == assignmentId.Id);
+
+                if (assignment == null)
+                {
+                    continue;
+                }
+
+                var assignmentModel = new StudentAssignmentViewModel()
+                {
+                    AssignmentName = assignment.AssignmentTitle,
+                    DueDate = assignment.DueDate,
+                    Id = assignment.Id,
+                    Signature = assignment.Signature,
+                    Stage = assignmentId.Stage,
+                    Points = assignmentId.Points
+                };
+
+                assignments.Add(assignmentModel);
+            }
+
+            return assignments;
         }
     }
 }

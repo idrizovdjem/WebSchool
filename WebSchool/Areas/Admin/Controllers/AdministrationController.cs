@@ -5,6 +5,7 @@ using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using WebSchool.ViewModels.RegistrationLink;
+using Microsoft.Extensions.Configuration;
 
 namespace WebSchool.Areas.Admin.Controllers
 {
@@ -17,9 +18,10 @@ namespace WebSchool.Areas.Admin.Controllers
         private readonly IEmailsService emailsService;
         private readonly IUsersService usersService;
         private readonly ITeacherService teacherService;
+        private readonly IConfiguration configuration;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public AdministrationController(ILinksService linksService, UserManager<ApplicationUser> userManager, ISchoolService schoolService, IEmailsService emailsService, IUsersService usersService, ITeacherService teacherService)
+        public AdministrationController(ILinksService linksService, UserManager<ApplicationUser> userManager, ISchoolService schoolService, IEmailsService emailsService, IUsersService usersService, ITeacherService teacherService, IConfiguration configuration)
         {
             this.linksService = linksService;
             this.userManager = userManager;
@@ -27,6 +29,7 @@ namespace WebSchool.Areas.Admin.Controllers
             this.emailsService = emailsService;
             this.usersService = usersService;
             this.teacherService = teacherService;
+            this.configuration = configuration;
         }
 
         public IActionResult Panel()
@@ -58,7 +61,7 @@ namespace WebSchool.Areas.Admin.Controllers
             var links = await this.linksService.GenerateLinks(input.Role, user.Email, user.SchoolId, emails);
             foreach (var link in links)
             {
-                await this.emailsService.SendRegistrationEmail(link.Id, link.To);
+                await this.emailsService.SendRegistrationEmail(link.Id, link.To, this.configuration["SendGripApi"]);
             }
 
             return RedirectToAction("Panel");
