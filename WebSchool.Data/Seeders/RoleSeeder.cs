@@ -1,9 +1,10 @@
-﻿using WebSchool.Data.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+
+using WebSchool.Data.Models;
 
 namespace WebSchool.Data.Seeders
 {
-    public class RoleSeeder
+    public class RoleSeeder : ISeeder
     {
         private readonly RoleManager<ApplicationRole> roleManager;
 

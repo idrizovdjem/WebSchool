@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
 namespace WebSchool
 {
@@ -48,7 +49,7 @@ namespace WebSchool
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<ApplicationRole> roleManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<ApplicationRole> roleManager, ApplicationDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -69,6 +70,7 @@ namespace WebSchool
             app.UseAuthorization();
 
             new RoleSeeder(roleManager).Seed();
+            new GroupSeeder(context).Seed();
 
             app.UseEndpoints(endpoints =>
             {

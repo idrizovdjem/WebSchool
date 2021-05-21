@@ -19,10 +19,6 @@ namespace WebSchool.Data.Models
         [MaxLength(250)]
         public string Name { get; set; }
 
-        [Range(1, 150)]
-        public int MaxParticipants { get; set; }
-
-        [Required]
         public string OwnerId { get; set; }
 
         public virtual ApplicationUser Owner { get; set; }
