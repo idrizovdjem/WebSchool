@@ -84,8 +84,6 @@ namespace WebSchool.Services
             {
                 var user = this.context.Users
                     .FirstOrDefault(x => x.Id == student.StudentId);
-                student.FirstName = user.FirstName;
-                student.LastName = user.LastName;
             }
 
             return students;

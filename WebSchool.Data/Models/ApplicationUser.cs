@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 using WebSchool.Data.BaseModels;
 
@@ -15,14 +14,6 @@ namespace WebSchool.Data.Models
             this.Comments = new HashSet<Comment>();
             this.Groups = new HashSet<UserGroup>();
         }
-
-        [Required]
-        [MaxLength(50)]
-        public string FirstName { get; set; }
-
-        [Required]
-        [MaxLength(50)]
-        public string LastName { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
 

@@ -20,7 +20,10 @@
         @if (!this.User.Identity.IsAuthenticated)
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="Users" asp-action="Login">Login</a>
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
             </li>
         }
     }

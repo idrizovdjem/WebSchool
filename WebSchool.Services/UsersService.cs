@@ -40,8 +40,6 @@ namespace WebSchool.Services
                 {
                     Id = x.Id,
                     Email = x.Email,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
                     Role = this.rolesService.GetUserRole(x.Id)
                 })
                 .FirstOrDefault();
