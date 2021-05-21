@@ -11,6 +11,9 @@ namespace WebSchool.Data
             : base(options)
         {
         }
+        public DbSet<Group> Groups { get; set; }
+
+        public DbSet<UserGroup> UserGroups { get; set; }
 
         public DbSet<Post> Posts { get; set; }
 
@@ -50,6 +53,8 @@ namespace WebSchool.Data
 
             builder.Entity<UserGroup>(entity =>
             {
+                entity.HasKey(x => new { x.UserId, x.GroupId });
+
                 entity
                     .HasOne(ug => ug.User)
                     .WithMany(u => u.Groups)

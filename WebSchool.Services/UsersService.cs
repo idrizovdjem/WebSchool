@@ -12,16 +12,13 @@ namespace WebSchool.Services
     {
         private readonly ApplicationDbContext context;
         private readonly IRolesService rolesService;
-        private readonly ILinksService linksService;
 
         public UsersService(
             ApplicationDbContext context,
-            IRolesService rolesService,
-            ILinksService linksService)
+            IRolesService rolesService)
         {
             this.context = context;
             this.rolesService = rolesService;
-            this.linksService = linksService;
         }
 
         public ApplicationUser GetUserByEmail(string email)
@@ -50,50 +47,50 @@ namespace WebSchool.Services
                 .FirstOrDefault();
         }
 
-        public async Task UpdateUser(UsersViewModel userModel)
-        {
-            var user = this.context.Users
-                .FirstOrDefault(x => x.Id == userModel.Id);
-            if (user == null)
-            {
-                return;
-            }
+        //public async Task UpdateUser(UsersViewModel userModel)
+        //{
+        //    var user = this.context.Users
+        //        .FirstOrDefault(x => x.Id == userModel.Id);
+        //    if (user == null)
+        //    {
+        //        return;
+        //    }
 
-            user.FirstName = userModel.FirstName;
-            user.LastName = userModel.LastName;
-            user.Email = userModel.Email;
+        //    user.FirstName = userModel.FirstName;
+        //    user.LastName = userModel.LastName;
+        //    user.Email = userModel.Email;
 
-            var oldUserRole = this.context.UserRoles
-                .FirstOrDefault(x => x.UserId == user.Id);
+        //    var oldUserRole = this.context.UserRoles
+        //        .FirstOrDefault(x => x.UserId == user.Id);
 
-            var realOldRole = this.context.Roles
-                .FirstOrDefault(x => x.Id == oldUserRole.RoleId);
+        //    var realOldRole = this.context.Roles
+        //        .FirstOrDefault(x => x.Id == oldUserRole.RoleId);
 
-            if (realOldRole.Name != userModel.Role)
-            {
-                await this.linksService.UpdateLinkRole(user.Email, userModel.Role);
-                await this.rolesService.RemoveUserFromRole(user);
-            }
+        //    if (realOldRole.Name != userModel.Role)
+        //    {
+        //        /await this.linksService.UpdateLinkRole(user.Email, userModel.Role);
+        //        await this.rolesService.RemoveUserFromRole(user);
+        //    }
 
-            this.context.Users.Update(user);
-            await this.context.SaveChangesAsync();
-        }
+        //    this.context.Users.Update(user);
+        //    await this.context.SaveChangesAsync();
+        //}
 
-        public ICollection<UsersViewModel> GetUsersTable(string schoolId)
-        {
-            return this.context.Users
-                .Where(x => x.SchoolId == schoolId)
-                .Select(x => new UsersViewModel()
-                {
-                    Id = x.Id,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    Email = x.Email,
-                    Role = this.rolesService.GetUserRole(x.Id)
-                })
-                .ToList()
-                .Where(x => x.Role != "Admin")
-                .ToList();
-        }
+        //public ICollection<UsersViewModel> GetUsersTable(string schoolId)
+        //{
+        //    return this.context.Users
+        //        .Where(x => x.SchoolId == schoolId)
+        //        .Select(x => new UsersViewModel()
+        //        {
+        //            Id = x.Id,
+        //            FirstName = x.FirstName,
+        //            LastName = x.LastName,
+        //            Email = x.Email,
+        //            Role = this.rolesService.GetUserRole(x.Id)
+        //        })
+        //        .ToList()
+        //        .Where(x => x.Role != "Admin")
+        //        .ToList();
+        //}
     }
 }

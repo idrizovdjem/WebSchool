@@ -2,21 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using WebSchool.Services.Contracts;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace WebSchool.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILinksService linksService;
-        private readonly IEmailsService emailsService;
         private readonly IConfiguration configuration;
 
-        public HomeController(ILinksService linksService,
-            IEmailsService emailsService,
-            IConfiguration configuration)
+        public HomeController(IConfiguration configuration)
         {
-            this.linksService = linksService;
-            this.emailsService = emailsService;
             this.configuration = configuration;
         }
 
@@ -44,20 +39,22 @@ namespace WebSchool.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateUser(string email)
         {
-            if (this.User.Identity.IsAuthenticated)
-            {
-                return Redirect("/School/Forum");
-            }
+            throw new NotImplementedException();
 
-            if (!this.emailsService.IsEmailAvailable(email))
-            {
-                this.ModelState.AddModelError("Email", "Email address is already in use");
-                return View();
-            }
-            var link = await this.linksService.GenerateAdminLink(email);
-            await this.emailsService.SendRegistrationEmail(link.Id, email, this.configuration["SendGripApi"]);
+            //if (this.User.Identity.IsAuthenticated)
+            //{
+            //    return Redirect("/School/Forum");
+            //}
 
-            return View("SuccessRegistration");
+            //if (!this.emailsService.IsEmailAvailable(email))
+            //{
+            //    this.ModelState.AddModelError("Email", "Email address is already in use");
+            //    return View();
+            //}
+            //var link = await this.linksService.GenerateAdminLink(email);
+            //await this.emailsService.SendRegistrationEmail(link.Id, email, this.configuration["SendGripApi"]);
+
+            //return View("SuccessRegistration");
         }
     }
 }

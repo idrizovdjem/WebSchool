@@ -13,54 +13,52 @@ namespace WebSchool.Services
     public class AssignmentService : IAssignmentService
     {
         private readonly ApplicationDbContext context;
-        private readonly IClassesService classesService;
 
-        public AssignmentService(ApplicationDbContext context, IClassesService classesService)
+        public AssignmentService(ApplicationDbContext context)
         {
             this.context = context;
-            this.classesService = classesService;
         }
 
-        public async Task CreateAssignment(CreateAssignmentInputModel input, string teacherId, string schoolId)
-        {
-            var assignment = new Assignment()
-            {
-                TeacherId = teacherId,
-                AssignmentTitle = input.AssignmentName,
-                AssignmentContent = input.AssignmentContent,
-                DueDate = input.DueDate,
-                Points = input.Points,
-                Signature = input.Signature
-            };
+        //public async Task CreateAssignment(CreateAssignmentInputModel input, string teacherId, string schoolId)
+        //{
+        //    var assignment = new Assignment()
+        //    {
+        //        TeacherId = teacherId,
+        //        AssignmentTitle = input.AssignmentName,
+        //        AssignmentContent = input.AssignmentContent,
+        //        DueDate = input.DueDate,
+        //        Points = input.Points,
+        //        Signature = input.Signature
+        //    };
 
-            await GenerateResults(input.Signature, schoolId, assignment.Id);
+        //    await GenerateResults(input.Signature, schoolId, assignment.Id);
 
-            await this.context.Assignments.AddAsync(assignment);
-            await this.context.SaveChangesAsync();
-        }
+        //    await this.context.Assignments.AddAsync(assignment);
+        //    await this.context.SaveChangesAsync();
+        //}
 
-        public async Task GenerateResults(string signature, string schoolId, string assignmentId)
-        {
-            var students = this.classesService.GetStudentsFromClass(signature, schoolId);
-            var firstResults = new List<AssignmentResult>();
-            foreach (var studentId in students)
-            {
-                var result = new AssignmentResult()
-                {
-                    StudentId = studentId,
-                    AssignmentId = assignmentId,
-                    DueDate = DateTime.UtcNow,
-                    Points = 0,
-                    Content = string.Empty,
-                    Stage = 1
-                };
+        //public async Task GenerateResults(string signature, string schoolId, string assignmentId)
+        //{
+        //    var students = this.classesService.GetStudentsFromClass(signature, schoolId);
+        //    var firstResults = new List<AssignmentResult>();
+        //    foreach (var studentId in students)
+        //    {
+        //        var result = new AssignmentResult()
+        //        {
+        //            StudentId = studentId,
+        //            AssignmentId = assignmentId,
+        //            DueDate = DateTime.UtcNow,
+        //            Points = 0,
+        //            Content = string.Empty,
+        //            Stage = 1
+        //        };
 
-                firstResults.Add(result);
-            }
+        //        firstResults.Add(result);
+        //    }
 
-            await this.context.AssignmentResults.AddRangeAsync(firstResults);
-            await this.context.SaveChangesAsync();
-        }
+        //    await this.context.AssignmentResults.AddRangeAsync(firstResults);
+        //    await this.context.SaveChangesAsync();
+        //}
 
         public ICollection<StudentResultViewModel> GetResults(string assignmentId)
         {

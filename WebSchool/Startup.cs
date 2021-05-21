@@ -25,8 +25,6 @@ namespace WebSchool
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            new ApplicationDbContext().Database.Migrate();
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -38,13 +36,9 @@ namespace WebSchool
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddTransient<ILinksService, LinksService>();
-            services.AddTransient<IEmailsService, EmailsService>();
-            services.AddTransient<ISchoolService, SchoolService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IPostsService, PostsService>();
             services.AddTransient<ICommentsService, CommentsService>();
-            services.AddTransient<IClassesService, ClassesService>();
             services.AddTransient<IRolesService, RolesService>();
             services.AddTransient<ITeacherService, TeacherService>();
             services.AddTransient<IAssignmentService, AssignmentService>();
@@ -59,7 +53,6 @@ namespace WebSchool
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {

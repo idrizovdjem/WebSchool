@@ -20,13 +20,13 @@ namespace WebSchool.Services
             this.commentsService = commentsService;
         }
 
-        public async Task CreatePost(string content, ApplicationUser user, string schoolId)
+        public async Task CreatePost(string content, ApplicationUser user, string groupId)
         {
             var post = new Post()
             {
                 Content = content,
                 CreatedOn = DateTime.UtcNow,
-                SchoolId = schoolId,
+                GroupId = groupId,
                 Creator = user
             };
 
@@ -34,10 +34,10 @@ namespace WebSchool.Services
             await this.context.SaveChangesAsync();
         }
 
-        public ICollection<PostViewModel> GetPosts(string schoolId, int page)
+        public ICollection<PostViewModel> GetPosts(string groupId, int page)
         {
             return this.context.Posts
-                .Where(x => x.SchoolId == schoolId && x.IsDeleted == false)
+                .Where(x => x.GroupId == groupId && x.IsDeleted == false)
                 .OrderByDescending(x => x.CreatedOn)
                 .Select(x => new PostViewModel()
                 {
@@ -58,10 +58,10 @@ namespace WebSchool.Services
                 .FirstOrDefault(x => x.Id == postId && x.IsDeleted == false);
         }
 
-        public int GetMaxPages(string schoolId)
+        public int GetMaxPages(string groupId)
         {
             var postsCount = this.context.Posts.
-                Count(x => x.SchoolId == schoolId);
+                Count(x => x.GroupId == groupId);
 
             var maxPages = postsCount / 10;
             if (maxPages % 10 > 0 || postsCount < 10)

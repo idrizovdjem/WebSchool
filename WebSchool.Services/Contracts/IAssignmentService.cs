@@ -7,11 +7,11 @@ namespace WebSchool.Services.Contracts
 {
     public interface IAssignmentService
     {
-        Task CreateAssignment(CreateAssignmentInputModel input, string teacherId, string schoolId);
+        // Task CreateAssignment(CreateAssignmentInputModel input, string teacherId, string schoolId);
 
         ICollection<AssignmentInformationViewModel> GetTeacherAssignments(string teacherId);
 
-        Task GenerateResults(string signature, string schoolId, string assignmentId);
+        // Task GenerateResults(string signature, string schoolId, string assignmentId);
 
         ICollection<StudentResultViewModel> GetResults(string assignmentId);
 

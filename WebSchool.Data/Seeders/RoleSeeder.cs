@@ -14,27 +14,21 @@ namespace WebSchool.Data.Seeders
 
         public void Seed()
         {
-            var adminRole = new ApplicationRole()
+            var roleNames = new string[]
             {
-                Name = "Admin",
-                NormalizedName = "ADMIN"
+                "Admin", "Teacher", "Student"
             };
 
-            var teacherRole = new ApplicationRole()
+            foreach(var roleName in roleNames)
             {
-                Name = "Teacher",
-                NormalizedName = "TEACHER"
-            };
+                var role = new ApplicationRole()
+                {
+                    Name = roleName,
+                    NormalizedName = roleName.ToUpper()
+                };
 
-            var studentRole = new ApplicationRole()
-            {
-                Name = "Student",
-                NormalizedName = "STUDENT"
-            };
-
-            roleManager.CreateAsync(adminRole).GetAwaiter().GetResult();
-            roleManager.CreateAsync(teacherRole).GetAwaiter().GetResult();
-            roleManager.CreateAsync(studentRole).GetAwaiter().GetResult();
+                roleManager.CreateAsync(role).GetAwaiter().GetResult();
+            }
         }
     }
 }

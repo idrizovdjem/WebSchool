@@ -11,10 +11,10 @@ namespace WebSchool.Services.Contracts
 
         ApplicationUser GetUserById(string id);
 
-        ICollection<UsersViewModel> GetUsersTable(string schoolId);
+        // ICollection<UsersViewModel> GetUsersTable(string schoolId);
 
         UsersViewModel GetUserForEdit(string id);
 
-        Task UpdateUser(UsersViewModel user);
+        // Task UpdateUser(UsersViewModel user);
     }
 }

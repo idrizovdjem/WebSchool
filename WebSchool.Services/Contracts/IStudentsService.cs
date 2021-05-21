@@ -5,7 +5,7 @@ namespace WebSchool.Services.Contracts
 {
     public interface IStudentsService
     {
-        List<string> GetStudentIdsWithMatchingEmail(string email, string signature, string schoolId);
+        // List<string> GetStudentIdsWithMatchingEmail(string email, string signature, string schoolId);
 
         public ICollection<StudentAssignmentViewModel> GetStudentAssignments(string studentId);
 

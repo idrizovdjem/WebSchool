@@ -5,28 +5,25 @@ using WebSchool.ViewModels.User;
 using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace WebSchool.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly ILinksService linksService;
         private readonly IUsersService usersService;
         private readonly IRolesService rolesService;
         private readonly IStudentsService studentsService;
-        private readonly ISchoolService schoolService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
 
-        public UsersController(ILinksService linksService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ISchoolService schoolService, IUsersService usersService, IRolesService rolesService, IStudentsService studentsService)
+        public UsersController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUsersService usersService, IRolesService rolesService, IStudentsService studentsService)
         {
             this.userManager = userManager;
             this.usersService = usersService;
             this.rolesService = rolesService;
             this.studentsService = studentsService;
-            this.linksService = linksService;
             this.signInManager = signInManager;
-            this.schoolService = schoolService;
         }
 
         public IActionResult Register()
@@ -43,63 +40,65 @@ namespace WebSchool.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserInputModel input)
         {
-            if (this.User.Identity.IsAuthenticated)
-            {
-                return Redirect("/School/Forum");
-            }
+            throw new NotImplementedException();
 
-            if (!this.ModelState.IsValid)
-            {
-                return View(input);
-            }
+            //if (this.User.Identity.IsAuthenticated)
+            //{
+            //    return Redirect("/School/Forum");
+            //}
 
-            var registerLink = this.linksService.GetLink(input.RegistrationLinkId);
-            if (registerLink == null)
-            {
-                return NotFound();
-            }
+            //if (!this.ModelState.IsValid)
+            //{
+            //    return View(input);
+            //}
 
-            if (input.Password != input.ConfirmPassword)
-            {
-                this.ModelState.AddModelError("Password", "Passwords does not match");
-                return View(input);
-            }
+            //var registerLink = this.linksService.GetLink(input.RegistrationLinkId);
+            //if (registerLink == null)
+            //{
+            //    return NotFound();
+            //}
 
-            var user = new ApplicationUser()
-            {
-                FirstName = input.FirstName,
-                LastName = input.LastName,
-                Email = registerLink.To,
-                UserName = registerLink.To
-            };
+            //if (input.Password != input.ConfirmPassword)
+            //{
+            //    this.ModelState.AddModelError("Password", "Passwords does not match");
+            //    return View(input);
+            //}
 
-            var result = await this.userManager.CreateAsync(user, input.Password);
-            if (!result.Succeeded)
-            {
-                foreach (var error in result.Errors)
-                {
-                    this.ModelState.AddModelError("Invalid data", error.Description);
-                }
+            //var user = new ApplicationUser()
+            //{
+            //    FirstName = input.FirstName,
+            //    LastName = input.LastName,
+            //    Email = registerLink.To,
+            //    UserName = registerLink.To
+            //};
 
-                return View(input);
-            }
+            //var result = await this.userManager.CreateAsync(user, input.Password);
+            //if (!result.Succeeded)
+            //{
+            //    foreach (var error in result.Errors)
+            //    {
+            //        this.ModelState.AddModelError("Invalid data", error.Description);
+            //    }
 
-            await userManager.AddToRoleAsync(user, registerLink.RoleName);
-            await this.signInManager.SignInAsync(user, false);
-            await this.linksService.UseLink(input.RegistrationLinkId);
+            //    return View(input);
+            //}
 
-            if (registerLink.RoleName == "Admin")
-            {
-                return Redirect("/School/Create");
-            }
+            //await userManager.AddToRoleAsync(user, registerLink.RoleName);
+            //await this.signInManager.SignInAsync(user, false);
+            //await this.linksService.UseLink(input.RegistrationLinkId);
 
-            if (string.IsNullOrWhiteSpace(registerLink.SchoolId))
-            {
-                return BadRequest();
-            }
+            //if (registerLink.RoleName == "Admin")
+            //{
+            //    return Redirect("/School/Create");
+            //}
 
-            await this.schoolService.AssignUserToSchool(user, registerLink.SchoolId);
-            return Redirect("/School/Forum");
+            //if (string.IsNullOrWhiteSpace(registerLink.SchoolId))
+            //{
+            //    return BadRequest();
+            //}
+
+            //await this.schoolService.AssignUserToSchool(user, registerLink.SchoolId);
+            //return Redirect("/School/Forum");
         }
 
         public IActionResult Login()
@@ -145,9 +144,10 @@ namespace WebSchool.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetStudentsWithEmail(string email, string signature)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-            var userEmails = this.studentsService.GetStudentIdsWithMatchingEmail(email, signature, user.SchoolId);
-            return Json(userEmails);
+            throw new NotImplementedException();
+            //var user = await this.userManager.GetUserAsync(this.User);
+            //var userEmails = this.studentsService.GetStudentIdsWithMatchingEmail(email, signature, user.SchoolId);
+            //return Json(userEmails);
         }
 
         [Authorize(Roles = "Admin")]
@@ -166,16 +166,18 @@ namespace WebSchool.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditUser(UsersViewModel input)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return View();
-            }
+            throw new NotImplementedException();
 
-            await this.usersService.UpdateUser(input);
-            var user = this.usersService.GetUserById(input.Id);
-            await this.userManager.AddToRoleAsync(user, input.Role);
+            //if (!this.ModelState.IsValid)
+            //{
+            //    return View();
+            //}
 
-            return Redirect("/Admin/Administration/Users");
+            //await this.usersService.UpdateUser(input);
+            //var user = this.usersService.GetUserById(input.Id);
+            //await this.userManager.AddToRoleAsync(user, input.Role);
+
+            //return Redirect("/Admin/Administration/Users");
         }
     }
 }

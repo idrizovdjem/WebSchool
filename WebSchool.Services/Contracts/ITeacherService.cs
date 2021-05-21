@@ -5,8 +5,8 @@ namespace WebSchool.Services.Contracts
 {
     public interface ITeacherService
     {
-        TeacherViewModel GetTeacher(string id);
+        // TeacherViewModel GetTeacher(string id);
 
-        ICollection<UsersViewModel> GetTeachers(string schoolId);
+        // ICollection<UsersViewModel> GetTeachers(string schoolId);
     }
 }

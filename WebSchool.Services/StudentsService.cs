@@ -19,33 +19,33 @@ namespace WebSchool.Services
             this.rolesService = rolesService;
         }
 
-        public List<string> GetStudentIdsWithMatchingEmail(string email, string signature, string schoolId)
-        {
-            var users = this.context.Users
-                .Where(x => x.SchoolId == schoolId && x.Email.Contains(email))
-                .ToList();
+        //public List<string> GetStudentIdsWithMatchingEmail(string email, string signature, string schoolId)
+        //{
+        //    var users = this.context.Users
+        //        .Where(x => x.SchoolId == schoolId && x.Email.Contains(email))
+        //        .ToList();
 
-            var schoolClass = this.context.SchoolClasses
-                .FirstOrDefault(x => x.SchoolId == schoolId && x.Signature == x.Signature);
+        //    var schoolClass = this.context.SchoolClasses
+        //        .FirstOrDefault(x => x.SchoolId == schoolId && x.Signature == x.Signature);
 
-            var filteredUsers = new List<string>();
-            foreach (var user in users)
-            {
-                if (this.context.UserClasses.Any(x => x.UserId == user.Id))
-                {
-                    continue;
-                }
+        //    var filteredUsers = new List<string>();
+        //    foreach (var user in users)
+        //    {
+        //        if (this.context.UserClasses.Any(x => x.UserId == user.Id))
+        //        {
+        //            continue;
+        //        }
 
-                if (this.rolesService.GetUserRole(user.Id) != "Student")
-                {
-                    continue;
-                }
+        //        if (this.rolesService.GetUserRole(user.Id) != "Student")
+        //        {
+        //            continue;
+        //        }
 
-                filteredUsers.Add(user.Email);
-            }
+        //        filteredUsers.Add(user.Email);
+        //    }
 
-            return filteredUsers;
-        }
+        //    return filteredUsers;
+        //}
 
         public ICollection<StudentAssignmentViewModel> GetStudentAssignments(string studentId)
         {
