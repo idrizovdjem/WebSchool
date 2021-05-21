@@ -1,0 +1,72 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="register-form">
+    <h4>Create a new account.</h4>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div>
+        <label asp-for="Input.Email"></label>
+        <input asp-for="Input.Email" class="input-controll" />
+        <span asp-validation-for="Input.Email" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Input.Password"></label>
+        <input asp-for="Input.Password" class="input-controll" />
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Input.ConfirmPassword"></label>
+        <input asp-for="Input.ConfirmPassword" class="input-controll" />
+        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+    </div>
+    <button type="submit" class="register-button">Register</button>
+</form>
+
+<div class="links">
+    <a asp-area="Identity" asp-page="/Account/Login">Already have account?</a>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .register-form {
+        margin: auto;
+        width: 50%;
+    }
+
+    .input-controll {
+        width: 100%;
+        margin-bottom: 1vh;
+        font-size: 3vh;
+    }
+
+    .input-label {
+        width: 100%;
+    }
+
+    .register-button {
+        font-size: 3vh;
+        width: 20%;
+        border: 1px solid black;
+        background: white;
+        transition: background ease 0.2s;
+    }
+
+    .register-button:hover {
+        color: #5885AF;
+        background: #5885AF;
+        color: white;
+        cursor: pointer;
+    }
+
+    .links {
+        width: 50%;
+        margin: 2vh auto;
+    }
+</style>

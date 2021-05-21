@@ -32,4 +32,9 @@
     <ProjectReference Include="..\WebSchool.ViewModels\WebSchool.ViewModels.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,72 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<section>
+    <form id="account" method="post" class="login-form">
+        <h4>Use a local account to log in.</h4>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div>
+            <label asp-for="Input.Email" class="input-label"></label>
+            <input asp-for="Input.Email" class="input-controll" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Input.Password" class="input-label"></label>
+            <input asp-for="Input.Password" class="input-controll" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="login-button">Log in</button>
+        </div>
+
+        <div class="form-group">
+            <p>
+                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+            </p>
+            <p>
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+            </p>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .login-form {
+        margin: auto;
+        width: 50%;
+    }
+
+    .input-controll {
+        width: 100%;
+        margin-bottom: 1vh;
+        font-size: 3vh;
+    }
+
+    .input-label {
+        width: 100%;
+    }
+
+    .login-button {
+        font-size: 3vh;
+        width: 20%;
+        border: 1px solid black;
+        background: white;
+        transition: background ease 0.2s;
+    }
+
+    .login-button:hover {
+        color: #5885AF;
+        background: #5885AF;
+        color: white;
+        cursor: pointer;
+    }
+</style>

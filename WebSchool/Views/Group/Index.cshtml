@@ -7,13 +7,17 @@
     Layout = "_Layout";
 }
 
-<p>@Model.Name</p>
+<partial name="_SideBar" />
 
-@foreach(PostViewModel post in Model.NewestPosts)
-{
-    <article>
-        <h3>@post.Creator</h3>
-        <p>@post.Content</p>
-        <span>@post.CreatedOn</span>
-    </article>
-}
+<main class="col-md-9 text-center">
+    <p>@Model.Name</p>
+
+    @foreach (PostViewModel post in Model.NewestPosts)
+    {
+        <article>
+            <h3>@post.Creator</h3>
+            <p>@post.Content</p>
+            <span>@post.CreatedOn</span>
+        </article>
+    }
+</main>
