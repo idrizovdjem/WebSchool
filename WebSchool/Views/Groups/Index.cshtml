@@ -1,0 +1,118 @@
+﻿@using WebSchool.ViewModels.Group
+@using WebSchool.ViewModels.Post
+@model GroupViewModel
+
+@{ 
+    ViewData["Title"] = Model.Name;
+    Layout = "_Layout";
+}
+
+<partial name="_SideBar" />
+
+<main class="group">
+    <h2>@Model.Name</h2>
+
+    <button class="create-post-button" id="formTogglerButton">
+        <i class="fas fa-plus-circle"></i>
+        Create new post
+    </button>
+
+    <form asp-controller="Posts" asp-action="Create" method="post" class="post-create-form" id="postForm">
+        <input type="hidden" asp-for="Id" name="groupId"/>
+        <textarea name="content" class="post-textarea" placeholder="Post content..."></textarea>
+        <button type="submit" class="post-form-button">Create</button>
+        <button class="post-form-button" type="button" id="cancelButton">Cancel</button>
+    </form>
+
+    <section>
+        @foreach (PostViewModel post in Model.NewestPosts)
+        {
+            <article>
+                <h3>@post.Creator</h3>
+                <p>@post.Content</p>
+                <span>@post.CreatedOn</span>
+            </article>
+        }
+    </section>
+</main>
+
+@section Scripts {
+    <script>
+        const formTogglerButton = document.getElementById('formTogglerButton');
+        const postForm = document.getElementById('postForm');
+        const cancelButton = document.getElementById('cancelButton');
+
+        formTogglerButton.addEventListener('click', () => {
+            formTogglerButton.style.display = 'none';
+            postForm.style.display = 'block';
+        });
+
+        cancelButton.addEventListener('click', () => {
+            formTogglerButton.style.display = 'inline';
+            postForm.style.display = 'none';
+        });
+    </script>
+} 
+
+<style>
+    .group {
+        text-align: center;
+        width: 79.85%;
+        float: left;
+        height: 93vh;
+    }
+
+    .create-post-button {
+        font-size: 3vh;
+        background: white;
+        padding: 0.5% 1%;
+        border-radius: 5px;
+        border: 1px solid black;
+        transition: background ease 0.2s;
+    }
+
+    .create-post-button:hover {
+        background: #5885AF;
+        border-color: #5885AF;
+        color: white;
+        cursor: pointer;
+    }
+
+    .post-create-form {
+        width: 40%;
+        margin: auto;
+        display: none;
+    }
+
+    .post-textarea {
+        width: 100%;
+        max-width: 98%;
+        min-width: 98%;
+        min-height: 20vh;
+        max-height: 20vh;
+        padding: 5px;
+        font-size: 3vh;
+    }
+
+    .post-form-button {
+        width: 49%;
+        float: left;
+        border: 1px solid black;
+        font-size: 3vh;
+        background: white;
+        padding: 0.5% 1%;
+        border-radius: 5px;
+        transition: background ease 0.2s;
+    }
+
+    .post-form-button:hover {
+        background: #5885AF;
+        border-color: #5885AF;
+        color: white;
+        cursor: pointer;
+    }
+
+    .post-form-button:nth-of-type(2) {
+        margin-left: 2%;
+    }
+</style>

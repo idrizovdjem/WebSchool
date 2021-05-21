@@ -1,0 +1,34 @@
+﻿.register-form {
+    margin: auto;
+    width: 50%;
+}
+
+.input-controll {
+    width: 100%;
+    margin-bottom: 1vh;
+    font-size: 3vh;
+}
+
+.input-label {
+    width: 100%;
+}
+
+.register-button {
+    font-size: 3vh;
+    width: 20%;
+    border: 1px solid black;
+    background: white;
+    transition: background ease 0.2s;
+}
+
+.register-button:hover {
+    color: #5885AF;
+    background: #5885AF;
+    color: white;
+    cursor: pointer;
+}
+
+.links {
+    width: 50%;
+    margin: 2vh auto;
+}

@@ -1,0 +1,27 @@
+﻿.sidebar {
+    width: 20%;
+    height: 93vh;
+    float: left;
+    border-right: 2px solid black;
+}
+
+.button-section {
+    width: 90%;
+    height: 6vh;
+    font-size: 4vh;
+    margin: 2% auto;
+    border-radius: 5px;
+    user-select: none;
+}
+
+.label {
+    margin: 0;
+    padding: 0;
+    padding-left: 15%;
+    padding-top: 2%;
+}
+
+.button-section:hover {
+    cursor: pointer;
+    background: lightgray;
+}

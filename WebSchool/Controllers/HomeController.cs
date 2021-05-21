@@ -8,7 +8,7 @@ namespace WebSchool.Controllers
         {
             if(User.Identity.IsAuthenticated)
             {
-                return Redirect("/Group/Index");
+                return Redirect("/Groups/Index");
             }
 
             return View();

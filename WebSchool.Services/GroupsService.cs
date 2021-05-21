@@ -23,10 +23,23 @@ namespace WebSchool.Services
                 .Where(g => g.Name == groupName)
                 .Select(g => new GroupViewModel()
                 {
+                    Id = g.Id,
                     Name = g.Name,
                     NewestPosts = postsService.GetNewestPosts(g.Id, 10)
                 })
                 .FirstOrDefault();
+        }
+
+        public string GetName(string groupId)
+        {
+            return dbContext.Groups
+                .FirstOrDefault(g => g.Id == groupId)?.Name;
+        }
+
+        public bool IsUserInGroup(string userId, string groupId)
+        {
+            return dbContext.UserGroups
+                .Any(ug => ug.UserId == userId && ug.GroupId == groupId);
         }
     }
 }

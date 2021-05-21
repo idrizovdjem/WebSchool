@@ -1,9 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 
 using WebSchool.Data;
 using WebSchool.ViewModels.Post;
 
+using WebSchool.Data.Models;
 using WebSchool.Services.Contracts;
 
 namespace WebSchool.Services
@@ -17,6 +20,21 @@ namespace WebSchool.Services
         {
             this.dbContext = context;
             this.commentsService = commentsService;
+        }
+
+        public async Task CreateAsync(CreatePostInputModel input, string userId)
+        {
+            var post = new Post()
+            {
+                Content = input.Content,
+                GroupId = input.GroupId,
+                CreatorId = userId,
+                CreatedOn = DateTime.UtcNow,
+                IsDeleted = false
+            };
+
+            await dbContext.Posts.AddAsync(post);
+            await dbContext.SaveChangesAsync();
         }
 
         public IEnumerable<PostViewModel> GetNewestPosts(string groupId, int count = 10)

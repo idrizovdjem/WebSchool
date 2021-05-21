@@ -5,11 +5,11 @@ using WebSchool.Services.Contracts;
 
 namespace WebSchool.Web.Controllers
 {
-    public class GroupController : Controller
+    public class GroupsController : Controller
     {
         private readonly IGroupsService groupsService;
 
-        public GroupController(IGroupsService groupsService)
+        public GroupsController(IGroupsService groupsService)
         {
             this.groupsService = groupsService;
         }

@@ -5,6 +5,8 @@
     ViewData["Title"] = "Log in";
 }
 
+<link rel="stylesheet" href="~/css/login.css" />
+ 
 <section>
     <form id="account" method="post" class="login-form">
         <h4>Use a local account to log in.</h4>
@@ -38,35 +40,3 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
-<style>
-    .login-form {
-        margin: auto;
-        width: 50%;
-    }
-
-    .input-controll {
-        width: 100%;
-        margin-bottom: 1vh;
-        font-size: 3vh;
-    }
-
-    .input-label {
-        width: 100%;
-    }
-
-    .login-button {
-        font-size: 3vh;
-        width: 20%;
-        border: 1px solid black;
-        background: white;
-        transition: background ease 0.2s;
-    }
-
-    .login-button:hover {
-        color: #5885AF;
-        background: #5885AF;
-        color: white;
-        cursor: pointer;
-    }
-</style>

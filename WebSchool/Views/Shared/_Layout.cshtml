@@ -3,14 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebSchool</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="/css/site.css" />
+    <link href="/css/fontawesome/all.css" rel="stylesheet">
+    <script defer src="/js/fontawesome/all.js"></script>
 </head>
 <body>
     <header>
         <nav class="navbar">
             <p class="navbar-logo">
-                <a asp-controller="Home" asp-action="Index">WebSchool</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index">WebSchool</a>
             </p>
 
             <partial name="_ButtonsPartial" />
