@@ -12,6 +12,7 @@ namespace WebSchool.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
             this.Users = new HashSet<UserGroup>();
+            this.Posts = new HashSet<Post>();
         }
 
         [Required]
@@ -27,5 +28,7 @@ namespace WebSchool.Data.Models
         public virtual ApplicationUser Owner { get; set; }
 
         public virtual ICollection<UserGroup> Users { get; set; }
+
+        public virtual ICollection<Post> Posts { get; set; }
     }
 }

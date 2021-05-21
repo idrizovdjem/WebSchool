@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using WebSchool.Data.BaseModels;
+
 namespace WebSchool.Data.Models
 {
-    public class Post
+    public class Post : BaseDeletableModel<string>
     {
         public Post()
         {
             this.Id = Guid.NewGuid().ToString();
             this.Comments = new HashSet<Comment>();
         }
-
-        public string Id { get; set; }
 
         [Required]
         public string Content { get; set; }
@@ -23,17 +23,9 @@ namespace WebSchool.Data.Models
         public virtual ApplicationUser Creator { get; set; }
 
         [Required]
-        public string SchoolId { get; set; }
+        public string GroupId { get; set; }
 
-        public virtual School School { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
-
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
+        public virtual Group Group { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
     }
