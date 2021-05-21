@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-using WebSchool.ViewModels.Post;
+﻿using WebSchool.ViewModels.Post;
 
 namespace WebSchool.ViewModels.Group
 {
@@ -10,6 +8,6 @@ namespace WebSchool.ViewModels.Group
 
         public string Name { get; set; }
 
-        public IEnumerable<PostViewModel> NewestPosts { get; set; }
+        public PostViewModel[] NewestPosts { get; set; }
     }
 }

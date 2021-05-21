@@ -10,7 +10,7 @@
 <partial name="_SideBar" />
 
 <main class="group">
-    <h2>@Model.Name</h2>
+    <h1>@Model.Name</h1>
 
     <button class="create-post-button" id="formTogglerButton">
         <i class="fas fa-plus-circle"></i>
@@ -24,13 +24,16 @@
         <button class="post-form-button" type="button" id="cancelButton">Cancel</button>
     </form>
 
-    <section>
-        @foreach (PostViewModel post in Model.NewestPosts)
+    <section class="posts">
+        @foreach(var post in Model.NewestPosts)
         {
-            <article>
-                <h3>@post.Creator</h3>
-                <p>@post.Content</p>
-                <span>@post.CreatedOn</span>
+            <article class="post">
+                <h3 class="post-creator">@post.Creator</h3>
+                <p class="post-content">@post.Content</p>
+                <div class="post-info">
+                    <span class="post-comments">@post.CommentsCount Comments</span>
+                    <span class="post-date">@post.CreatedOn</span>
+                </div>
             </article>
         }
     </section>
@@ -60,6 +63,64 @@
         width: 79.85%;
         float: left;
         height: 93vh;
+        overflow-y: auto;
+    }
+
+    .post {
+        width: 44%;
+        height: 30vh;
+        border-radius: 5px;
+        border: 2px solid lightgray;
+        float: left;
+        margin: 1% 2.5%;
+        transition: border-color ease 0.3s;
+    }
+
+        .post:hover {
+            border-color: black;
+            cursor: pointer;
+        }
+
+    .post-creator {
+        float: left;
+        width: 98%;
+        height: 4vh;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+        padding-left: 2%;
+        padding-top: 0.5vh;
+        background: lightgray;
+    }
+
+    .post-content {
+        height: 19vh;
+        width: 96%;
+        margin: 0;
+        float: left;
+        padding: 1vh 2%;
+        text-align: justify;
+        font-size: 3vh;
+        overflow-y: auto;
+    }
+
+    .post-info {
+        width: 100%;
+        height: 4.5vh;
+        background: lightgray;
+        float: left;
+    }
+
+    .post-date {
+        margin-top: 1vh;
+        margin-right: 1vh;
+        float: right;
+    }
+
+    .post-comments {
+        float: left;
+        margin-top: 1vh;
+        margin-left: 1vh;
     }
 
     .create-post-button {
@@ -69,19 +130,21 @@
         border-radius: 5px;
         border: 1px solid black;
         transition: background ease 0.2s;
+        margin-bottom: 2%;
     }
 
-    .create-post-button:hover {
-        background: #5885AF;
-        border-color: #5885AF;
-        color: white;
-        cursor: pointer;
-    }
+        .create-post-button:hover {
+            background: #5885AF;
+            border-color: #5885AF;
+            color: white;
+            cursor: pointer;
+        }
 
     .post-create-form {
         width: 40%;
         margin: auto;
         display: none;
+        margin-bottom: 5%;
     }
 
     .post-textarea {
@@ -105,14 +168,14 @@
         transition: background ease 0.2s;
     }
 
-    .post-form-button:hover {
-        background: #5885AF;
-        border-color: #5885AF;
-        color: white;
-        cursor: pointer;
-    }
+        .post-form-button:hover {
+            background: #5885AF;
+            border-color: #5885AF;
+            color: white;
+            cursor: pointer;
+        }
 
-    .post-form-button:nth-of-type(2) {
-        margin-left: 2%;
-    }
+        .post-form-button:nth-of-type(2) {
+            margin-left: 2%;
+        }
 </style>

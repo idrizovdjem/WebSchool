@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 using WebSchool.Data;
 using WebSchool.ViewModels.Post;
@@ -37,7 +36,7 @@ namespace WebSchool.Services
             await dbContext.SaveChangesAsync();
         }
 
-        public IEnumerable<PostViewModel> GetNewestPosts(string groupId, int count = 10)
+        public PostViewModel[] GetNewestPosts(string groupId, int count = 10)
         {
             return dbContext.Posts
                 .Where(p => p.GroupId == groupId && p.IsDeleted == false)
@@ -47,9 +46,9 @@ namespace WebSchool.Services
                     Content = p.Content,
                     CreatedOn = p.CreatedOn,
                     Creator = p.Creator.Email,
-                    Comments = commentsService.GetPostComments(p.Id)
+                    CommentsCount = p.Comments.Count()
                 })
-                .ToList();
+                .ToArray();
         }
     }
 }

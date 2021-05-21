@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-
-using WebSchool.ViewModels.Comment;
 
 namespace WebSchool.ViewModels.Post
 {
@@ -15,6 +12,6 @@ namespace WebSchool.ViewModels.Post
 
         public DateTime CreatedOn { get; set; }
 
-        public IEnumerable<CommentViewModel> Comments { get; set; }
+        public int CommentsCount { get; set; }
     }
 }
