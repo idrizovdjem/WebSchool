@@ -37,13 +37,9 @@ namespace WebSchool
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IPostsService, PostsService>();
-            services.AddTransient<ICommentsService, CommentsService>();
             services.AddTransient<IRolesService, RolesService>();
-            services.AddTransient<ITeacherService, TeacherService>();
-            services.AddTransient<IAssignmentService, AssignmentService>();
-            services.AddTransient<IStudentsService, StudentsService>();
+            services.AddTransient<ICommentsService, CommentsService>();
 
             services.AddAntiforgery();
         }
