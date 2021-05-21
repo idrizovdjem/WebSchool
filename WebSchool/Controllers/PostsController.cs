@@ -9,7 +9,7 @@ using WebSchool.Services.Contracts;
 
 namespace WebSchool.WebApplication.Controllers
 {
-    
+    [Authorize]
     public class PostsController : Controller
     {
         private readonly IGroupsService groupsService;
@@ -22,7 +22,6 @@ namespace WebSchool.WebApplication.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Create(CreatePostInputModel input)
         {
             if(ModelState.IsValid == false)
@@ -52,6 +51,17 @@ namespace WebSchool.WebApplication.Controllers
 
             await postsService.CreateAsync(input, userId);
             return Redirect($"/Groups/Index?Name={groupName}");
+        }
+
+        public IActionResult Index(string postId)
+        {
+            var post = postsService.GetById(postId);
+            if(post == null)
+            {
+                return Redirect("/Groups/Index");
+            }
+
+            return View(post);
         }
     }
 }

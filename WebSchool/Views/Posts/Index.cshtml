@@ -1,0 +1,23 @@
+﻿@using WebSchool.ViewModels.Post
+@model PostPreviewViewModel
+
+@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "Post";
+}
+
+<partial name="_Sidebar" />
+
+<main class="post-container">
+    @Model.Content
+</main>
+
+<style>
+    .post-container {
+        text-align: center;
+        width: 79.85%;
+        float: left;
+        height: 93vh;
+        overflow-y: auto;
+    }
+</style>

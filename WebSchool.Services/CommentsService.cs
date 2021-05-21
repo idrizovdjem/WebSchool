@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using System.Linq;
 
 using WebSchool.Data;
 using WebSchool.Services.Contracts;
@@ -17,7 +15,7 @@ namespace WebSchool.Services
             this.context = context;
         }
 
-        public IEnumerable<CommentViewModel> GetPostComments(string postId)
+        public CommentViewModel[] GetPostComments(string postId)
         {
             return this.context.Comments
                 .Where(x => x.PostId == postId && x.IsDeleted == false)
@@ -29,7 +27,7 @@ namespace WebSchool.Services
                     CreatedOn = x.CreatedOn,
                 })
                 .OrderByDescending(x => x.CreatedOn)
-                .ToList();
+                .ToArray();
         }
     }
 }

@@ -36,6 +36,20 @@ namespace WebSchool.Services
             await dbContext.SaveChangesAsync();
         }
 
+        public PostPreviewViewModel GetById(string postId)
+        {
+            return dbContext.Posts
+                .Where(p => p.Id == postId && p.IsDeleted == false)
+                .Select(p => new PostPreviewViewModel()
+                {
+                    Id = p.Id,
+                    Creator = p.Creator.Email,
+                    Content = p.Content,
+                    Comments = commentsService.GetPostComments(p.Id)
+                })
+                .FirstOrDefault();
+        }
+
         public PostViewModel[] GetNewestPosts(string groupId, int count = 10)
         {
             return dbContext.Posts
@@ -43,6 +57,7 @@ namespace WebSchool.Services
                 .Take(count)
                 .Select(p => new PostViewModel()
                 {
+                    Id = p.Id,
                     Content = p.Content,
                     CreatedOn = p.CreatedOn,
                     Creator = p.Creator.Email,

@@ -9,5 +9,7 @@ namespace WebSchool.Services.Contracts
         PostViewModel[] GetNewestPosts(string groupId, int count = 10);
 
         Task CreateAsync(CreatePostInputModel input, string userId);
+
+        PostPreviewViewModel GetById(string postId);
     }
 }
