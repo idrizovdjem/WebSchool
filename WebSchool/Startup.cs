@@ -1,16 +1,17 @@
-using WebSchool.Data;
-using WebSchool.Services;
-using WebSchool.Data.Models;
-using WebSchool.Data.Seeders;
-using Microsoft.AspNetCore.Builder;
-using WebSchool.Services.Contracts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
+
+using WebSchool.Data;
+using WebSchool.Services;
+using WebSchool.Data.Models;
+using WebSchool.Data.Seeders;
+using WebSchool.Services.Contracts;
+
 
 namespace WebSchool
 {
@@ -23,14 +24,13 @@ namespace WebSchool
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services
+                .AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -38,15 +38,17 @@ namespace WebSchool
             services.AddRazorPages();
 
             services.AddTransient<IPostsService, PostsService>();
-            services.AddTransient<IRolesService, RolesService>();
+            services.AddTransient<IGroupsService, GroupsService>();
             services.AddTransient<ICommentsService, CommentsService>();
 
             services.AddAntiforgery();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<ApplicationRole> roleManager, ApplicationDbContext context)
         {
+            new RoleSeeder(roleManager).Seed();
+            new GroupSeeder(context).Seed();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -54,7 +56,6 @@ namespace WebSchool
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -64,9 +65,6 @@ namespace WebSchool
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            new RoleSeeder(roleManager).Seed();
-            new GroupSeeder(context).Seed();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,0 +1,19 @@
+﻿@using WebSchool.ViewModels.Group
+@using WebSchool.ViewModels.Post
+@model GroupViewModel
+
+@{ 
+    ViewData["Title"] = Model.Name;
+    Layout = "_Layout";
+}
+
+<p>@Model.Name</p>
+
+@foreach(PostViewModel post in Model.NewestPosts)
+{
+    <article>
+        <h3>@post.Creator</h3>
+        <p>@post.Content</p>
+        <span>@post.CreatedOn</span>
+    </article>
+}

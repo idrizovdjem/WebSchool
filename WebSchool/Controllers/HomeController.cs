@@ -6,6 +6,11 @@ namespace WebSchool.Controllers
     {
         public IActionResult Index()
         {
+            if(User.Identity.IsAuthenticated)
+            {
+                return Redirect("/Group/Index");
+            }
+
             return View();
         }
     }
