@@ -4,7 +4,7 @@ namespace WebSchool.ViewModels.Post
 {
     public class CreatePostInputModel
     {
-        [MinLength(5), MaxLength(1000)]
+        [MinLength(5), MaxLength(5000)]
         public string Content { get; set; }
 
         [Required]

@@ -1,4 +1,6 @@
-﻿using WebSchool.ViewModels.Comment;
+﻿using System;
+
+using WebSchool.ViewModels.Comment;
 
 namespace WebSchool.ViewModels.Post
 {
@@ -9,6 +11,8 @@ namespace WebSchool.ViewModels.Post
         public string Creator { get; set; }
 
         public string Content { get; set; }
+
+        public DateTime CreatedOn { get; set; }
 
         public CommentViewModel[] Comments { get; set; }
     }

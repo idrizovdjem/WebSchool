@@ -45,7 +45,8 @@ namespace WebSchool.Services
                     Id = p.Id,
                     Creator = p.Creator.Email,
                     Content = p.Content,
-                    Comments = commentsService.GetPostComments(p.Id)
+                    Comments = commentsService.GetPostComments(p.Id),
+                    CreatedOn = p.CreatedOn
                 })
                 .FirstOrDefault();
         }

@@ -9,7 +9,13 @@
 <partial name="_Sidebar" />
 
 <main class="post-container">
-    @Model.Content
+    <article class="post">
+        <header class="post-header">
+            <h3 class="post-creator">@Model.Creator</h3>
+            <span class="post-date">@Model.CreatedOn</span>
+        </header>
+        <p class="post-content">@Model.Content</p>
+    </article>
 </main>
 
 <style>
@@ -19,5 +25,37 @@
         float: left;
         height: 93vh;
         overflow-y: auto;
+    }
+
+    .post {
+        width: 80%;
+        margin: 2vh auto;
+        border: 2px solid lightgray;
+        border-radius: 5px;
+    }
+
+    .post-header {
+        background: lightgray;
+        height: 4vh;
+    }
+
+    .post-creator {
+        font-size: 3vh;
+        padding: 0;
+        float: left;
+        margin: 0 2%;
+    }
+    
+    .post-date {
+        float: right;
+        margin: 0 2%;
+        font-size: 3vh;
+    }
+
+    .post-content {
+        text-align: justify;
+        font-size: 3vh;
+        padding: 1% 2%;
+        margin: 0;
     }
 </style>
