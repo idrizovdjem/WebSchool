@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 using WebSchool.Data;
+using WebSchool.Data.Models;
 using WebSchool.Services.Contracts;
 using WebSchool.ViewModels.Comment;
 
@@ -8,16 +11,31 @@ namespace WebSchool.Services
 {
     public class CommentsService : ICommentsService
     {
-        private readonly ApplicationDbContext context;
+        private readonly ApplicationDbContext dbContext;
 
         public CommentsService(ApplicationDbContext context)
         {
-            this.context = context;
+            this.dbContext = context;
+        }
+
+        public async Task CreateAsync(string postId, string content, string userId)
+        {
+            var comment = new Comment()
+            {
+                PostId = postId,
+                Content = content,
+                CreatedOn = DateTime.UtcNow,
+                CreatorId = userId,
+                IsDeleted = false
+            };
+
+            await dbContext.Comments.AddAsync(comment);
+            await dbContext.SaveChangesAsync();
         }
 
         public CommentViewModel[] GetPostComments(string postId)
         {
-            return this.context.Comments
+            return this.dbContext.Comments
                 .Where(x => x.PostId == postId && x.IsDeleted == false)
                 .Select(x => new CommentViewModel()
                 {

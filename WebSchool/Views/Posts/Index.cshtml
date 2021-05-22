@@ -16,6 +16,14 @@
         </header>
         <p class="post-content">@Model.Content</p>
     </article>
+
+    <section>
+        <form asp-controller="Comments" asp-action="Create" method="post" class="comment-form">
+            <input type="hidden" name="postId" value="@Model.Id"/>
+            <textarea name="content" class="comment-textarea" placeholder="Write your comment..."></textarea>
+            <button class="comment-button">Send</button>
+        </form>
+    </section>
 </main>
 
 <style>
@@ -58,4 +66,36 @@
         padding: 1% 2%;
         margin: 0;
     }
+
+    .comment-form {
+        text-align: right;
+        width: 80%;
+        margin: auto;
+        margin-bottom: 10vh;
+    }
+
+    .comment-textarea {
+        max-width: 98%;
+        min-width: 98%;
+        max-height: 15vh;
+        min-height: 15vh;
+        font-size: 3vh;
+        padding: 1%;
+    }
+
+    .comment-button {
+        font-size: 3vh;
+        width: 20%;
+        border: 1px solid black;
+        border-radius: 5px;
+        background: white;
+        transition: background ease 0.3s;
+    }
+
+        .comment-button:hover {
+            cursor: pointer;
+            background: #5885AF;
+            color: white;
+        }
+
 </style>
