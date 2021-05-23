@@ -46,7 +46,7 @@
     padding: 1vh 2%;
     text-align: justify;
     font-size: 3vh;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 .post-info {

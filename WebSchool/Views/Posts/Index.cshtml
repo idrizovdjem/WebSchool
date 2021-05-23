@@ -17,9 +17,20 @@
         <p class="post-content">@Model.Content</p>
     </article>
 
-    <section>
+    <section class="comments-section">
+        @foreach (var comment in Model.Comments)
+        {
+            <article class="comment">
+                <header class="comment-header">
+                    <h3 class="comment-creator">@comment.Creator</h3>
+                    <span class="comment-date">@comment.CreatedOn</span>
+                </header>
+                <p class="comment-content">@comment.Content</p>
+            </article>
+        }
+
         <form asp-controller="Comments" asp-action="Create" method="post" class="comment-form">
-            <input type="hidden" name="postId" value="@Model.Id"/>
+            <input type="hidden" name="postId" value="@Model.Id" />
             <textarea name="content" class="comment-textarea" placeholder="Write your comment..."></textarea>
             <button class="comment-button">Send</button>
         </form>
@@ -27,6 +38,46 @@
 </main>
 
 <style>
+    .comment-header {
+        font-size: 3vh;
+        height: 4vh; 
+        background: lightgray;
+    }
+
+    .comment-creator {
+        padding: 0;
+        margin: 0 2%;
+        float: left;
+    }
+
+    .comment-date {
+        padding: 0;
+        margin: 0 2%;
+        float: right;
+    }
+
+    .comment-content {
+        text-align: justify;
+        font-size: 3vh;
+        padding: 1% 2%;
+        margin: 0;
+    }
+
+    .comments-section {
+        text-align: right;
+        width: 80%;
+        margin: auto;
+    }
+
+    .comment {
+        text-align: left;
+         width: 95%;
+         border: 2px solid lightgray;
+         border-radius: 5px;
+         margin: 1vh 0;
+         float: right;
+    }
+
     .post-container {
         text-align: center;
         width: 79.85%;
@@ -69,10 +120,9 @@
 
     .comment-form {
         text-align: right;
-        width: 80%;
-        margin: auto;
-        margin-bottom: 10vh;
-    }
+        width: 95%;
+        float: right;
+    }   
 
     .comment-textarea {
         max-width: 98%;
@@ -90,6 +140,7 @@
         border-radius: 5px;
         background: white;
         transition: background ease 0.3s;
+        margin-bottom: 1vh;
     }
 
         .comment-button:hover {
