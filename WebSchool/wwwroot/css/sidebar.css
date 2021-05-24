@@ -7,7 +7,6 @@
 
 .button-section {
     width: 90%;
-    height: 6vh;
     font-size: 4vh;
     margin: 2% auto;
     border-radius: 5px;
@@ -19,9 +18,32 @@
     padding: 0;
     padding-left: 15%;
     padding-top: 2%;
+    padding-bottom: 2%;
 }
 
 .button-section:hover {
     cursor: pointer;
     background: lightgray;
 }
+
+.groups-container {
+    display: none;
+}
+
+.group-element {
+    width: 85%;
+    margin: 2% 0;
+    padding-left: 15%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.group-element a {
+    text-decoration: none;
+    color: inherit;
+}
+
+    .group-element:hover {
+        background: #5885AF;
+        color: white;
+    }

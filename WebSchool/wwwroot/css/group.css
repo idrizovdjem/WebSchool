@@ -6,6 +6,10 @@
     overflow-y: auto;
 }
 
+.posts {
+    margin-top: 2vh;
+}
+
 .post-link {
     text-decoration: none;
     color: black;
@@ -78,7 +82,6 @@
     border-radius: 5px;
     border: 1px solid black;
     transition: background ease 0.2s;
-    margin-bottom: 2%;
 }
 
     .create-post-button:hover {

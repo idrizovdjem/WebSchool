@@ -2,6 +2,7 @@
 
 using WebSchool.Data;
 using WebSchool.ViewModels.Group;
+using System.Collections.Generic;
 using WebSchool.Services.Contracts;
 
 namespace WebSchool.Services
@@ -34,6 +35,17 @@ namespace WebSchool.Services
         {
             return dbContext.Groups
                 .FirstOrDefault(g => g.Id == groupId)?.Name;
+        }
+
+        public ICollection<string> GetUserGroups(string userId)
+        {
+            var groupNames =  dbContext.UserGroups
+                .Where(ug => ug.UserId == userId)
+                .Select(ug => ug.Group.Name)
+                .ToList();
+
+            groupNames.Add("Global Group");
+            return groupNames;
         }
 
         public bool IsUserInGroup(string userId, string groupId)

@@ -1,6 +1,7 @@
 ﻿.post-create-form {
     width: 50%;
-    margin: 5% auto;
+    margin: 5% 12%;
+    float: left;
 }
 
 .post-textarea {

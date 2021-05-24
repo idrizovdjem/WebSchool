@@ -1,4 +1,6 @@
-﻿using WebSchool.ViewModels.Group;
+﻿using System.Collections.Generic;
+
+using WebSchool.ViewModels.Group;
 
 namespace WebSchool.Services.Contracts
 {
@@ -9,5 +11,7 @@ namespace WebSchool.Services.Contracts
         bool IsUserInGroup(string userId, string groupId);
 
         string GetName(string groupId);
+
+        ICollection<string> GetUserGroups(string userId);
     }
 }

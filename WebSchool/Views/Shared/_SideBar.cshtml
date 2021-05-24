@@ -1,8 +1,11 @@
 ﻿<link rel="stylesheet" href="~/css/sidebar.css" />
 
 <aside class="sidebar">
-    <div class="button-section">
+    <div class="button-section" id="groupsSection">
         <p class="label"><i class="fas fa-users"></i> Groups</p>
+        <div id="groupsContainer" class="groups-container">
+
+        </div>
     </div>
 
     <div class="button-section">
@@ -16,5 +19,39 @@
     <div class="button-section">
         <p class="label"><i class="fas fa-search"></i> Browse</p>
     </div>
-
 </aside>
+
+<script>
+    const groupsContainer = document.getElementById('groupsContainer');
+    const groupsSection = document.getElementById('groupsSection');
+
+    groupsSection.addEventListener('click', () => {
+        const groupsVisibility = groupsContainer.style.display;
+        const newVisibility = groupsVisibility === 'block' ? 'none' : 'block';
+        groupsContainer.style.display = newVisibility;
+    });
+
+    const fetchGroups = () => {
+        fetch('/Groups/api/GetUserGroups')
+            .then(response => response.json())
+            .then(data => addGroups(data))
+            .catch(error => console.log(error));
+    }
+
+    const addGroups = (groupNames) => {
+        groupNames.forEach(groupName => {
+            const groupLabelElement = document.createElement('p');
+            groupLabelElement.innerHTML = `<a href="/Groups/Index?groupName=${groupName}">${groupName}</a>`;
+            groupLabelElement.classList.add('group-element');
+            groupsContainer.appendChild(groupLabelElement);
+
+            groupLabelElement.addEventListener('click', (event) => {
+                event.stopImmediatePropagation();
+            });
+        });
+    }
+
+    window.onload = () => {
+        fetchGroups();
+    }
+</script>
