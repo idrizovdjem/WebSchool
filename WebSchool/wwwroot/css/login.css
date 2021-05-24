@@ -21,9 +21,10 @@
     transition: background ease 0.2s;
 }
 
-.login-button:hover {
-    color: #5885AF;
-    background: #5885AF;
-    color: white;
-    cursor: pointer;
-}
+    .login-button:hover {
+        color: #5885AF;
+        background: #5885AF;
+        border-color: #5885AF;
+        color: white;
+        cursor: pointer;
+    }

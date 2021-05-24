@@ -10,6 +10,7 @@ using WebSchool.Services.Contracts;
 namespace WebSchool.WebApplication.Controllers
 {
     [Authorize]
+    [AutoValidateAntiforgeryToken]
     public class PostsController : Controller
     {
         private readonly IGroupsService groupsService;

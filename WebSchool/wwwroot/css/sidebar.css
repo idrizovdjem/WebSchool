@@ -47,3 +47,8 @@
         background: #5885AF;
         color: white;
     }
+
+.button-link {
+    color: black;
+    text-decoration: none;
+}

@@ -10,6 +10,7 @@ using WebSchool.Services.Contracts;
 namespace WebSchool.WebApplication.Controllers
 {
     [Authorize]
+    [AutoValidateAntiforgeryToken]
     public class CommentsController : Controller
     {
         private readonly ICommentsService commentsService;

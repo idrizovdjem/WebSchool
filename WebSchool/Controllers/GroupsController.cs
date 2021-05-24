@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using WebSchool.Services.Contracts;
-using System.Security.Claims;
 
 namespace WebSchool.Web.Controllers
 {
     [Authorize]
+    [AutoValidateAntiforgeryToken]
     public class GroupsController : Controller
     {
         private readonly IGroupsService groupsService;
@@ -28,6 +30,11 @@ namespace WebSchool.Web.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var groupNames = groupsService.GetUserGroups(userId);
             return Json(groupNames);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
         }
     }
 }

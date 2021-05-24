@@ -1,0 +1,52 @@
+﻿@using WebSchool.ViewModels.Group
+@model CreateGroupInputModel 
+
+@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "New Group";
+}
+
+<form class="group-form">
+    <h1>Create new group</h1>
+    <input asp-for="Name" class="name-input" placeholder="Group name..."  />
+    <button class="create-button">Create</button>
+</form>
+
+<style>
+    .group-form {
+        width: 50%;
+        float: left;
+        margin: 5% 14%;
+    }
+
+    .name-input {
+        width: 100%;
+        font-size: 4vh;
+        border: none;
+        border-bottom: 3px solid lightgray;
+        outline: none;
+        transition: border ease 0.5s;
+    }
+
+        .name-input:focus {
+            border-color: #5885FF;
+        }
+
+    .create-button {
+        width: 25%;
+        float: right;
+        margin: 2% 0;
+        font-size: 3vh;
+        border: 1px solid black;
+        border-radius: 5px;
+        background: white;
+        transition: background ease 0.2s;
+    }
+
+        .create-button:hover {
+            cursor: pointer;
+            background: #5885AF;
+            color: white;
+            border-color: #5885AF;
+        }
+</style>

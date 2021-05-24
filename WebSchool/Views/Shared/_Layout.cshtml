@@ -20,6 +20,11 @@
     </header>
 
     <main role="main">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <partial name="_SideBar" />
+        }
+
         @RenderBody()
     </main>
 
