@@ -6,52 +6,46 @@
     ViewData["Title"] = "New Group";
 }
 
+<link rel="stylesheet" href="~/css/createGroup.css" />
+
 <form asp-controller="Groups" asp-action="Create" method="post" class="group-form">
     <div asp-validation-summary="All" class="error-message"></div>
     <h1>Create new group</h1>
-    <input asp-for="Name" class="name-input" placeholder="Group name..."  />
-    <button class="create-button">Create</button>
+
+    <p class="custom-error" id="customError"></p>
+    <input asp-for="Name" class="name-input" placeholder="Group name..."  id="nameInput"/>
+    <button class="create-button" id="createButton">Create</button>
 </form>
 
-<style>
-    .group-form {
-        width: 50%;
-        float: left;
-        margin: 5% 14%;
-    }
+@section Scripts {
+    <script>
+        const nameInput = document.getElementById('nameInput');
+        const customError = document.getElementById('customError');
+        const createButton = document.getElementById('createButton');
 
-    .name-input {
-        width: 100%;
-        font-size: 4vh;
-        border: none;
-        border-bottom: 3px solid lightgray;
-        outline: none;
-        transition: border ease 0.5s;
-    }
+        nameInput.addEventListener('input', async () => {
+            const groupName = nameInput.value;
+            if (groupName === '') {
+                return;
+            }
 
-        .name-input:focus {
-            border-color: #5885FF;
+            const isGroupNameAvailable = await checkGroupName(groupName);
+            if (isGroupNameAvailable === false) {
+                nameInput.style.borderColor = 'red';
+                customError.textContent = 'This group name is already taken!';
+                createButton.setAttribute('disabled', 'true');
+            } else {
+                nameInput.style.borderColor = '#5885AF';
+                customError.textContent = '';
+                createButton.removeAttribute('disabled');
+            }
+        });
+
+        const checkGroupName = async (groupName) => {
+            return await fetch(`/Groups/api/IsNameAvailable?groupName=${groupName}`)
+                .then(response => response.json())
+                .then(data => data)
+                .catch(error => false);
         }
-
-    .create-button {
-        width: 25%;
-        float: right;
-        margin: 2% 0;
-        font-size: 3vh;
-        border: 1px solid black;
-        border-radius: 5px;
-        background: white;
-        transition: background ease 0.2s;
-    }
-
-        .create-button:hover {
-            cursor: pointer;
-            background: #5885AF;
-            color: white;
-            border-color: #5885AF;
-        }
-
-    .error-message {
-        color: red;
-    }
-</style>
+    </script>
+}

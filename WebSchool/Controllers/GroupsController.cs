@@ -63,5 +63,12 @@ namespace WebSchool.Web.Controllers
 
             return Redirect($"/Groups/Index/groupName={createGroup.Name}");
         }
+
+        [Route("/Groups/api/IsNameAvailable")]
+        public IActionResult IsNameAvailable(string groupName)
+        {
+            var isNameAvailable = groupsService.IsGroupNameAvailable(groupName);
+            return Json(isNameAvailable);
+        }
     }
 }
