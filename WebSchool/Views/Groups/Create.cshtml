@@ -6,7 +6,8 @@
     ViewData["Title"] = "New Group";
 }
 
-<form class="group-form">
+<form asp-controller="Groups" asp-action="Create" method="post" class="group-form">
+    <div asp-validation-summary="All" class="error-message"></div>
     <h1>Create new group</h1>
     <input asp-for="Name" class="name-input" placeholder="Group name..."  />
     <button class="create-button">Create</button>
@@ -49,4 +50,8 @@
             color: white;
             border-color: #5885AF;
         }
+
+    .error-message {
+        color: red;
+    }
 </style>
