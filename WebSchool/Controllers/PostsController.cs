@@ -53,7 +53,7 @@ namespace WebSchool.WebApplication.Controllers
             if(groupName == "Global Group")
             {
                 await postsService.CreateAsync(input, userId);
-                return Redirect($"/Groups/Index?Name={groupName}");
+                return Redirect("/Groups/Index");
             }
 
             var isUserInGroup = groupsService.IsUserInGroup(userId, input.GroupId);
@@ -63,7 +63,7 @@ namespace WebSchool.WebApplication.Controllers
             }
 
             await postsService.CreateAsync(input, userId);
-            return Redirect($"/Groups/Index?Name={groupName}");
+            return Redirect($"/Groups/Index?groupName={groupName}");
         }
 
         public IActionResult Index(string postId)
