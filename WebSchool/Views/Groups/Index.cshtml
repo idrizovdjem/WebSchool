@@ -1,5 +1,4 @@
 ﻿@using WebSchool.ViewModels.Group
-@using WebSchool.ViewModels.Post
 @model GroupViewModel
 
 @{ 
@@ -14,17 +13,10 @@
 <main class="group">
     <h1>@Model.Name</h1>
 
-    <button class="create-post-button" id="formTogglerButton">
+    <a asp-controller="Posts" asp-action="Create" asp-route-groupId="@Model.Id" class="create-post-button" id="formTogglerButton">
         <i class="fas fa-plus-circle"></i>
         Create new post
-    </button>
-
-    <form asp-controller="Posts" asp-action="Create" method="post" class="post-create-form" id="postForm">
-        <input type="hidden" asp-for="Id" name="groupId"/>
-        <textarea name="content" class="post-textarea" placeholder="Post content..."></textarea>
-        <button type="submit" class="post-form-button">Create</button>
-        <button class="post-form-button" type="button" id="cancelButton">Cancel</button>
-    </form>
+    </a>
 
     <section class="posts">
         @foreach(var post in Model.NewestPosts)
@@ -43,20 +35,3 @@
     </section>
 </main>
 
-@section Scripts {
-    <script>
-        const formTogglerButton = document.getElementById('formTogglerButton');
-        const postForm = document.getElementById('postForm');
-        const cancelButton = document.getElementById('cancelButton');
-
-        formTogglerButton.addEventListener('click', () => {
-            formTogglerButton.style.display = 'none';
-            postForm.style.display = 'block';
-        });
-
-        cancelButton.addEventListener('click', () => {
-            formTogglerButton.style.display = 'inline';
-            postForm.style.display = 'none';
-        });
-    </script>
-} 

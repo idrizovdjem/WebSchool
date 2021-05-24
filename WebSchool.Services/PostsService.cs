@@ -55,6 +55,7 @@ namespace WebSchool.Services
         {
             return dbContext.Posts
                 .Where(p => p.GroupId == groupId && p.IsDeleted == false)
+                .OrderByDescending(p => p.CreatedOn)
                 .Take(count)
                 .Select(p => new PostViewModel()
                 {
@@ -62,7 +63,7 @@ namespace WebSchool.Services
                     Content = p.Content,
                     CreatedOn = p.CreatedOn,
                     Creator = p.Creator.Email,
-                    CommentsCount = p.Comments.Count()
+                    CommentsCount = p.Comments.Count
                 })
                 .ToArray();
         }

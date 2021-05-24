@@ -21,12 +21,24 @@ namespace WebSchool.WebApplication.Controllers
             this.postsService = postsService;
         }
 
+        public IActionResult Create(string groupId)
+        {
+            var groupName = groupsService.GetName(groupId);
+            if(groupName == null)
+            {
+                return Redirect("/Groups/Index");
+            }
+
+            ViewData["GroupId"] = groupId;
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreatePostInputModel input)
         {
             if(ModelState.IsValid == false)
             {
-                return Redirect("/Groups/Index");
+                return View(input);
             }
 
             var groupName = groupsService.GetName(input.GroupId);

@@ -1,0 +1,17 @@
+﻿@using WebSchool.ViewModels.Post
+@model CreatePostInputModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Create Post";
+}
+
+<link rel="stylesheet" href="~/css/createPost.css" />
+
+<form asp-controller="Posts" asp-action="Create" method="post" class="post-create-form">
+    <div asp-validation-summary="All" class="error-message"></div>
+    <h1>Create a post</h1>
+    <input type="hidden" asp-for="GroupId" value="@ViewData["GroupId"]" />
+    <textarea asp-for="Content" class="post-textarea" placeholder="Post content..."></textarea>
+    <button type="submit" class="post-form-button">Create</button>
+</form>
