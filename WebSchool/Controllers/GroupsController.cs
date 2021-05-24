@@ -29,15 +29,7 @@ namespace WebSchool.Web.Controllers
             }
 
             return View(groupViewModel);
-        }
-
-        [Route("/Groups/api/GetUserGroups")]
-        public IActionResult GetUserGroups()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var groupNames = groupsService.GetUserGroups(userId);
-            return Json(groupNames);
-        }
+        }        
 
         public IActionResult Create()
         {
@@ -62,13 +54,6 @@ namespace WebSchool.Web.Controllers
             var createGroup = await groupsService.CreateAsync(userId, input.Name);
 
             return Redirect($"/Groups/Index/groupName={createGroup.Name}");
-        }
-
-        [Route("/Groups/api/IsNameAvailable")]
-        public IActionResult IsNameAvailable(string groupName)
-        {
-            var isNameAvailable = groupsService.IsGroupNameAvailable(groupName);
-            return Json(isNameAvailable);
         }
     }
 }

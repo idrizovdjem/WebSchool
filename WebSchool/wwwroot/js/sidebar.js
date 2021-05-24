@@ -8,7 +8,7 @@ groupsSection.addEventListener('click', () => {
 });
 
 const fetchGroups = () => {
-    fetch('/Groups/api/GetUserGroups')
+    fetch('/apiGroups/GetUserGroups')
         .then(response => response.json())
         .then(data => addGroups(data))
         .catch(error => console.log(error));

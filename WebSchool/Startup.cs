@@ -75,6 +75,11 @@ namespace WebSchool
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "apiControllers",
+                    pattern: "{apicontroller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapRazorPages();
             });
         }
