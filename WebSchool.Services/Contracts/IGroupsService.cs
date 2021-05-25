@@ -16,6 +16,8 @@ namespace WebSchool.Services.Contracts
 
         string GetName(string groupId);
 
+        string[] GetGroupsContainingName(string userId, string groupName);
+
         ICollection<string> GetUserGroups(string userId);
 
         Task<Group> CreateAsync(string userId, string name);

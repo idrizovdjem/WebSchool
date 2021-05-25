@@ -1,0 +1,146 @@
+﻿@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "Browse";
+}
+
+<main class="browse-container">
+    <form>
+        <input id="groupNameInput" class="group-input" type="text" placeholder="Start typing group name..." />
+        <button id="searchButton" class="search-button" type="button">Search</button>
+    </form>
+
+    <section class="found-groups-container">
+        <table class="groups-table">
+            <thead>
+                <tr class="odd-row">
+                    <th class="group-name-col">Group Name</th>
+                    <th class="group-join-col">Join</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="even-row">
+                    <td class="group-name-col">Test Group</td>
+                    <td><button class="group-join-button">Send Request</button></td>
+                </tr>
+
+                <tr class="odd-row">
+                    <td class="group-name-col">Test Group</td>
+                    <td><button class="group-join-button">Send Request</button></td>
+                </tr>
+
+                <tr class="even-row">
+                    <td class="group-name-col">Test Group</td>
+                    <td><button class="group-join-button">Send Request</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<style>
+    .browse-container {
+        text-align: center;
+        width: 79%;
+        float: left;
+        height: 93vh;
+        overflow-y: auto;
+    }
+
+    .groups-table {
+        width: 90%;
+        margin: auto;
+        text-align: left;
+        font-size: 3.5vh;
+        border: 1px solid black;
+    }
+
+    .group-name-col {
+        width: 78%;
+        padding-left: 2%;
+    }
+
+    .group-join-col {
+        padding-left: 2%;
+        background: lightgray;
+    }
+
+    .group-join-button {
+        width: 100%;
+        font-size: 3vh;
+        padding: 2%;
+        border: 1px solid black;
+        background: white;
+        transition: background ease 0.2s;
+    }
+
+        .group-join-button:hover {
+            color: #5885AF;
+            background: #5885AF;
+            border-color: #5885AF;
+            color: white;
+            cursor: pointer;
+        }
+
+    .odd-row {
+        background: lightgray;
+    }
+
+    .even-row {
+        background: white;
+    }
+
+    .found-groups-container {
+        height: 78vh;
+        width: 85%;
+        margin: auto;
+        margin-top: 3vh;
+        overflow-y: auto;
+    }
+
+    .group-input {
+        width: 60%;
+        font-size: 4vh;
+        border: none;
+        border-bottom: 3px solid lightgray;
+        outline: none;
+        transition: border ease 0.5s;
+        margin: 2vh 0;
+    }
+
+    .search-button {
+        font-size: 3vh;
+        padding: 0.5% 2%;
+        margin-left: 2%;
+        border: 1px solid black;
+        background: white;
+        transition: background ease 0.2s;
+    }
+
+        .search-button:hover {
+            color: #5885AF;
+            background: #5885AF;
+            border-color: #5885AF;
+            color: white;
+            cursor: pointer;
+        }
+</style>
+
+@section Scripts {
+    <script>
+        const groupNameInput = document.getElementById('groupNameInput');
+        const searchButton = document.getElementById('searchButton');
+
+        searchButton.addEventListener('click', async () => {
+            const groupName = groupNameInput.value.trim();
+            const foundGroups = await fetchGroupsNames(groupName);
+            console.log(foundGroups);
+        });
+
+        const fetchGroupsNames = async (groupName) => {
+            return await fetch(`apiGroups/GetGroupsByName?groupName=${groupName}`)
+                .then(response => response.json())
+                .then(data => data)
+                .catch(error => []);
+        }
+    </script>
+}

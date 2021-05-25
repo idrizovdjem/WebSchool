@@ -1,11 +1,12 @@
 ﻿using System.Security.Claims;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using WebSchool.Services.Contracts;
 
 namespace WebSchool.WebApplication.Controllers.ApiControllers
 {
+    [Authorize]
     public class ApiGroupsController : Controller
     {
         private readonly IGroupsService groupsService;
@@ -26,6 +27,13 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
         {
             var isNameAvailable = groupsService.IsGroupNameAvailable(groupName);
             return Json(isNameAvailable);
+        }
+
+        public IActionResult GetGroupsByName(string groupName)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var groups = groupsService.GetGroupsContainingName(userId, groupName);
+            return Json(groups);
         }
     }
 }

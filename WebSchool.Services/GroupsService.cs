@@ -69,6 +69,18 @@ namespace WebSchool.Services
                 .FirstOrDefault();
         }
 
+        public string[] GetGroupsContainingName(string userId, string groupName)
+        {
+            return dbContext.Groups
+                .Where(g => 
+                    g.Name.Contains(groupName) && 
+                    g.IsDeleted == false && 
+                    g.Users.Any(ug => ug.UserId == userId) == false &&
+                    g.Name != "Global Group")
+                .Select(g => g.Name)
+                .ToArray();
+        }
+
         public string GetName(string groupId)
         {
             return dbContext.Groups
