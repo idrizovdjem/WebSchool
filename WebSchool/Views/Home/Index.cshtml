@@ -2,11 +2,13 @@
     ViewData["Title"] = "Home Page";
 }
 
+<link rel="stylesheet" href="~/css/home.css" />
+
 <main class="home-content">
     <h1>Welcome to WebSchool</h1>
 
     <article class="home-article">
-        <p>WebSchool is trying to make the e-learning and e-teaching experience more pleasent and easy for everyone. There is an easy way of making, editing and giving assignments for the teachers. They also have a choice... They can let the system automatically check every assignment and calcuate the student grade or they can do it manually. As for the students, there is a simple way to solve assignments. Just few clicks. There is also a social side of the system. Every school has it's own forum. There you can find help by creating new post, give help by commenting under a post or just notify everybody of something that you thing is remarkable :). <cite>Go, leave mark behing you !</cite></p>
+        <p>WebSchool is trying to make the e-learning and e-teaching experience more pleasent and easy for everyone. There is an easy way of making, editing and giving assignments for the teachers. They also have a choice... They can let the system automatically check every assignment and calcuate the student grade or they can do it manually. As for the students, there is a simple way to solve assignments. Just few clicks. There is also a social side of the system. Every school has it's own forum. There you can find help by creating new post, give help by commenting under a post or just notify everybody of something that you thing is remarkable :). <cite><b>Go, leave mark behing you !</b></cite></p>
     </article>
 </main>
 
@@ -20,123 +22,6 @@
     <div id="next" class="image-button next">></div>
 </div>
 
-<style>
-    .home-content {
-        float: left;
-        width: 65%;
-        text-align: center;
-    }
-
-    .home-article {
-        width: 80%;
-        margin: auto;
-        font-size: 3vh;
-        text-align: justify;
-    }
-
-    .image-container {
-        float: left;
-        width: 35%;
-        height: 93vh;
-    }
-
-    .image {
-        width: 100%;
-        height: 93vh;
-        transition: opacity ease 1s;
-    }
-
-    #second, #third, #fourth {
-        display: none;
-    }
-
-    .image-button {
-        position: absolute;
-        bottom: 1%;
-        font-size: 5vh;
-        color: white;
-        background: lightgray;
-        border-radius: 100px;
-        width: 3%;
-        text-align: center;
-        user-select: none;
-        color: black;
-    }
-
-        .image-button:hover {
-            background: gray;
-            cursor: pointer;
-        }
-
-    .next {
-        right: 0;
-    }
-</style>
-
-
-<script>
-    const prevButton = document.getElementById('prev');
-    const nextButton = document.getElementById('next');
-
-    const firstImage = document.getElementById('first');
-    const secondImage = document.getElementById('second');
-    const thirdImage = document.getElementById('third');
-    const fourthImage = document.getElementById('fourth');
-
-    let currentIndex = 0;
-    const images = [firstImage, secondImage, thirdImage, fourthImage];
-
-    prevButton.addEventListener('click', () => {
-        const oldIndex = currentIndex;
-        images[oldIndex].style.opacity = 0;
-
-        if (currentIndex === 0) {
-            currentIndex = images.length - 1;
-        }
-        else {
-            currentIndex--;
-        }
-
-        setTimeout(() => {
-            images[oldIndex].style.display = 'none';
-            images[currentIndex].style.opacity = 1;
-            images[currentIndex].style.display = 'block';
-        }, 1000);
-    });
-
-    nextButton.addEventListener('click', () => {
-        const oldIndex = currentIndex;
-        images[oldIndex].style.opacity = 0;
-
-        if (currentIndex === images.length - 1) {
-            currentIndex = 0;
-        }
-        else {
-            currentIndex++;
-        }
-
-        setTimeout(() => {
-            images[oldIndex].style.display = 'none';
-            images[currentIndex].style.opacity = 1;
-            images[currentIndex].style.display = 'block';
-        }, 1000);
-    });
-
-    setInterval(() => {
-        const oldIndex = currentIndex;
-        images[oldIndex].style.opacity = 0;
-
-        if (currentIndex === images.length - 1) {
-            currentIndex = 0;
-        }
-        else {
-            currentIndex++;
-        }
-
-        setTimeout(() => {
-            images[oldIndex].style.display = 'none';
-            images[currentIndex].style.opacity = 1;
-            images[currentIndex].style.display = 'block';
-        }, 1000);
-    }, 5000);
-</script>
+@section Scripts {
+    <script src="~/js/home.js"></script>
+}

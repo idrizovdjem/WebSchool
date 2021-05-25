@@ -1,21 +1,39 @@
 ﻿.register-form {
-    margin: auto;
-    width: 50%;
+    margin: 10vh auto;
+    width: 40%;
+}
+
+.input-container {
+    width: 100%;
+    margin: 2vh 0;
 }
 
 .input-controll {
     width: 100%;
-    margin-bottom: 1vh;
-    font-size: 3vh;
+    font-size: 4vh;
+    border: none;
+    border-bottom: 3px solid lightgray;
+    outline: none;
+    transition: border ease 0.5s;
 }
 
+    .input-controll:focus {
+        border-color: #5885FF;
+    }
+
+
 .input-label {
-    width: 100%;
+    margin: 0;
+    font-size: 3vh;
+    margin-bottom: 1vh;
 }
 
 .register-button {
     font-size: 3vh;
+    margin-top: 3vh;
     width: 20%;
+    float: right;
+    padding: 0.5% 2%;
     border: 1px solid black;
     background: white;
     transition: background ease 0.2s;
@@ -29,7 +47,13 @@
         cursor: pointer;
     }
 
+.error-message {
+    color: red;
+}
+
 .links {
-    width: 50%;
-    margin: 2vh auto;
+    width: 100%;
+    float: right;
+    text-align: right;
+    margin-top: 2vh;
 }

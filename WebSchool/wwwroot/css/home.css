@@ -1,0 +1,50 @@
+﻿.home-content {
+    float: left;
+    width: 65%;
+    text-align: center;
+}
+
+.home-article {
+    width: 80%;
+    margin: auto;
+    font-size: 3vh;
+    text-align: justify;
+}
+
+.image-container {
+    float: left;
+    width: 35%;
+    height: 93vh;
+}
+
+.image {
+    width: 100%;
+    height: 93vh;
+    transition: opacity ease 1s;
+}
+
+#second, #third, #fourth {
+    display: none;
+}
+
+.image-button {
+    position: absolute;
+    bottom: 1%;
+    font-size: 5vh;
+    color: white;
+    background: lightgray;
+    border-radius: 100px;
+    width: 3%;
+    text-align: center;
+    user-select: none;
+    color: black;
+}
+
+    .image-button:hover {
+        background: gray;
+        cursor: pointer;
+    }
+
+.next {
+    right: 0;
+}

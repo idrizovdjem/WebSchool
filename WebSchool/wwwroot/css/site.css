@@ -28,11 +28,11 @@ html, body {
 
 .navbar-item {
     float: right;
-    margin: 0;
+    margin: 1.2vh 0.5vh;
     padding: 0;
-    font-size: 3vh;
+    font-size: 3.2vh;
     width: 8%;
-    margin: 1.5vh 0.5vh;
+    padding: 0.1% 0;
     text-align: center;
 }
 

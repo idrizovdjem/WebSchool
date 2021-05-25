@@ -7,29 +7,30 @@
 <link rel="stylesheet" href="~/css/register.css" />
 
 <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="register-form">
-    <h4>Create a new account.</h4>
+    <h1>Create a new account.</h1>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <div>
-        <label asp-for="Input.Email"></label>
-        <input asp-for="Input.Email" class="input-controll" />
-        <span asp-validation-for="Input.Email" class="text-danger"></span>
-    </div>
-    <div>
-        <label asp-for="Input.Password"></label>
-        <input asp-for="Input.Password" class="input-controll" />
-        <span asp-validation-for="Input.Password" class="text-danger"></span>
-    </div>
-    <div>
-        <label asp-for="Input.ConfirmPassword"></label>
-        <input asp-for="Input.ConfirmPassword" class="input-controll" />
-        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-    </div>
-    <button type="submit" class="register-button">Register</button>
-</form>
 
-<div class="links">
-    <a asp-area="Identity" asp-page="/Account/Login">Already have account?</a>
-</div>
+    <div class="input-container">
+        <p class="input-label">Email</p>
+        <input asp-for="Input.Email" class="input-controll" placeholder="your@email.com" />
+    </div>
+
+    <div class="input-container">
+        <p class="input-label">Password</p>
+        <input asp-for="Input.Password" class="input-controll" placeholder="strongpassword" />
+    </div>
+
+    <div class="input-container">
+        <p class="input-label">Confirm Password</p>
+        <input asp-for="Input.ConfirmPassword" class="input-controll" placeholder="strongpassword"/>
+    </div>
+
+    <button type="submit" class="register-button">Register</button>
+
+    <div class="links">
+        <a asp-area="Identity" asp-page="/Account/Login">Already have account?</a>
+    </div>
+</form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
