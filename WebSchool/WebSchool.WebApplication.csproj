@@ -32,10 +32,4 @@
     <ProjectReference Include="..\WebSchool.ViewModels\WebSchool.ViewModels.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="wwwroot\css\fontawesome\" />
-    <Folder Include="wwwroot\js\fontawesome\" />
-  </ItemGroup>
-
 </Project>
