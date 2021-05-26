@@ -16,7 +16,7 @@ namespace WebSchool.Services.Contracts
 
         string GetName(string groupId);
 
-        string[] GetGroupsContainingName(string userId, string groupName);
+        BrowseGroupViewModel[] GetGroupsContainingName(string userId, string groupName);
 
         ICollection<string> GetUserGroups(string userId);
 

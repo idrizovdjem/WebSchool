@@ -9,10 +9,11 @@ namespace WebSchool.Data.Models
     {
         public ApplicationUser()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.Posts = new HashSet<Post>();
-            this.Comments = new HashSet<Comment>();
-            this.Groups = new HashSet<UserGroup>();
+            Id = Guid.NewGuid().ToString();
+            Posts = new HashSet<Post>();
+            Comments = new HashSet<Comment>();
+            Groups = new HashSet<UserGroup>();
+            Applications = new HashSet<Application>();
         }
 
         public virtual ICollection<Post> Posts { get; set; }
@@ -20,5 +21,7 @@ namespace WebSchool.Data.Models
         public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ICollection<UserGroup> Groups { get; set; }
+
+        public virtual ICollection<Application> Applications { get; set; }
     }
 }

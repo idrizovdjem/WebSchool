@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using WebSchool.Data;
 using WebSchool.Data.Models;
 using WebSchool.ViewModels.Group;
+using WebSchool.ViewModels.Enums;
 using WebSchool.Services.Contracts;
 
 namespace WebSchool.Services
@@ -69,16 +70,43 @@ namespace WebSchool.Services
                 .FirstOrDefault();
         }
 
-        public string[] GetGroupsContainingName(string userId, string groupName)
+        public BrowseGroupViewModel[] GetGroupsContainingName(string userId, string groupName)
         {
-            return dbContext.Groups
+            var groups = dbContext.Groups
                 .Where(g => 
                     g.Name.Contains(groupName) && 
                     g.IsDeleted == false && 
-                    g.Users.Any(ug => ug.UserId == userId) == false &&
                     g.Name != "Global Group")
-                .Select(g => g.Name)
+                .Select(g => new BrowseGroupViewModel()
+                {
+                    Id = g.Id,
+                    Name = g.Name
+                })
                 .ToArray();
+
+            foreach(var group in groups)
+            {
+                if(dbContext.UserGroups.Any(ug => ug.UserId == userId && ug.GroupId == group.Id))
+                {
+                    group.RequestStatus = GroupRequestStatus.InGroup.ToString();
+                }
+                else
+                {
+                    var application = dbContext.Applications
+                        .FirstOrDefault(a => a.UserId == userId && a.GroupId == group.Id);
+
+                    if(application == null)
+                    {
+                        group.RequestStatus = GroupRequestStatus.NotApplied.ToString();
+                    }
+                    else
+                    {
+                        group.RequestStatus = application.IsConfirmed ? GroupRequestStatus.InGroup.ToString() : GroupRequestStatus.WaitingApproval.ToString();
+                    }
+                }
+            }
+
+            return groups;
         }
 
         public string GetName(string groupId)

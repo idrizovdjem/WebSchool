@@ -7,7 +7,7 @@ namespace WebSchool.Data.Models
     {
         public Assignment()
         {
-            this.Id = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid().ToString();
         }
 
         [Key]

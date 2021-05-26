@@ -10,8 +10,8 @@ namespace WebSchool.Data.Models
     {
         public Post()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.Comments = new HashSet<Comment>();
+            Id = Guid.NewGuid().ToString();
+            Comments = new HashSet<Comment>();
         }
 
         [Required]

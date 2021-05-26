@@ -23,6 +23,8 @@ namespace WebSchool.Data
 
         public DbSet<AssignmentResult> AssignmentResults { get; set; }
 
+        public DbSet<Application> Applications { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Post>(entity =>
@@ -64,6 +66,11 @@ namespace WebSchool.Data
                     .HasOne(ug => ug.Group)
                     .WithMany(g => g.Users)
                     .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            builder.Entity<Application>(entity =>
+            {
+                entity.HasKey(ap => new { ap.GroupId, ap.UserId });
             });
 
             base.OnModelCreating(builder);

@@ -17,21 +17,7 @@
                     <th class="group-join-col">Join</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr class="even-row">
-                    <td class="group-name-col">Test Group</td>
-                    <td><button class="group-join-button">Send Request</button></td>
-                </tr>
-
-                <tr class="odd-row">
-                    <td class="group-name-col">Test Group</td>
-                    <td><button class="group-join-button">Send Request</button></td>
-                </tr>
-
-                <tr class="even-row">
-                    <td class="group-name-col">Test Group</td>
-                    <td><button class="group-join-button">Send Request</button></td>
-                </tr>
+            <tbody id="tableBody">
             </tbody>
         </table>
     </section>
@@ -65,21 +51,43 @@
     }
 
     .group-join-button {
-        width: 100%;
-        font-size: 3vh;
-        padding: 2%;
-        border: 1px solid black;
+        display: block;
+        width: 99%;
+        font-size: 3.5vh;
         background: white;
+        border: 1px solid black;
         transition: background ease 0.2s;
+        text-decoration: none;
+        color: black;
+        text-align: center;
     }
 
         .group-join-button:hover {
-            color: #5885AF;
-            background: #5885AF;
-            border-color: #5885AF;
-            color: white;
             cursor: pointer;
         }
+
+    .not-joined {
+        border: 1px solid black;
+        background: white;
+    }
+
+        .not-joined:hover {
+            color: white;
+            background: #5885AF;
+            border-color: #5885AF;
+        }
+
+    .joined {
+        color: white;
+        background: #5885AF;
+        border-color: #5885AF;
+    }
+
+    .waiting-approval {
+        background: #FFD700;
+        color: black;
+        border-color: #FFD700;
+    }
 
     .odd-row {
         background: lightgray;
@@ -129,11 +137,12 @@
     <script>
         const groupNameInput = document.getElementById('groupNameInput');
         const searchButton = document.getElementById('searchButton');
+        const tableBody = document.getElementById('tableBody');
 
         searchButton.addEventListener('click', async () => {
             const groupName = groupNameInput.value.trim();
             const foundGroups = await fetchGroupsNames(groupName);
-            console.log(foundGroups);
+            attachGroups(foundGroups);
         });
 
         const fetchGroupsNames = async (groupName) => {
@@ -141,6 +150,42 @@
                 .then(response => response.json())
                 .then(data => data)
                 .catch(error => []);
+        }
+
+        const attachGroups = (groups) => {
+            tableBody.innerHTML = '';
+
+            groups.forEach((group, index) => {
+                console.log(group);
+                const tableRow = document.createElement('tr');
+                const rowClass = index % 2 == 0 ? "event-row" : "odd-row";
+                tableRow.classList.add(rowClass);
+
+                const nameData = document.createElement('td');
+                nameData.classList.add('group-name-col');
+                nameData.textContent = group.name;
+
+                const linkData = document.createElement('td');
+                const requestLink = document.createElement('a');
+                requestLink.classList.add('group-join-button');
+
+                if (group.requestStatus === 'NotApplied') {
+                    requestLink.classList.add('not-joined');
+                    requestLink.textContent = 'Send Request';
+                    requestLink.href = '/Applications/Apply?groupId=' + group.id;
+                } else if (group.requestStatus === 'WaitingApproval') {
+                    requestLink.classList.add('waiting-approval');
+                    requestLink.textContent = 'Waiting approval';
+                } else if (group.requestStatus === 'InGroup') {
+                    requestLink.classList.add('joined');
+                    requestLink.textContent = 'Joined';
+                }
+
+                linkData.appendChild(requestLink);
+                tableRow.appendChild(nameData);
+                tableRow.appendChild(linkData);
+                tableBody.appendChild(tableRow);
+            });
         }
     </script>
 }
