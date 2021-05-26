@@ -124,6 +124,18 @@ namespace WebSchool.Services
                 .FirstOrDefault(g => g.Id == groupId)?.Name;
         }
 
+        public GroupSettingsViewModel GetSettings(string groupId)
+        {
+            return dbContext.Groups
+                .Where(g => g.Id == groupId)
+                .Select(g => new GroupSettingsViewModel()
+                {
+                    Id = g.Id,
+                    Name = g.Name
+                })
+                .FirstOrDefault();
+        }
+
         public ICollection<string> GetUserGroups(string userId)
         {
             var groupNames =  dbContext.UserGroups

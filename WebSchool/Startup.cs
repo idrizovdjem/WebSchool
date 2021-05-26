@@ -38,6 +38,7 @@ namespace WebSchool
             services.AddRazorPages();
 
             services.AddTransient<IPostsService, PostsService>();
+            services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IGroupsService, GroupsService>();
             services.AddTransient<ICommentsService, CommentsService>();
             services.AddTransient<IApplicationsService, ApplicationsService>();
