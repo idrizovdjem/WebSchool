@@ -1,0 +1,52 @@
+﻿.main-container {
+    float: left;
+    margin-left: 2%;
+    height: 93vh;
+    width: 50%;
+}
+
+.edit-name-section {
+    width: 100%;
+    border-radius: 5px;
+    border: 2px solid lightgray;
+}
+
+.edit-name-label {
+    font-size: 3vh;
+    margin-left: 2%;
+}
+
+.input-controll {
+    width: 80%;
+    margin: 1vh;
+    font-size: 4vh;
+    border: none;
+    border-bottom: 3px solid lightgray;
+    outline: none;
+    transition: border ease 0.5s;
+}
+
+    .input-controll:focus {
+        border-color: #5885FF;
+    }
+
+.change-name-button {
+    font-size: 3vh;
+    width: 16%;
+    border: 1px solid black;
+    background: white;
+    transition: background ease 0.2s;
+}
+
+    .change-name-button:hover {
+        color: #5885AF;
+        background: #5885AF;
+        border-color: #5885AF;
+        color: white;
+        cursor: pointer;
+    }
+
+.error-message {
+    color: red;
+    margin-left: 2%;
+}

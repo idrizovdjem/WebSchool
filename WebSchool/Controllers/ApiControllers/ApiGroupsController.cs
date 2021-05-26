@@ -23,8 +23,13 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
             return Json(groupNames);
         }
 
-        public IActionResult IsNameAvailable(string groupName)
+        public IActionResult IsNameValid(string groupName)
         {
+            if(groupName.Length < 5 || groupName.Length > 250)
+            {
+                return Json(false);
+            }
+
             var isNameAvailable = groupsService.IsGroupNameAvailable(groupName);
             return Json(isNameAvailable);
         }

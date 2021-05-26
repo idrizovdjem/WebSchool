@@ -6,64 +6,22 @@
     ViewData["Title"] = "Administration";
 }
 
+<link rel="stylesheet" href="~/css/administration.css" />
+ 
 <main class="main-container">
     <h1>Administration</h1>
 
     <section class="edit-name-section">
         <h2 class="edit-name-label">Change group name</h2>
-        <form>
-            <input class="input-controll" asp-for="Name" />
-            <button class="change-name-button">Change</button>
+        <form id="changeNameForm" asp-controller="Administration" asp-action="ChangeGroupName" method="post">
+            <div id="errorMessages" asp-validation-summary="All" class="error-message"></div>
+            <input type="hidden" asp-for="Id" />
+            <input class="input-controll" asp-for="Name" id="groupNameInput"/>
+            <button id="changeNameButton" class="change-name-button">Change</button>
         </form>
     </section>
 </main>
 
-<style>
-    .main-container {
-        float: left;
-        margin-left: 2%;
-        height: 93vh;
-        width: 50%;
-    }
-
-    .edit-name-section {
-        width: 100%;
-        border-radius: 5px;
-        border: 2px solid lightgray;
-    }
-
-    .edit-name-label {
-        font-size: 3vh;
-        margin-left: 2%;
-    }
-
-    .input-controll {
-        width: 80%;
-        margin: 1vh;
-        font-size: 4vh;
-        border: none;
-        border-bottom: 3px solid lightgray;
-        outline: none;
-        transition: border ease 0.5s;
-    }
-
-        .input-controll:focus {
-            border-color: #5885FF;
-        }
-
-    .change-name-button {
-        font-size: 3vh;
-        width: 16%;
-        border: 1px solid black;
-        background: white;
-        transition: background ease 0.2s;
-    }
-
-        .change-name-button:hover {
-            color: #5885AF;
-            background: #5885AF;
-            border-color: #5885AF;
-            color: white;
-            cursor: pointer;
-        }
-</style>
+@section Scripts {
+    <script src="~/js/administration.js"></script>
+}

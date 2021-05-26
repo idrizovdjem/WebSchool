@@ -24,7 +24,7 @@ namespace WebSchool.Services
             this.applicationsService = applicationsService;
         }
 
-        public async Task AddUserToGroup(string userId, string groupId, GroupRole role)
+        public async Task AddUserToGroupAsync(string userId, string groupId, GroupRole role)
         {
             var userRole = dbContext.Roles
                 .FirstOrDefault(r => r.Name.ToLower() == role.ToString().ToLower());
@@ -37,6 +37,15 @@ namespace WebSchool.Services
             };
 
             await dbContext.UserGroups.AddAsync(userGroup);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task ChangeNameAsync(GroupSettingsViewModel input)
+        {
+            var group = dbContext.Groups
+                .Find(input.Id);
+
+            group.Name = input.Name.Trim();
             await dbContext.SaveChangesAsync();
         }
 
@@ -53,7 +62,7 @@ namespace WebSchool.Services
             await dbContext.Groups.AddAsync(group);
             await dbContext.SaveChangesAsync();
 
-            await AddUserToGroup(userId, group.Id, GroupRole.Admin);
+            await AddUserToGroupAsync(userId, group.Id, GroupRole.Admin);
 
             return group;
         }

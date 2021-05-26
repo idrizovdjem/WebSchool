@@ -27,6 +27,8 @@ namespace WebSchool.Services.Contracts
 
         Task<Group> CreateAsync(string userId, string name);
 
-        Task AddUserToGroup(string userId, string groupId, GroupRole role);
+        Task AddUserToGroupAsync(string userId, string groupId, GroupRole role);
+
+        Task ChangeNameAsync(GroupSettingsViewModel input);
     }
 }

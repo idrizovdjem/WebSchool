@@ -21,7 +21,7 @@ nameInput.addEventListener('input', async () => {
 });
 
 const checkGroupName = async (groupName) => {
-    return await fetch(`/apiGroups/IsNameAvailable?groupName=${groupName}`)
+    return await fetch(`/apiGroups/IsNameValid?groupName=${groupName}`)
         .then(response => response.json())
         .then(data => data)
         .catch(error => false);
