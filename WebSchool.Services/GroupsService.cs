@@ -15,11 +15,13 @@ namespace WebSchool.Services
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IPostsService postsService;
+        private readonly IApplicationsService applicationsService;
 
-        public GroupsService(ApplicationDbContext dbContext, IPostsService postsService)
+        public GroupsService(ApplicationDbContext dbContext, IPostsService postsService, IApplicationsService applicationsService)
         {
             this.dbContext = dbContext;
             this.postsService = postsService;
+            this.applicationsService = applicationsService;
         }
 
         public async Task AddUserToGroup(string userId, string groupId, string role)
@@ -86,23 +88,14 @@ namespace WebSchool.Services
 
             foreach(var group in groups)
             {
-                if(dbContext.UserGroups.Any(ug => ug.UserId == userId && ug.GroupId == group.Id))
+                if (IsUserInGroup(userId, group.Id))
                 {
                     group.RequestStatus = ApplicationStatus.InGroup.ToString();
                 }
                 else
                 {
-                    var application = dbContext.Applications
-                        .FirstOrDefault(a => a.UserId == userId && a.GroupId == group.Id);
-
-                    if(application == null)
-                    {
-                        group.RequestStatus = ApplicationStatus.NotApplied.ToString();
-                    }
-                    else
-                    {
-                        group.RequestStatus = application.IsConfirmed ? ApplicationStatus.InGroup.ToString() : ApplicationStatus.WaitingApproval.ToString();
-                    }
+                    var applicationStatus = applicationsService.GetApplicationStatus(userId, group.Id);
+                    group.RequestStatus = applicationStatus.ToString();
                 }
             }
 
