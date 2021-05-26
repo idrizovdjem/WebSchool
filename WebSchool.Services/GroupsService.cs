@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using WebSchool.Data;
 using WebSchool.Data.Models;
 using WebSchool.ViewModels.Group;
-using WebSchool.ViewModels.Enums;
 using WebSchool.Services.Contracts;
+using WebSchool.Common.Enumerations;
 
 namespace WebSchool.Services
 {
@@ -88,7 +88,7 @@ namespace WebSchool.Services
             {
                 if(dbContext.UserGroups.Any(ug => ug.UserId == userId && ug.GroupId == group.Id))
                 {
-                    group.RequestStatus = GroupRequestStatus.InGroup.ToString();
+                    group.RequestStatus = ApplicationStatus.InGroup.ToString();
                 }
                 else
                 {
@@ -97,11 +97,11 @@ namespace WebSchool.Services
 
                     if(application == null)
                     {
-                        group.RequestStatus = GroupRequestStatus.NotApplied.ToString();
+                        group.RequestStatus = ApplicationStatus.NotApplied.ToString();
                     }
                     else
                     {
-                        group.RequestStatus = application.IsConfirmed ? GroupRequestStatus.InGroup.ToString() : GroupRequestStatus.WaitingApproval.ToString();
+                        group.RequestStatus = application.IsConfirmed ? ApplicationStatus.InGroup.ToString() : ApplicationStatus.WaitingApproval.ToString();
                     }
                 }
             }
@@ -124,6 +124,11 @@ namespace WebSchool.Services
 
             groupNames.Add("Global Group");
             return groupNames;
+        }
+
+        public bool GroupExists(string id)
+        {
+            return dbContext.Groups.Any(g => g.Id == id);
         }
 
         public bool IsGroupNameAvailable(string name)

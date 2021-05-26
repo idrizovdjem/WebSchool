@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebSchool.Common\WebSchool.Common.csproj" />
     <ProjectReference Include="..\WebSchool.Data\WebSchool.Data.csproj" />
     <ProjectReference Include="..\WebSchool.ViewModels\WebSchool.ViewModels.csproj" />
   </ItemGroup>

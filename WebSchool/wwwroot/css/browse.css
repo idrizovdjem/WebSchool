@@ -1,0 +1,107 @@
+﻿.browse-container {
+    text-align: center;
+    width: 79%;
+    float: left;
+    height: 93vh;
+    overflow-y: auto;
+}
+
+.groups-table {
+    width: 90%;
+    margin: auto;
+    text-align: left;
+    font-size: 3.5vh;
+    border: 1px solid black;
+}
+
+.group-name-col {
+    width: 78%;
+    padding-left: 2%;
+}
+
+.group-join-col {
+    padding-left: 2%;
+    background: lightgray;
+}
+
+.group-join-button {
+    display: block;
+    width: 99%;
+    font-size: 3.5vh;
+    background: white;
+    border: 1px solid black;
+    transition: background ease 0.2s;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+}
+
+    .group-join-button:hover {
+        cursor: pointer;
+    }
+
+.not-joined {
+    border: 1px solid black;
+    background: white;
+}
+
+    .not-joined:hover {
+        color: white;
+        background: #5885AF;
+        border-color: #5885AF;
+    }
+
+.joined {
+    color: white;
+    background: #5885AF;
+    border-color: #5885AF;
+}
+
+.waiting-approval {
+    background: #FFD700;
+    color: black;
+    border-color: #FFD700;
+}
+
+.odd-row {
+    background: lightgray;
+}
+
+.even-row {
+    background: white;
+}
+
+.found-groups-container {
+    height: 78vh;
+    width: 85%;
+    margin: auto;
+    margin-top: 3vh;
+    overflow-y: auto;
+}
+
+.group-input {
+    width: 60%;
+    font-size: 4vh;
+    border: none;
+    border-bottom: 3px solid lightgray;
+    outline: none;
+    transition: border ease 0.5s;
+    margin: 2vh 0;
+}
+
+.search-button {
+    font-size: 3vh;
+    padding: 0.5% 2%;
+    margin-left: 2%;
+    border: 1px solid black;
+    background: white;
+    transition: background ease 0.2s;
+}
+
+    .search-button:hover {
+        color: #5885AF;
+        background: #5885AF;
+        border-color: #5885AF;
+        color: white;
+        cursor: pointer;
+    }

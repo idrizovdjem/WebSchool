@@ -14,6 +14,8 @@ namespace WebSchool.Services.Contracts
 
         bool IsGroupNameAvailable(string name);
 
+        bool GroupExists(string id);
+
         string GetName(string groupId);
 
         BrowseGroupViewModel[] GetGroupsContainingName(string userId, string groupName);

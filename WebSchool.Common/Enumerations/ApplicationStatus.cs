@@ -1,6 +1,6 @@
-﻿namespace WebSchool.ViewModels.Enums
+﻿namespace WebSchool.Common.Enumerations
 {
-    public enum GroupRequestStatus
+    public enum ApplicationStatus
     {
         NotApplied = 0,
         WaitingApproval = 1,

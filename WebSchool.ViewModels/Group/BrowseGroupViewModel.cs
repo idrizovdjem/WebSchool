@@ -1,6 +1,4 @@
-﻿using WebSchool.ViewModels.Enums;
-
-namespace WebSchool.ViewModels.Group
+﻿namespace WebSchool.ViewModels.Group
 {
     public class BrowseGroupViewModel
     {
