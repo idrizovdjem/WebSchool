@@ -24,11 +24,10 @@ namespace WebSchool.Services
             this.applicationsService = applicationsService;
         }
 
-        public async Task AddUserToGroup(string userId, string groupId, string role)
+        public async Task AddUserToGroup(string userId, string groupId, GroupRole role)
         {
             var userRole = dbContext.Roles
-                .Where(r => r.Name.ToLower() == role.ToLower())
-                .FirstOrDefault();
+                .FirstOrDefault(r => r.Name.ToLower() == role.ToString().ToLower());
 
             var userGroup = new UserGroup()
             {
@@ -54,14 +53,14 @@ namespace WebSchool.Services
             await dbContext.Groups.AddAsync(group);
             await dbContext.SaveChangesAsync();
 
-            await AddUserToGroup(userId, group.Id, "admin");
+            await AddUserToGroup(userId, group.Id, GroupRole.Admin);
 
             return group;
         }
 
-        public GroupViewModel GetGroupContent(string groupName)
+        public GroupViewModel GetGroupContent(string userId, string groupName)
         {
-            return dbContext.Groups
+            var groupViewModel = dbContext.Groups
                 .Where(g => g.Name == groupName)
                 .Select(g => new GroupViewModel()
                 {
@@ -70,6 +69,23 @@ namespace WebSchool.Services
                     NewestPosts = postsService.GetNewestPosts(g.Id, 10)
                 })
                 .FirstOrDefault();
+
+            if(groupName != "Global Group")
+            {
+                var roleId = dbContext.UserGroups
+                .First(ug => ug.UserId == userId && ug.GroupId == groupViewModel.Id).RoleId;
+
+                var role = dbContext.Roles
+                    .Find(roleId).Name;
+
+                groupViewModel.UserRole = (GroupRole)Enum.Parse(typeof(GroupRole), role);
+            }
+            else
+            {
+                groupViewModel.UserRole = GroupRole.Student;
+            }
+
+            return groupViewModel;
         }
 
         public BrowseGroupViewModel[] GetGroupsContainingName(string userId, string groupName)

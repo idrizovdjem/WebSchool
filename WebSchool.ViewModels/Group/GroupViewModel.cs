@@ -1,4 +1,5 @@
 ﻿using WebSchool.ViewModels.Post;
+using WebSchool.Common.Enumerations;
 
 namespace WebSchool.ViewModels.Group
 {
@@ -9,5 +10,7 @@ namespace WebSchool.ViewModels.Group
         public string Name { get; set; }
 
         public PostViewModel[] NewestPosts { get; set; }
+
+        public GroupRole UserRole { get; set; }
     }
 }

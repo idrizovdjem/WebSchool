@@ -82,6 +82,7 @@
     border-radius: 5px;
     border: 1px solid black;
     transition: background ease 0.2s;
+    margin: 0 2%;
 }
 
     .create-post-button:hover {

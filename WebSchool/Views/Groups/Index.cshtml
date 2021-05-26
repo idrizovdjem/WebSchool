@@ -1,4 +1,6 @@
 ﻿@using WebSchool.ViewModels.Group
+@using WebSchool.Common.Enumerations
+
 @model GroupViewModel
 
 @{ 
@@ -16,8 +18,16 @@
         Create new post
     </a>
 
+    @if (Model.UserRole == GroupRole.Admin)
+    {
+        <a asp-controller="Administration" asp-action="Index" asp-route-groupId="@Model.Id" class="create-post-button" id="formTogglerButton">
+            <i class="fas fa-cog"></i>
+            Administration
+        </a>
+    }
+
     <section class="posts">
-        @foreach(var post in Model.NewestPosts)
+        @foreach (var post in Model.NewestPosts)
         {
             <article class="post">
                 <a class="post-link" asp-controller="Posts" asp-action="Index" asp-route-postId="@post.Id">

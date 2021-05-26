@@ -3,12 +3,13 @@ using System.Collections.Generic;
 
 using WebSchool.Data.Models;
 using WebSchool.ViewModels.Group;
+using WebSchool.Common.Enumerations;
 
 namespace WebSchool.Services.Contracts
 {
     public interface IGroupsService
     {
-        GroupViewModel GetGroupContent(string groupName);
+        GroupViewModel GetGroupContent(string userId, string groupName);
 
         bool IsUserInGroup(string userId, string groupId);
 
@@ -24,6 +25,6 @@ namespace WebSchool.Services.Contracts
 
         Task<Group> CreateAsync(string userId, string name);
 
-        Task AddUserToGroup(string userId, string groupId, string role);
+        Task AddUserToGroup(string userId, string groupId, GroupRole role);
     }
 }

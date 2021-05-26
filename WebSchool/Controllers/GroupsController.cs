@@ -22,7 +22,8 @@ namespace WebSchool.Web.Controllers
 
         public IActionResult Index(string groupName = "Global Group")
         {
-            var groupViewModel = groupsService.GetGroupContent(groupName);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var groupViewModel = groupsService.GetGroupContent(userId, groupName);
             if(groupViewModel == null)
             {
                 return Redirect("/Groups/Index");
