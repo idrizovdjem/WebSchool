@@ -5,6 +5,7 @@ using WebSchool.Data;
 using WebSchool.Data.Models;
 using WebSchool.Services.Contracts;
 using WebSchool.Common.Enumerations;
+using WebSchool.ViewModels.Application;
 
 namespace WebSchool.Services
 {
@@ -28,6 +29,18 @@ namespace WebSchool.Services
 
             await dbContext.Applications.AddAsync(application);
             await dbContext.SaveChangesAsync();
+        }
+
+        public ApplicationViewModel[] GetApplications(string groupId)
+        {
+            return dbContext.Applications
+                .Where(a => a.GroupId == groupId && a.IsConfirmed == false)
+                .Select(a => new ApplicationViewModel()
+                {
+                    ApplicantId = a.UserId,
+                    Applicant = a.User.Email
+                })
+                .ToArray();
         }
 
         public ApplicationStatus GetApplicationStatus(string userId, string groupId)

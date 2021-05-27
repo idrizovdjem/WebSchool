@@ -72,6 +72,8 @@ th, td:first-child {
     width: 100%;
     text-align: center;
     background: white;
+    text-decoration: none;
+    color: black;
 }
 
     .go-to-link:hover {

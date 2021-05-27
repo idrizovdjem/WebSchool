@@ -1,0 +1,53 @@
+﻿@using WebSchool.ViewModels.Application
+@model ApplicationViewModel[]
+
+@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "Applications";
+}
+
+<link rel="stylesheet" href="~/css/applications.css" />
+
+<main class="applications-container">
+    <h1>Applications</h1>
+
+    <table class="applications-table">
+        <thead>
+            <tr class="odd-row">
+                <th width="50%">Applicant</th>
+                <th width="25%">Role</th>
+                <th width="15%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var applicant in Model)
+            {
+                <tr>
+                    <td class="applicant-name">@applicant.Applicant</td>
+                    <td>
+                        <select class="role-select">
+                            <option>Student</option>
+                            <option>Teacher</option>
+                        </select>
+                    </td>
+                    <td>
+                        <form asp-controller="Administration" asp-action="Applications" method="post">
+                            <input type="hidden" value="@ViewData["GroupId"]" name="groupId" />
+
+                            <input type="hidden" value="@applicant.ApplicantId" name="applicantId" />
+
+                            <input type="hidden" value="Student" name="role" />
+
+                            <button class="action-button approve-button"><i class="fas fa-check"></i></button>
+                            <button class="action-button decline-button"><i class="fas fa-times"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>
+
+@section Scripts {
+    <script src="~/js/applications.js"></script>
+}

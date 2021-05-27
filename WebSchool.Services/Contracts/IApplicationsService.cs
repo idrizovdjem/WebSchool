@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 using WebSchool.Common.Enumerations;
+using WebSchool.ViewModels.Application;
 
 namespace WebSchool.Services.Contracts
 {
@@ -9,5 +10,7 @@ namespace WebSchool.Services.Contracts
         ApplicationStatus GetApplicationStatus(string userId, string groupId);
 
         Task ApplyAsync(string userId, string groupId);
+
+        ApplicationViewModel[] GetApplications(string groupId);
     }
 }

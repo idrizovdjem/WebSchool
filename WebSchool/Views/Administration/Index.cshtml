@@ -31,17 +31,17 @@
         <tbody>
             <tr>
                 <td>Members</td>
-                <td><a class="go-to-link">Go to</a></td>
+                <td><a asp-controller="Administration" asp-action="Members" asp-route-groupId="@Model.Id" class="go-to-link">Go to</a></td>
             </tr>
 
             <tr class="odd-row">
                 <td>Applications</td>
-                <td><a class="go-to-link">Go to</a></td>
+                <td><a  asp-controller="Administration" asp-action="Applications" asp-route-groupId="@Model.Id" class="go-to-link">Go to</a></td>
             </tr>
 
             <tr>
                 <td>Posts</td>
-                <td><a class="go-to-link">Go to</a></td>
+                <td><a  asp-controller="Administration" asp-action="Posts"  asp-route-groupId="@Model.Id" class="go-to-link">Go to</a></td>
             </tr>
         </tbody>
     </table>
