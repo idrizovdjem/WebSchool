@@ -9,6 +9,7 @@
     width: 100%;
     border-radius: 5px;
     border: 2px solid lightgray;
+    margin-bottom: 3vh;
 }
 
 .edit-name-label {
@@ -39,7 +40,6 @@
 }
 
     .change-name-button:hover {
-        color: #5885AF;
         background: #5885AF;
         border-color: #5885AF;
         color: white;
@@ -50,3 +50,33 @@
     color: red;
     margin-left: 2%;
 }
+
+.settings-table {
+    width: 100%;
+    text-align: left;
+    border: 1px solid black;
+    font-size: 4vh;
+}
+
+.odd-row {
+    background: lightgray;
+}
+
+th, td:first-child {
+    padding-left: 2%;
+}
+
+.go-to-link {
+    display: block;
+    border: 1px solid black;
+    width: 100%;
+    text-align: center;
+    background: white;
+}
+
+    .go-to-link:hover {
+        background: #5885AF;
+        border-color: #5885AF;
+        color: white;
+        cursor: pointer;
+    }
