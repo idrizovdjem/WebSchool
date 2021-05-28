@@ -53,5 +53,25 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
 
             return Ok();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Decline(ApplicationReviewInputModel input)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (administrationService.ValidateIfUserIsAdmin(userId, input.GroupId) == false)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest();
+            }
+
+            await applicationsService.DeclineAsync(input.ApplicantId, input.GroupId);
+
+            return Ok();
+        }
     }
 }

@@ -16,7 +16,7 @@ Array.from(document.getElementsByClassName('approve-button')).forEach((button, i
 });
 
 Array.from(document.getElementsByClassName('decline-button')).forEach((button, index) => {
-    button.addEventListener('click', (event) => applicationButtonHandler(event, index, ''));
+    button.addEventListener('click', (event) => applicationButtonHandler(event, index, '/apiApplications/Decline'));
 });
 
 const applicationButtonHandler = (event, index, url) => {
