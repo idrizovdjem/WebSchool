@@ -20,29 +20,34 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var applicant in Model)
-            {
-                <tr>
-                    <td class="applicant-name">@applicant.Applicant</td>
-                    <td>
-                        <select class="role-select">
-                            <option>Student</option>
-                            <option>Teacher</option>
-                        </select>
-                    </td>
-                    <td>
-                        <form asp-controller="Administration" asp-action="Applications" method="post">
-                            <input type="hidden" value="@ViewData["GroupId"]" name="groupId" />
+            @{
+                var rowIndex = 0;
+                foreach (var applicant in Model)
+                {
+                    <tr class="@(rowIndex % 2 != 0 ? "odd-row" : string.Empty)">
+                        <td class="applicant-name">@applicant.Applicant</td>
+                        <td>
+                            <select class="role-select">
+                                <option>Student</option>
+                                <option>Teacher</option>
+                            </select>
+                        </td>
+                        <td>
+                            <form class="application-form">
+                                <input type="hidden" value="@ViewData["GroupId"]" name="groupId" />
 
-                            <input type="hidden" value="@applicant.ApplicantId" name="applicantId" />
+                                <input type="hidden" value="@applicant.ApplicantId" name="applicantId" />
 
-                            <input type="hidden" value="Student" name="role" />
+                                <input type="hidden" value="Student" name="role" />
 
-                            <button class="action-button approve-button"><i class="fas fa-check"></i></button>
-                            <button class="action-button decline-button"><i class="fas fa-times"></i></button>
-                        </form>
-                    </td>
-                </tr>
+                                <button class="action-button approve-button"><i class="fas fa-check"></i></button>
+                                <button class="action-button decline-button"><i class="fas fa-times"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    rowIndex++;
+                }
             }
         </tbody>
     </table>

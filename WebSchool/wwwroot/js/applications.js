@@ -7,3 +7,40 @@
         roleField.setAttribute('value', role);
     });
 });
+
+
+const forms = Array.from(document.getElementsByClassName('application-form'));
+
+Array.from(document.getElementsByClassName('approve-button')).forEach((button, index) => {
+    button.addEventListener('click', (event) => applicationButtonHandler(event, index, '/apiApplications/Approve'));
+});
+
+Array.from(document.getElementsByClassName('decline-button')).forEach((button, index) => {
+    button.addEventListener('click', (event) => applicationButtonHandler(event, index, ''));
+});
+
+const applicationButtonHandler = (event, index, url) => {
+    event.preventDefault();
+
+    const formData = new FormData(forms[index]);
+    const groupId = formData.get('groupId');
+    const applicantId = formData.get('applicantId');
+    const role = formData.get('role');
+
+    fetch(url, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ groupId, applicantId, role })
+    })
+        .then(response => {
+            if (response.status === 200) {
+                const rowElement = forms[index].parentElement.parentElement;
+                rowElement.remove();
+            } else {
+                console.log('Something went wrong')
+            }
+        })
+        .catch(error => console.log('Something went wrong'));
+}

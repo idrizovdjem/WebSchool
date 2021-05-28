@@ -42,6 +42,7 @@ namespace WebSchool
             services.AddTransient<IGroupsService, GroupsService>();
             services.AddTransient<ICommentsService, CommentsService>();
             services.AddTransient<IApplicationsService, ApplicationsService>();
+            services.AddTransient<IAdministrationService, AdministrationService>();
 
             services.AddAntiforgery();
         }

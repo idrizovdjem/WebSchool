@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 
 using WebSchool.ViewModels.Group;
 using WebSchool.Services.Contracts;
-using WebSchool.Common.Enumerations;
 
 namespace WebSchool.WebApplication.Controllers
 {
@@ -16,18 +15,20 @@ namespace WebSchool.WebApplication.Controllers
         private readonly IGroupsService groupsService;
         private readonly IUsersService usersService;
         private readonly IApplicationsService applicationsService;
+        private readonly IAdministrationService administrationService;
 
-        public AdministrationController(IGroupsService groupsService, IUsersService usersService, IApplicationsService applicationsService)
+        public AdministrationController(IGroupsService groupsService, IUsersService usersService, IApplicationsService applicationsService, IAdministrationService administrationService)
         {
             this.groupsService = groupsService;
             this.usersService = usersService;
             this.applicationsService = applicationsService;
+            this.administrationService = administrationService;
         }
 
         public IActionResult Index(string groupId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (ValidateIfUserIsAdmin(userId, groupId) == false)
+            if (administrationService.ValidateIfUserIsAdmin(userId, groupId) == false)
             {
                 return Redirect("/Groups/Index");
             }
@@ -45,7 +46,7 @@ namespace WebSchool.WebApplication.Controllers
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if(ValidateIfUserIsAdmin(userId, input.Id) == false)
+            if(administrationService.ValidateIfUserIsAdmin(userId, input.Id) == false)
             {
                 return Redirect("/Groups/Index");
             }
@@ -62,7 +63,7 @@ namespace WebSchool.WebApplication.Controllers
         public IActionResult Applications(string groupId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if(ValidateIfUserIsAdmin(userId, groupId) == false)
+            if(administrationService.ValidateIfUserIsAdmin(userId, groupId) == false)
             {
                 return Redirect("/Groups/Index");
             }
@@ -71,22 +72,6 @@ namespace WebSchool.WebApplication.Controllers
             ViewData["GroupId"] = groupId;
             var applications = applicationsService.GetApplications(groupId);
             return View(applications);
-        }
-
-        private bool ValidateIfUserIsAdmin(string userId, string groupId)
-        {
-            if (groupsService.IsUserInGroup(userId, groupId) == false)
-            {
-                return false;
-            }
-
-            var userRole = usersService.GetRoleInGroup(userId, groupId);
-            if (userRole != GroupRole.Admin)
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

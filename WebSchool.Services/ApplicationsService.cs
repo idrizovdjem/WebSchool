@@ -31,6 +31,20 @@ namespace WebSchool.Services
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task ApproveAsync(string applicantId, string groupId)
+        {
+            var application = dbContext.Applications
+                .FirstOrDefault(a => a.UserId == applicantId && a.GroupId == groupId);
+
+            if(application == null)
+            {
+                return;
+            }
+
+            application.IsConfirmed = true;
+            await dbContext.SaveChangesAsync();
+        }
+
         public ApplicationViewModel[] GetApplications(string groupId)
         {
             return dbContext.Applications
