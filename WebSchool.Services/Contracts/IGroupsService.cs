@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using WebSchool.Data.Models;
 using WebSchool.ViewModels.Group;
 using WebSchool.Common.Enumerations;
+using WebSchool.ViewModels.Users;
 
 namespace WebSchool.Services.Contracts
 {
@@ -24,6 +25,8 @@ namespace WebSchool.Services.Contracts
         BrowseGroupViewModel[] GetGroupsContainingName(string userId, string groupName);
 
         ICollection<string> GetUserGroups(string userId);
+
+        UserViewModel[] GetMembers(string adminId, string groupId);
 
         Task<Group> CreateAsync(string userId, string name);
 

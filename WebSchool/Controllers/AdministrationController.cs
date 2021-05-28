@@ -13,14 +13,12 @@ namespace WebSchool.WebApplication.Controllers
     public class AdministrationController : Controller
     {
         private readonly IGroupsService groupsService;
-        private readonly IUsersService usersService;
         private readonly IApplicationsService applicationsService;
         private readonly IAdministrationService administrationService;
 
-        public AdministrationController(IGroupsService groupsService, IUsersService usersService, IApplicationsService applicationsService, IAdministrationService administrationService)
+        public AdministrationController(IGroupsService groupsService, IApplicationsService applicationsService, IAdministrationService administrationService)
         {
             this.groupsService = groupsService;
-            this.usersService = usersService;
             this.applicationsService = applicationsService;
             this.administrationService = administrationService;
         }
@@ -72,6 +70,20 @@ namespace WebSchool.WebApplication.Controllers
             ViewData["GroupId"] = groupId;
             var applications = applicationsService.GetApplications(groupId);
             return View(applications);
+        }
+
+        public IActionResult Members(string groupId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if(administrationService.ValidateIfUserIsAdmin(userId, groupId) == false)
+            {
+                return Redirect("/Groups/Index");
+            }
+
+            ViewData["GroupId"] = groupId;
+
+            var groupMembers = groupsService.GetMembers(userId, groupId);
+            return View(groupMembers);
         }
     }
 }

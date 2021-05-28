@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 using WebSchool.Data;
 using WebSchool.Data.Models;
+using WebSchool.ViewModels.Users;
 using WebSchool.ViewModels.Group;
 using WebSchool.Services.Contracts;
 using WebSchool.Common.Enumerations;
@@ -125,6 +126,18 @@ namespace WebSchool.Services
             }
 
             return groups;
+        }
+
+        public UserViewModel[] GetMembers(string adminId, string groupId)
+        {
+            return dbContext.UserGroups
+                .Where(ug => ug.GroupId == groupId && ug.UserId != adminId)
+                .Select(ug => new UserViewModel()
+                {
+                    Id = ug.User.Id,
+                    Email = ug.User.Email
+                })
+                .ToArray();
         }
 
         public string GetName(string groupId)
