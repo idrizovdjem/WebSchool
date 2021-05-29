@@ -23,7 +23,7 @@
                 <tr>
                     <td>@member.Email</td>
                     <td><a asp-controller="Members" asp-action="Settings" asp-route-memberId="@member.Id" asp-route-groupId="@ViewData["GroupId"]" class="settings-link">Settings</a></td>
-                    <td><a class="remove-link">Remove</a></td>
+                    <td><a asp-controller="Members" asp-action="Remove" asp-route-memberId="@member.Id" asp-route-groupId="@ViewData["GroupId"]" class="remove-link">Remove</a></td>
                 </tr>
             }
         </tbody>

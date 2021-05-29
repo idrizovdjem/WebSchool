@@ -61,5 +61,17 @@ namespace WebSchool.WebApplication.Controllers
 
             return Redirect("/Administration?groupId=" + input.GroupId);
         }
+
+        public async Task<IActionResult> Remove(string memberId, string groupId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (administrationService.ValidateIfUserIsAdmin(userId, groupId) == false)
+            {
+                return Redirect("/Groups/Index");
+            }
+
+            await membersService.RemoveAsync(memberId, groupId);
+            return Redirect("/Administration?groupId=" + groupId);
+        }
     }
 }

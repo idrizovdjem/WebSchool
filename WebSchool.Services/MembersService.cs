@@ -12,11 +12,13 @@ namespace WebSchool.Services
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IUsersService usersService;
+        private readonly IApplicationsService applicationsService;
 
-        public MembersService(ApplicationDbContext dbContext, IUsersService usersService)
+        public MembersService(ApplicationDbContext dbContext, IUsersService usersService, IApplicationsService applicationsService)
         {
             this.dbContext = dbContext;
             this.usersService = usersService;
+            this.applicationsService = applicationsService;
         }
 
         public MemberViewModel GetById(string memberId, string groupId)
@@ -31,6 +33,22 @@ namespace WebSchool.Services
                     GroupId = groupId
                 })
                 .FirstOrDefault();
+        }
+
+        public async Task RemoveAsync(string memberId, string groupId)
+        {
+            var userGroup = dbContext.UserGroups
+                .FirstOrDefault(x => x.UserId == memberId && x.GroupId == groupId);
+
+            if(userGroup == null)
+            {
+                return;
+            }
+
+            await applicationsService.RemoveAsync(memberId, groupId);
+
+            dbContext.UserGroups.Remove(userGroup);
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(string memberId, string groupId, GroupRole role)

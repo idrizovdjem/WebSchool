@@ -15,6 +15,8 @@ namespace WebSchool.Services.Contracts
 
         Task DeclineAsync(string applicantId, string groupId);
 
+        Task RemoveAsync(string applicantId, string groupId);
+
         ApplicationViewModel[] GetApplications(string groupId);
     }
 }

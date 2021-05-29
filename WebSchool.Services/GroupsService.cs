@@ -83,7 +83,7 @@ namespace WebSchool.Services
             if(groupName != "Global Group")
             {
                 var roleId = dbContext.UserGroups
-                .First(ug => ug.UserId == userId && ug.GroupId == groupViewModel.Id).RoleId;
+                .FirstOrDefault(ug => ug.UserId == userId && ug.GroupId == groupViewModel.Id)?.RoleId;
 
                 var role = dbContext.Roles
                     .Find(roleId).Name;

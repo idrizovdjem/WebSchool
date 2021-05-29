@@ -83,5 +83,19 @@ namespace WebSchool.Services
 
             return application.IsConfirmed ? ApplicationStatus.InGroup : ApplicationStatus.WaitingApproval;
         }
+
+        public async Task RemoveAsync(string applicantId, string groupId)
+        {
+            var application = dbContext.Applications
+                .FirstOrDefault(x => x.UserId == applicantId && x.GroupId == groupId);
+
+            if(application == null)
+            {
+                return;
+            }
+
+            dbContext.Applications.Remove(application);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }
