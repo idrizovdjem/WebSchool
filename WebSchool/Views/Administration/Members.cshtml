@@ -12,7 +12,7 @@
     <table class="members-table">
         <thead>
             <tr>
-                <th width="65%">Member</th>
+                <th width="60%">Member</th>
                 <th width="20%">Settings</th>
                 <th>Remove</th>
             </tr>
@@ -22,7 +22,7 @@
             {
                 <tr>
                     <td>@member.Email</td>
-                    <td><a asp-controller="Members" asp-action="Settings" asp-route-userId="@member.Id" class="settings-link">Settings</a></td>
+                    <td><a asp-controller="Members" asp-action="Settings" asp-route-memberId="@member.Id" asp-route-groupId="@ViewData["GroupId"]" class="settings-link">Settings</a></td>
                     <td><a class="remove-link">Remove</a></td>
                 </tr>
             }
@@ -35,7 +35,7 @@
         float: left;
         padding-left: 2%;
         width: 50%;
-        font-size: 3vh;
+        font-size: 4vh;
     }
 
     .members-table {
@@ -61,6 +61,8 @@
     }
 
     .settings-link, .remove-link {
+        text-decoration: none;
+        color: black;
         width: 100%;
         display: block;
         border: 1px solid black;

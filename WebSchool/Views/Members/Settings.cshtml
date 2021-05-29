@@ -1,0 +1,68 @@
+﻿@using WebSchool.ViewModels.Users
+@model MemberViewModel
+
+@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "Member";
+}
+
+<main class="main-container">
+    <h1>Member Settings</h1>
+
+    <section>
+        <p>Email: @Model.Email</p>
+
+        <form asp-controller="Members" asp-action="SaveChanges" method="post">
+            <input type="hidden" name="memberId" value="@Model.Id" />
+            <input type="hidden" name="groupId" value="@Model.GroupId" />
+
+            <label for="role">Role: </label>
+            <select class="role-select" id="role" name="role">
+                <option value="Student">Student</option>
+                <option value="Teacher">Teacher</option>
+            </select>
+
+            <button class="save-button">Save Changes</button>
+        </form>
+    </section>
+</main>
+
+<style>
+    .main-container {
+        float: left;
+        padding-left: 2%;
+        font-size: 3vh;
+    }
+
+    .role-select {
+        font-size: 3vh;
+        width: 70%;
+    }
+
+    form {
+        width: 70%;
+    }
+
+    .save-button {
+        width: 100%;
+        margin-top: 3vh;
+        font-size: 3vh;
+        border: 1px solid black;
+        background: white;
+        transition: background ease 0.2s;
+    }
+
+    .save-button:hover {
+        background: #5885AF;
+        border-color: #5885AF;
+        color: white;
+        cursor: pointer;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        const roleSelect = document.getElementById('role');
+        roleSelect.value = "@Model.Role";
+    </script>
+} 
