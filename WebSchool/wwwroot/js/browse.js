@@ -19,29 +19,26 @@ const attachGroups = (groups) => {
     tableBody.innerHTML = '';
 
     groups.forEach((group, index) => {
-        console.log(group);
         const tableRow = document.createElement('tr');
-        const rowClass = index % 2 == 0 ? "event-row" : "odd-row";
-        tableRow.classList.add(rowClass);
 
         const nameData = document.createElement('td');
-        nameData.classList.add('group-name-col');
         nameData.textContent = group.name;
+        nameData.classList.add('h5', 'pt-2');
 
         const linkData = document.createElement('td');
         const requestLink = document.createElement('a');
-        requestLink.classList.add('group-join-button');
+        
 
         if (group.requestStatus === 'NotApplied') {
-            requestLink.classList.add('not-joined');
             requestLink.textContent = 'Send Request';
             requestLink.href = '/Applications/Apply?groupId=' + group.id;
+            requestLink.classList.add('btn', 'btn-success', 'w-100', 'text-white');
         } else if (group.requestStatus === 'WaitingApproval') {
-            requestLink.classList.add('waiting-approval');
             requestLink.textContent = 'Waiting approval';
+            requestLink.classList.add('btn', 'btn-warning', 'w-100', 'text-black');
         } else if (group.requestStatus === 'InGroup') {
-            requestLink.classList.add('joined');
             requestLink.textContent = 'Joined';
+            requestLink.classList.add('btn', 'btn-primary', 'w-100', 'text-white');
         }
 
         linkData.appendChild(requestLink);

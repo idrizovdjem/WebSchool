@@ -6,16 +6,14 @@
     ViewData["Title"] = "Members";
 }
 
-<link rel="stylesheet" href="~/css/members.css" />
-
-<main class="main-container">
+<main class="float-left w-50 pl-3">
     <h1>Members</h1>
 
-    <table class="members-table">
+    <table class="table table-sm table-striped table-bordered">
         <thead>
-            <tr>
-                <th width="60%">Member</th>
-                <th width="20%">Settings</th>
+            <tr class="h4">
+                <th>Member</th>
+                <th>Settings</th>
                 <th>Remove</th>
             </tr>
         </thead>
@@ -23,9 +21,9 @@
             @foreach (var member in Model)
             {
                 <tr>
-                    <td>@member.Email</td>
-                    <td><a asp-controller="Members" asp-action="Settings" asp-route-memberId="@member.Id" asp-route-groupId="@ViewData["GroupId"]" class="settings-link">Settings</a></td>
-                    <td><a asp-controller="Members" asp-action="Remove" asp-route-memberId="@member.Id" asp-route-groupId="@ViewData["GroupId"]" class="remove-link">Remove</a></td>
+                    <td class="h5 pt-2">@member.Email</td>
+                    <td><a asp-controller="Members" asp-action="Settings" asp-route-memberId="@member.Id" asp-route-groupId="@ViewData["GroupId"]" class="btn btn-primary w-100">Settings</a></td>
+                    <td><a asp-controller="Members" asp-action="Remove" asp-route-memberId="@member.Id" asp-route-groupId="@ViewData["GroupId"]" class="btn btn-danger w-100">Remove</a></td>
                 </tr>
             }
         </tbody>

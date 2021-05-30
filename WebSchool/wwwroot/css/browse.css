@@ -6,24 +6,6 @@
     overflow-y: auto;
 }
 
-.groups-table {
-    width: 90%;
-    margin: auto;
-    text-align: left;
-    font-size: 3.5vh;
-    border: 1px solid black;
-}
-
-.group-name-col {
-    width: 75%;
-    padding-left: 2%;
-}
-
-.group-join-col {
-    padding-left: 2%;
-    background: lightgray;
-}
-
 .group-join-button {
     display: block;
     width: 99%;
@@ -39,37 +21,6 @@
     .group-join-button:hover {
         cursor: pointer;
     }
-
-.not-joined {
-    border: 1px solid black;
-    background: white;
-}
-
-    .not-joined:hover {
-        color: white;
-        background: #5885AF;
-        border-color: #5885AF;
-    }
-
-.joined {
-    color: white;
-    background: #5885AF;
-    border-color: #5885AF;
-}
-
-.waiting-approval {
-    background: #FFD700;
-    color: black;
-    border-color: #FFD700;
-}
-
-.odd-row {
-    background: lightgray;
-}
-
-.even-row {
-    background: white;
-}
 
 .found-groups-container {
     height: 78vh;

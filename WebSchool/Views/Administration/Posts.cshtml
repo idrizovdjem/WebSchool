@@ -6,7 +6,7 @@
     ViewData["Title"] = "Posts";
 }
 
-<main class="main-container">
+<main class="float-left w-75 pl-3">
     <h1>Posts</h1>
 
     <table class="table table-sm table-striped table-bordered">
@@ -22,22 +22,14 @@
         <tbody>
             @foreach(var post in Model)
             { 
-                <tr>
-                    <td>@post.Creator</td>
-                    <td>@post.Content</td>
-                    <td>@post.CommentsCount</td>
-                    <td>@post.CreatedOn</td>
-                    <td><a>Details</a></td>
+                <tr >
+                    <td class="pt-2 h5">@post.Creator</td>
+                    <td class="pt-2 h5">@post.Content</td>
+                    <td class="pt-2 h5">@post.CommentsCount</td>
+                    <td class="pt-2 h5">@post.CreatedOn.ToShortDateString()</td>
+                    <td><a asp-controller="Posts" asp-action="Index" asp-route-postId="@post.Id" class="btn btn-info w-100 text-white">Details</a></td>
                 </tr>
             }
         </tbody>
     </table>
 </main>
-
-<style>
-    .main-container {
-        float: left;
-        padding-left: 2%;
-        font-size: 3vh;
-    }
-</style>

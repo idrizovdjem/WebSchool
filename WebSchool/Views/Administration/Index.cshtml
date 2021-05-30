@@ -12,36 +12,40 @@
     <h1>Administration</h1>
 
     <section class="edit-name-section">
-        <h2 class="edit-name-label">Change group name</h2>
-        <form id="changeNameForm" asp-controller="Administration" asp-action="ChangeGroupName" method="post">
-            <div id="errorMessages" asp-validation-summary="All" class="error-message"></div>
+        <form id="changeNameForm" asp-controller="Administration" asp-action="ChangeGroupName" method="post" class="ml-3 mr-3">
+            <h2 class="edit-name-label mt-2">Change group name</h2>
+            <div id="errorMessages" asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <input class="input-controll" asp-for="Name" id="groupNameInput"/>
-            <button id="changeNameButton" class="change-name-button">Change</button>
+            
+            <div class="form-group">
+                <input class="form-control" asp-for="Name" id="groupNameInput" />
+            </div>
+
+            <button id="changeNameButton" class="btn btn-primary w-25 mb-2">Change</button>
         </form>
     </section>
 
-    <table class="settings-table">
+    <table class="table table-sm table-striped table-bordered">
         <thead>
-            <tr class="odd-row">
-                <th>Section name</th>
-                <th>Go to</th>
+            <tr>
+                <th class="h4">Section name</th>
+                <th class="h4">Go to</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Members</td>
-                <td><a asp-controller="Administration" asp-action="Members" asp-route-groupId="@Model.Id" class="go-to-link">Go to</a></td>
-            </tr>
-
-            <tr class="odd-row">
-                <td>Applications</td>
-                <td><a  asp-controller="Administration" asp-action="Applications" asp-route-groupId="@Model.Id" class="go-to-link">Go to</a></td>
+                <td class="h5 pt-2">Members</td>
+                <td><a asp-controller="Administration" asp-action="Members" asp-route-groupId="@Model.Id" class="btn btn-primary w-100">Go to</a></td>
             </tr>
 
             <tr>
-                <td>Posts</td>
-                <td><a  asp-controller="Administration" asp-action="Posts"  asp-route-groupId="@Model.Id" class="go-to-link">Go to</a></td>
+                <td class="h5 pt-2">Applications</td>
+                <td><a  asp-controller="Administration" asp-action="Applications" asp-route-groupId="@Model.Id" class="btn btn-primary w-100">Go to</a></td>
+            </tr>
+
+            <tr>
+                <td class="h5 pt-2">Posts</td>
+                <td><a  asp-controller="Administration" asp-action="Posts"  asp-route-groupId="@Model.Id" class="btn btn-primary w-100">Go to</a></td>
             </tr>
         </tbody>
     </table>
