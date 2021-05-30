@@ -6,15 +6,16 @@
     ViewData["Title"] = "New Group";
 }
 
-<link rel="stylesheet" href="~/css/createGroup.css" />
 
-<form asp-controller="Groups" asp-action="Create" method="post" class="group-form">
-    <div asp-validation-summary="All" class="error-message"></div>
+<form asp-controller="Groups" asp-action="Create" method="post" class=" float-left col-md-5 offset-md-2 mt-3">
+    <div asp-validation-summary="All" class="text-danger"></div>
     <h1>Create new group</h1>
 
-    <p class="custom-error" id="customError"></p>
-    <input asp-for="Name" class="name-input" placeholder="Group name..."  id="nameInput"/>
-    <button class="create-button" id="createButton">Create</button>
+    <div class="form-group">
+        <p class="custom-error" id="customError"></p>
+        <input asp-for="Name" class="form-control" placeholder="Group name..." id="nameInput" />
+    </div>
+    <button class="btn btn-primary w-25" id="createButton">Create</button>
 </form>
 
 @section Scripts {

@@ -1,57 +1,5 @@
-﻿.login-form {
-    margin: 10vh auto;
-    width: 40%;
-}
-
-.input-container {
-    width: 100%;
-    margin: 2vh 0;
-}
-
-.input-controll {
-    width: 100%;
-    font-size: 4vh;
-    border: none;
-    border-bottom: 3px solid lightgray;
-    outline: none;
-    transition: border ease 0.5s;
-}
-
-    .input-controll:focus {
-        border-color: #5885FF;
-    }
-
-
-.input-label {
+﻿.input-label {
     margin: 0;
     font-size: 3vh;
     margin-bottom: 1vh;
-}
-
-.login-button {
-    font-size: 3vh;
-    margin-top: 3vh;
-    width: 20%;
-    float: right;
-    padding: 0.5% 2%;
-    border: 1px solid black;
-    background: white;
-    transition: background ease 0.2s;
-}
-
-    .login-button:hover {
-        background: #5885AF;
-        border-color: #5885AF;
-        color: white;
-        cursor: pointer;
-    }
-
-.error-message {
-    color: red;
-}
-
-.links {
-    width: 100%;
-    float: right;
-    text-align: right;
 }

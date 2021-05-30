@@ -6,30 +6,30 @@
 
 <link rel="stylesheet" href="~/css/register.css" />
 
-<form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="register-form">
-    <h1>Create a new account.</h1>
+<form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="col-md-6 offset-md-3 mt-3">
+    <h1>Register</h1>
     <div asp-validation-summary="All" class="text-danger"></div>
 
-    <div class="input-container">
+    <div class="form-group">
         <p class="input-label">Email</p>
-        <input asp-for="Input.Email" class="input-controll" placeholder="your@email.com" />
+        <input asp-for="Input.Email" class="form-control" placeholder="your@email.com" />
     </div>
 
-    <div class="input-container">
+    <div class="form-group">
         <p class="input-label">Password</p>
-        <input asp-for="Input.Password" class="input-controll" placeholder="strongpassword" />
+        <input asp-for="Input.Password" class="form-control" placeholder="strongpassword" />
     </div>
 
-    <div class="input-container">
+    <div class="form-group">
         <p class="input-label">Confirm Password</p>
-        <input asp-for="Input.ConfirmPassword" class="input-controll" placeholder="strongpassword" />
+        <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="strongpassword" />
     </div>
 
-    <button type="submit" class="register-button">Register</button>
+    <button type="submit" class="btn btn-primary w-25 mb-3">Register</button>
 
-    <div class="links">
+    <p>
         <a asp-area="Identity" asp-page="/Account/Login">Already have account?</a>
-    </div>
+    </p>
 </form>
 
 @section Scripts {

@@ -31,8 +31,13 @@
 
         <form asp-controller="Comments" asp-action="Create" method="post" class="comment-form">
             <input type="hidden" name="postId" value="@Model.Id" />
-            <textarea name="content" class="comment-textarea" placeholder="Write your comment..."></textarea>
-            <button class="comment-button">Send</button>
+
+            <div class="form-group mt-3">
+                <textarea name="content" rows="4" class="form-control" placeholder="Write your comment..."></textarea>
+
+            </div>
+
+            <button class="btn btn-primary float-right w-25">Send</button>
         </form>
     </section>
 </main>

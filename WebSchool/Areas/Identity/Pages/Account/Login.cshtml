@@ -8,33 +8,30 @@
 <link rel="stylesheet" href="~/css/login.css" />
  
 <section>
-    <form id="account" method="post" class="login-form">
-        <h1>Use a local account to log in.</h1>
+    <form id="account" method="post" class="col-md-6 offset-md-3 mt-3">
+        <h1>Login</h1>
         <div asp-validation-summary="All" class="error-message"></div>
 
-        <div class="input-container">
+        <div class="form-group">
             <p class="input-label">Email</p>
-            <input asp-for="Input.Email" class="input-controll" placeholder="your@email.com" />
-
+            <input asp-for="Input.Email" class="form-control" placeholder="your@email.com" />
         </div>
 
-        <div class="input-container">
+        <div class="form-group">
             <p class="input-label">Password</p>
-            <input asp-for="Input.Password" class="input-controll" placeholder="strongpassword" />
+            <input asp-for="Input.Password" class="form-control" placeholder="strongpassword" />
         </div>
 
         <div>
-            <button type="submit" class="login-button">Log in</button>
+            <button type="submit" class="btn btn-primary w-25 mb-3">Log in</button>
         </div>
 
-        <div class="links">
-            <p>
-                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-            </p>
-            <p>
-                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-            </p>
-        </div>
+        <p>
+            <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+        </p>
+        <p>
+            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+        </p>
     </form>
 </section>
 
