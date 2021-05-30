@@ -6,31 +6,31 @@
     ViewData["Title"] = "Applications";
 }
 
-<link rel="stylesheet" href="~/css/applications.css" />
-
-<main class="applications-container">
+<main class="float-left w-50 pl-3">
     <h1>Applications</h1>
 
-    <table class="applications-table">
+    <table class="table table-sm table-striped table-bordered">
         <thead>
-            <tr class="odd-row">
-                <th width="50%">Applicant</th>
-                <th width="25%">Role</th>
-                <th width="15%">Action</th>
+            <tr>
+                <th>Applicant</th>
+                <th>Role</th>
+                <th width="15%">Approve</th>
+                <th width="15%">Decline</th>
             </tr>
         </thead>
         <tbody>
             @{
-                var rowIndex = 0;
                 foreach (var applicant in Model)
                 {
-                    <tr class="@(rowIndex % 2 != 0 ? "odd-row" : string.Empty)">
-                        <td class="applicant-name">@applicant.Applicant</td>
+                    <tr>
+                        <td class="h4">@applicant.Applicant</td>
                         <td>
-                            <select class="role-select">
-                                <option>Student</option>
-                                <option>Teacher</option>
-                            </select>
+                            <div class="form-group">
+                                <select class="form-control mb-0 role-select">
+                                    <option>Student</option>
+                                    <option>Teacher</option>
+                                </select>
+                            </div>
                         </td>
                         <td>
                             <form class="application-form">
@@ -39,14 +39,14 @@
                                 <input type="hidden" value="@applicant.ApplicantId" name="applicantId" />
 
                                 <input type="hidden" value="Student" name="role" />
-
-                                <button class="action-button approve-button"><i class="fas fa-check"></i></button>
-                                <button class="action-button decline-button"><i class="fas fa-times"></i></button>
                             </form>
+
+                            <button class="btn btn-success w-100 approve-button"><i class="fas fa-check"></i></button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger w-100 decline-button"><i class="fas fa-times"></i></button>
                         </td>
                     </tr>
-
-                    rowIndex++;
                 }
             }
         </tbody>
