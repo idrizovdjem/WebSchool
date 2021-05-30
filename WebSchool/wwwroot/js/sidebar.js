@@ -16,8 +16,9 @@ const fetchGroups = () => {
 
 const addGroups = (groupNames) => {
     groupNames.forEach(groupName => {
-        const groupLabelElement = document.createElement('p');
-        groupLabelElement.innerHTML = `<a href="/Groups/Index?groupName=${groupName}">${groupName}</a>`;
+        const groupLabelElement = document.createElement('a');
+        groupLabelElement.href = `/Groups/Index?groupName=${groupName}`;
+        groupLabelElement.textContent = groupName;
         groupLabelElement.classList.add('group-element');
         groupsContainer.appendChild(groupLabelElement);
 

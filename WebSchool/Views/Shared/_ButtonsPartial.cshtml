@@ -4,13 +4,13 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="navbar-item">
+    <div class="custom-navbar-item">
         <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button class="logout-button" type="submit">Logout</button>
         </form>
     </div>
 
-    <div class="navbar-item">
+    <div class="custom-navbar-item">
         <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
     </div>
 }
@@ -18,10 +18,10 @@ else
 {
     @if (!this.User.Identity.IsAuthenticated)
     {
-        <div class="navbar-item">
+        <div class="custom-navbar-item">
             <a asp-area="Identity" asp-page="/Account/Register">Register</a>
         </div>
-        <div class="navbar-item">
+        <div class="custom-navbar-item">
             <a asp-area="Identity" asp-page="/Account/Login">Login</a>
         </div>
     }

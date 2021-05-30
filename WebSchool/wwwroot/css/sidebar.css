@@ -31,9 +31,12 @@
 }
 
 .group-element {
-    width: 85%;
+    width: 98%;
+    display: block;
+    text-decoration: none;
+    color: black;
     margin: 0;
-    padding-left: 15%;
+    padding-left: 2%;
     padding-top: 2%;
     padding-bottom: 2%;
 }

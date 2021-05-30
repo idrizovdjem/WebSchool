@@ -6,6 +6,8 @@
     ViewData["Title"] = "Members";
 }
 
+<link rel="stylesheet" href="~/css/members.css" />
+
 <main class="main-container">
     <h1>Members</h1>
 
@@ -29,61 +31,3 @@
         </tbody>
     </table>
 </main>
-
-<style>
-    .main-container {
-        float: left;
-        padding-left: 2%;
-        width: 50%;
-        font-size: 4vh;
-    }
-
-    .members-table {
-        width: 100%;
-        border: 1px solid black;
-    }
-
-    th {
-        padding-left: 2%;
-        text-align: left;
-    }
-
-    thead {
-        background: lightgray;
-    }
-
-    tr:nth-child(even) {
-        background: lightgray;
-    }
-
-    td:first-child {
-        padding-left: 2%;
-    }
-
-    .settings-link, .remove-link {
-        text-decoration: none;
-        color: black;
-        width: 100%;
-        display: block;
-        border: 1px solid black;
-        background: white;
-        transition: background ease 0.2s;
-        text-align: center;
-    }
-
-        .settings-link:hover, .remove-link:hover {
-            background: #5885AF;
-            border-color: #5885AF;
-            color: white;
-            cursor: pointer;
-        }
-
-    .remove-link {
-        background: #f26c2e;
-    }
-
-        .remove-link:hover {
-            background: #f22e2e;
-            border: 1px solid #f22e2e;
-        }
-</style>

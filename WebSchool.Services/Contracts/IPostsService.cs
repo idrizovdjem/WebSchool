@@ -11,5 +11,7 @@ namespace WebSchool.Services.Contracts
         Task CreateAsync(CreatePostInputModel input, string userId);
 
         PostPreviewViewModel GetById(string postId);
+
+        PostViewModel[] GetAll(string groupId);
     }
 }

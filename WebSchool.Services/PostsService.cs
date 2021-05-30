@@ -36,6 +36,21 @@ namespace WebSchool.Services
             await dbContext.SaveChangesAsync();
         }
 
+        public PostViewModel[] GetAll(string groupId)
+        {
+            return dbContext.Posts
+                .Where(p => p.GroupId == groupId && p.IsDeleted == false)
+                .Select(p => new PostViewModel()
+                {
+                    Id = p.Id,
+                    Creator = p.Creator.Email,
+                    CreatedOn = p.CreatedOn,
+                    Content = p.Content.Substring(0, 25) + "...",
+                    CommentsCount = p.Comments.Count
+                })
+                .ToArray();
+        }
+
         public PostPreviewViewModel GetById(string postId)
         {
             return dbContext.Posts
