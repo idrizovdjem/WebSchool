@@ -98,18 +98,6 @@ namespace WebSchool.Services
             return groupViewModel;
         }
 
-        public UserViewModel[] GetMembers(string adminId, string groupId)
-        {
-            return dbContext.UserGroups
-                .Where(ug => ug.GroupId == groupId && ug.UserId != adminId)
-                .Select(ug => new UserViewModel()
-                {
-                    Id = ug.User.Id,
-                    Email = ug.User.Email
-                })
-                .ToArray();
-        }
-
         public string GetName(string groupId)
         {
             return dbContext.Groups

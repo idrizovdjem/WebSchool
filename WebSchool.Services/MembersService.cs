@@ -62,5 +62,18 @@ namespace WebSchool.Services
             memberGroup.RoleId = roleId;
             await dbContext.SaveChangesAsync();
         }
+
+        public MemberViewModel[] GetMembers(string adminId, string groupId)
+        {
+            return dbContext.UserGroups
+                .Where(ug => ug.GroupId == groupId && ug.UserId != adminId)
+                .Select(ug => new MemberViewModel()
+                {
+                    Id = ug.User.Id,
+                    Email = ug.User.Email,
+                    Role = ug.Role.Name
+                })
+                .ToArray();
+        }
     }
 }

@@ -16,13 +16,15 @@ namespace WebSchool.WebApplication.Controllers
         private readonly IApplicationsService applicationsService;
         private readonly IAdministrationService administrationService;
         private readonly IPostsService postsService;
+        private readonly IMembersService membersService;
 
-        public AdministrationController(IGroupsService groupsService, IApplicationsService applicationsService, IAdministrationService administrationService, IPostsService postsService)
+        public AdministrationController(IGroupsService groupsService, IApplicationsService applicationsService, IAdministrationService administrationService, IPostsService postsService, IMembersService membersService)
         {
             this.groupsService = groupsService;
             this.applicationsService = applicationsService;
             this.administrationService = administrationService;
             this.postsService = postsService;
+            this.membersService = membersService;
         }
 
         public IActionResult Index(string groupId)
@@ -84,7 +86,7 @@ namespace WebSchool.WebApplication.Controllers
 
             ViewData["GroupId"] = groupId;
 
-            var groupMembers = groupsService.GetMembers(userId, groupId);
+            var groupMembers = membersService.GetMembers(userId, groupId);
             return View(groupMembers);
         }
 

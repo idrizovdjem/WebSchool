@@ -18,13 +18,19 @@
 
                 @if (Model.IsCreator == true)
                 {
-                    <span class="badge bg-danger float-end ms-3">
-                        <a class="text-decoration-none text-light h6" href="#">Delete</a>
-                    </span>
+                    <div class="badge bg-danger float-end ms-3">
+                        <a class="text-decoration-none text-light h6" href="#">
+                            <i class="fas fa-trash-alt"></i>
+                            Delete
+                        </a>
+                    </div>
 
-                    <span class="badge bg-warning float-end">
-                        <a class="text-decoration-none text-light h6" href="#">Edit</a>
-                    </span>
+                    <div class="badge bg-warning float-end">
+                        <a class="text-decoration-none text-light h6" href="#">
+                            <i class="fas fa-edit"></i>
+                            Edit
+                        </a>
+                    </div>
                 }
             </div>
         </article>
@@ -42,13 +48,19 @@
 
                     @if (Model.IsCreator == true)
                     {
-                        <span class="badge bg-danger float-end ms-3">
-                            <a class="text-decoration-none text-light h6" href="#">Delete</a>
-                        </span>
+                        <div class="badge bg-danger float-end ms-3">
+                            <a class="text-decoration-none text-light h6" href="#">
+                                <i class="fas fa-trash-alt"></i>
+                                Delete
+                            </a>
+                        </div>
 
-                        <span class="badge bg-warning float-end">
-                            <a class="text-decoration-none text-light h6" href="#">Edit</a>
-                        </span>
+                        <div class="badge bg-warning float-end">
+                            <a class="text-decoration-none text-light h6" href="#">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </a>
+                        </div>
                     }
                 </div>
             </article>

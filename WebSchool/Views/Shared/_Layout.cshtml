@@ -13,7 +13,10 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-controller="Groups" asp-action="Index">WebSchool</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Groups" asp-action="Index">
+                    <i class="fas fa-graduation-cap"></i>
+                    WebSchool
+                </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -25,33 +28,43 @@
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user-friends"></i>
                                     Groups
                                 </a>
                                 <ul class="dropdown-menu" id="groupList" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#">Group name</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#">All groups</a></li>
                                 </ul>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-light" href="/Browse/Index">Browse</a>
+                            <li class="nav-item me-3">
+                                <a class="nav-link text-light" href="/Browse/Index">
+                                    <i class="fas fa-search"></i>
+                                    Browse
+                                </a>
                             </li>
 
                             <li class="nav-item">
                                 <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                    <button class="btn btn-link text-light text-decoration-none" type="submit">Logout</button>
+                                    <button class="btn btn-outline-light text-decoration-none" type="submit">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        Logout
+                                    </button>
                                 </form>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Login
+                                </a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    Register
+                                </a>
                             </li>
                         }
 
@@ -96,14 +109,14 @@
                     groupList.innerHTML += `
 <li><hr class="dropdown-divider"></li>
 <li><a class="dropdown-item" href="/Groups/Create">New group</a></li>
-<li><a class="dropdown-item" href="/Groups/All">All groups</a></li>
+<li><a class="dropdown-item" href="/Groups/All">All joined groups</a></li>
 `;
                 })
                 .catch(error => {
                     groupList.innerHTML += `
 <li><hr class="dropdown-divider"></li>
 <li><a class="dropdown-item" href="/Groups/Create">New group</a></li>
-<li><a class="dropdown-item" href="/Groups/All">All groups</a></li>
+<li><a class="dropdown-item" href="/Groups/All">ALl joined groups</a></li>
 `;
                 });
         }

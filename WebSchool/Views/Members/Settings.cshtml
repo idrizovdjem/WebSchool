@@ -6,7 +6,7 @@
     ViewData["Title"] = "Member";
 }
 
-<main class="float-left w-25 pl-3">
+<main class="container col-md-4 offset-md-4">
     <h1>Member Settings</h1>
 
     <section>
@@ -16,16 +16,18 @@
             <input type="hidden" name="memberId" value="@Model.Id" />
             <input type="hidden" name="groupId" value="@Model.GroupId" />
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="role">Role: </label>
-                <select class="form-control float-left" id="role" name="role">
+                <select class="form-control" id="role" name="role">
                     <option value="Student">Student</option>
                     <option value="Teacher">Teacher</option>
                 </select>
             </div>
 
-            <button class="btn btn-primary w-100 mt-2">Save Changes</button>
+            <button class="btn btn-primary w-100">Save Changes</button>
         </form>
+
+        <a asp-controller="Members" asp-action="Remove" asp-route-memberId="@Model.Id" asp-route-groupId="@Model.GroupId" class="btn btn-danger mt-3" id="removeButton">Remove Member</a>
     </section>
 </main>
 
@@ -33,5 +35,13 @@
     <script>
         const roleSelect = document.getElementById('role');
         roleSelect.value = "@Model.Role";
+
+        const removeButton = document.getElementById('removeButton');
+        removeButton.onclick = (event) => {
+            const removeConfirm = confirm("Are you sure you want to remove this user ?");
+            if (removeConfirm === false) {
+                event.preventDefault();
+            }
+        }
     </script>
 } 

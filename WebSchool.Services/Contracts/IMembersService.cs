@@ -12,5 +12,7 @@ namespace WebSchool.Services.Contracts
         Task UpdateAsync(string memberId, string groupId, GroupRole role);
 
         Task RemoveAsync(string memberId, string groupId);
+
+        MemberViewModel[] GetMembers(string adminId, string groupId);
     }
 }

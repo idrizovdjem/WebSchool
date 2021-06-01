@@ -6,49 +6,37 @@
     ViewData["Title"] = "Administration";
 }
 
-<link rel="stylesheet" href="~/css/administration.css" />
- 
-<main class="main-container">
+<main class="container">
     <h1>Administration</h1>
+    <section class="mt-3 mb-3">
+        <a asp-controller="Administration" asp-action="Members" asp-route-groupId="@Model.Id" class="btn btn-primary">
+            <i class="fas fa-users"></i>
+            Members page
+        </a>
+        <a asp-controller="Administration" asp-action="Applications" asp-route-groupId="@Model.Id" class="btn btn-primary">
+            <i class="fas fa-address-card"></i>
+            Applications page
+        </a>
+        <a asp-controller="Administration" asp-action="Posts" asp-route-groupId="@Model.Id" class="btn btn-primary">
+            <i class="fas fa-newspaper"></i>
+            Posts page
+        </a>
+    </section>
 
     <section class="edit-name-section">
-        <form id="changeNameForm" asp-controller="Administration" asp-action="ChangeGroupName" method="post" class="ml-3 mr-3">
-            <h2 class="edit-name-label mt-2">Change group name</h2>
+        <h2>Change group name</h2>
+        <form id="changeNameForm" asp-controller="Administration" asp-action="ChangeGroupName" method="post" class="w-50">
             <div id="errorMessages" asp-validation-summary="All" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            
-            <div class="form-group">
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+
+            <div class="mb-3">
+                <label for="groupNameInput" class="form-label">Group name</label>
                 <input class="form-control" asp-for="Name" id="groupNameInput" />
             </div>
 
-            <button id="changeNameButton" class="btn btn-primary w-25 mb-2">Change</button>
+            <button id="changeNameButton" class="btn btn-primary w-25 mb-2">Save changes</button>
         </form>
     </section>
-
-    <table class="table table-sm table-striped table-bordered">
-        <thead>
-            <tr>
-                <th class="h4">Section name</th>
-                <th class="h4">Go to</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="h5 pt-2">Members</td>
-                <td><a asp-controller="Administration" asp-action="Members" asp-route-groupId="@Model.Id" class="btn btn-primary w-100">Go to</a></td>
-            </tr>
-
-            <tr>
-                <td class="h5 pt-2">Applications</td>
-                <td><a  asp-controller="Administration" asp-action="Applications" asp-route-groupId="@Model.Id" class="btn btn-primary w-100">Go to</a></td>
-            </tr>
-
-            <tr>
-                <td class="h5 pt-2">Posts</td>
-                <td><a  asp-controller="Administration" asp-action="Posts"  asp-route-groupId="@Model.Id" class="btn btn-primary w-100">Go to</a></td>
-            </tr>
-        </tbody>
-    </table>
 </main>
 
 @section Scripts {

@@ -22,8 +22,6 @@ namespace WebSchool.Services.Contracts
 
         ICollection<string> GetUserGroups(string userId);
 
-        UserViewModel[] GetMembers(string adminId, string groupId);
-
         Task<Group> CreateAsync(string userId, string name);
 
         Task AddUserToGroupAsync(string userId, string groupId, GroupRole role);
