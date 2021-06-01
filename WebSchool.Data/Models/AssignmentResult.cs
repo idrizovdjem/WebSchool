@@ -16,16 +16,13 @@ namespace WebSchool.Data.Models
         [Required]
         public string AssignmentId { get; set; }
 
+        public virtual Assignment Assignment { get; set; }
+
         [Required]
         public string StudentId { get; set; }
 
+        public virtual ApplicationUser Student { get; set; }
+
         public int Points { get; set; }
-
-        public DateTime DueDate { get; set; }
-
-        [Required]
-        public string Content { get; set; }
-
-        public byte Stage { get; set; }
     }
 }

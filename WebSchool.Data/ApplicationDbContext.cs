@@ -21,6 +21,8 @@ namespace WebSchool.Data
 
         public DbSet<Assignment> Assignments { get; set; }
 
+        public DbSet<UserAssignment> UserAssignments { get; set; }
+
         public DbSet<AssignmentResult> AssignmentResults { get; set; }
 
         public DbSet<Application> Applications { get; set; }
@@ -71,6 +73,34 @@ namespace WebSchool.Data
             builder.Entity<Application>(entity =>
             {
                 entity.HasKey(ap => new { ap.GroupId, ap.UserId });
+            });
+
+            builder.Entity<UserAssignment>(entity =>
+            {
+                entity.HasKey(ua => new { ua.StudentId, ua.AssignmentId });
+
+                entity
+                    .HasOne(ua => ua.Student)
+                    .WithMany(s => s.Assignments)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity
+                    .HasOne(ua => ua.Assignment)
+                    .WithMany(a => a.Students)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            builder.Entity<AssignmentResult>(entity =>
+            {
+                entity
+                    .HasOne(ar => ar.Assignment)
+                    .WithMany(a => a.Results)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity
+                    .HasOne(ar => ar.Student)
+                    .WithMany(s => s.Results)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             base.OnModelCreating(builder);

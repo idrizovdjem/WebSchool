@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebSchool.Data.Models
@@ -8,10 +9,21 @@ namespace WebSchool.Data.Models
         public Assignment()
         {
             Id = Guid.NewGuid().ToString();
+            Students = new HashSet<UserAssignment>();
+            Results = new HashSet<AssignmentResult>();
         }
 
         [Key]
         public string Id { get; set; }
+
+        [Required]
+        [MaxLength(200)]
+        public string Title { get; set; }
+
+        [Required]
+        public string Content { get; set; }
+
+        public int Points { get; set; }
 
         [Required]
         public string TeacherId { get; set; }
@@ -19,17 +31,12 @@ namespace WebSchool.Data.Models
         public virtual ApplicationUser Teacher { get; set; }
 
         [Required]
-        [MaxLength(200)]
-        public string AssignmentTitle { get; set; }
+        public string GroupId { get; set; }
 
-        [Required]
-        public string Signature { get; set; }
+        public virtual Group Group { get; set; }
 
-        [Required]
-        public string AssignmentContent { get; set; }
+        public virtual ICollection<UserAssignment> Students { get; set; }
 
-        public DateTime DueDate { get; set; }
-
-        public int Points { get; set; }
+        public virtual ICollection<AssignmentResult> Results { get; set; }
     }
 }

@@ -40,10 +40,11 @@ namespace WebSchool
             services.AddTransient<IPostsService, PostsService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IGroupsService, GroupsService>();
+            services.AddTransient<IMembersService, MembersService>();
             services.AddTransient<ICommentsService, CommentsService>();
+            services.AddTransient<IAssignmentsService, AssignmentsService>();
             services.AddTransient<IApplicationsService, ApplicationsService>();
             services.AddTransient<IAdministrationService, AdministrationService>();
-            services.AddTransient<IMembersService, MembersService>();
 
             services.AddAntiforgery();
         }
