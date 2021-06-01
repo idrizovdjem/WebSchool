@@ -66,7 +66,7 @@ namespace WebSchool.Services
                 .FirstOrDefault();
         }
 
-        public PostViewModel[] GetNewestPosts(string groupId, int count = 10)
+        public PostViewModel[] GetNewestPosts(string userId, string groupId, int count = 10)
         {
             return dbContext.Posts
                 .Where(p => p.GroupId == groupId && p.IsDeleted == false)
@@ -75,10 +75,12 @@ namespace WebSchool.Services
                 .Select(p => new PostViewModel()
                 {
                     Id = p.Id,
-                    Content = p.Content,
+                    Title = p.Title.Length < 50 ? p.Title : p.Title.Substring(0, 50) + "...",
+                    Content = p.Content.Length < 500 ? p.Content : p.Content.Substring(0, 500) + "...",
                     CreatedOn = p.CreatedOn,
                     Creator = p.Creator.Email,
-                    CommentsCount = p.Comments.Count
+                    CommentsCount = p.Comments.Count,
+                    IsCreator = p.CreatorId == userId
                 })
                 .ToArray();
         }

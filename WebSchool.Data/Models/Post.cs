@@ -15,6 +15,10 @@ namespace WebSchool.Data.Models
         }
 
         [Required]
+        [MaxLength(150)]
+        public string Title { get; set; }
+
+        [Required]
         public string Content { get; set; }
 
         [Required]

@@ -6,6 +6,8 @@ namespace WebSchool.ViewModels.Post
     {
         public string Id { get; set; }
 
+        public string Title { get; set; }
+
         public string Creator { get; set; }
 
         public string Content { get; set; }
@@ -13,5 +15,7 @@ namespace WebSchool.ViewModels.Post
         public DateTime CreatedOn { get; set; }
 
         public int CommentsCount { get; set; }
+
+        public bool IsCreator { get; set; }
     }
 }

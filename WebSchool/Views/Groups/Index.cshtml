@@ -3,52 +3,41 @@
 
 @model GroupViewModel
 
-@{ 
+@{
     ViewData["Title"] = Model.Name;
     Layout = "_Layout";
 }
 
-<link rel="stylesheet" href="~/css/group.css" />
+<div class="container text-center">
+    <h1 class="m-3">@Model.Name</h1>
 
-<main class="group">
-    <h1>@Model.Name</h1>
-
-    <div class="mt-3">
-        <a asp-controller="Posts" asp-action="Create" asp-route-groupId="@Model.Id" class="create-post-button" id="formTogglerButton">
-            <i class="fas fa-plus-circle"></i>
-            Create new post
-        </a>
-
-        @if (Model.UserRole == GroupRole.Admin)
-        {
-            <a asp-controller="Administration" asp-action="Index" asp-route-groupId="@Model.Id" class="create-post-button" id="formTogglerButton">
-                <i class="fas fa-cog"></i>
-                Administration
-            </a>
-        }
-        else if (Model.UserRole == GroupRole.Teacher)
-        {
-            <a asp-controller="Assignments" asp-action="Give" asp-route-groupId="@Model.Id" class="create-post-button" id="formTogglerButton">
-                <i class="fas fa-file-alt"></i>
-                Give assignment
-            </a>
-        }
-    </div>
-
-    <section class="posts">
+    <section class="col-md-10 offset-md-1 mt-3 text-start">
         @foreach (var post in Model.NewestPosts)
         {
-            <article class="post">
-                <a class="post-link" asp-controller="Posts" asp-action="Index" asp-route-postId="@post.Id">
-                    <h3 class="post-creator">@post.Creator</h3>
-                    <p class="post-content">@post.Content</p>
-                    <div class="post-info">
-                        <span class="post-comments">@post.CommentsCount Comments</span>
-                        <span class="post-date">@post.CreatedOn</span>
-                    </div>
-                </a>
+            <article>
+                <h2><a class="text-decoration-none text-dark" asp-controller="Posts" asp-action="Index" asp-route-postId="@post.Id">@post.Title</a></h2>
+                <p>@post.Content</p>
+                <div>
+                    <span class="badge bg-success">By @post.Creator</span>
+                    <span class="badge bg-primary">@post.CommentsCount Comments</span>
+                    <span class="badge bg-secondary">Posted @post.CreatedOn</span>
+
+                    @if (post.IsCreator == true)
+                    {
+                        <span class="badge bg-danger float-end ms-3">
+                            <a class="text-decoration-none text-light h6" href="#">Delete</a>
+                        </span>
+
+                        <span class="badge bg-warning float-end">
+                            <a class="text-decoration-none text-light h6" href="#">Edit</a>
+                        </span>
+                    }
+
+                </div>
             </article>
+
+            <hr />
         }
     </section>
-</main>
+</div>
 

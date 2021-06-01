@@ -76,7 +76,7 @@ namespace WebSchool.Services
                 {
                     Id = g.Id,
                     Name = g.Name,
-                    NewestPosts = postsService.GetNewestPosts(g.Id, 10)
+                    NewestPosts = postsService.GetNewestPosts(userId, g.Id, 10)
                 })
                 .FirstOrDefault();
 

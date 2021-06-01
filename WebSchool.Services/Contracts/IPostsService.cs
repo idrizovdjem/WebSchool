@@ -6,7 +6,7 @@ namespace WebSchool.Services.Contracts
 {
     public interface IPostsService
     {
-        PostViewModel[] GetNewestPosts(string groupId, int count = 10);
+        PostViewModel[] GetNewestPosts(string userId, string groupId, int count = 10);
 
         Task CreateAsync(CreatePostInputModel input, string userId);
 
