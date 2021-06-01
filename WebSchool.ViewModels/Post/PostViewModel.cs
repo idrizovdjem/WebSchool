@@ -1,5 +1,7 @@
 ﻿using System;
 
+using WebSchool.ViewModels.Comment;
+
 namespace WebSchool.ViewModels.Post
 {
     public class PostViewModel
@@ -14,7 +16,7 @@ namespace WebSchool.ViewModels.Post
 
         public DateTime CreatedOn { get; set; }
 
-        public int CommentsCount { get; set; }
+        public CommentViewModel[] Comments { get; set; }
 
         public bool IsCreator { get; set; }
     }

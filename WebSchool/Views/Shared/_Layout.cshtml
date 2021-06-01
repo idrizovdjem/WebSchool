@@ -13,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Navbar</a>
+                <a class="navbar-brand" asp-controller="Groups" asp-action="Index">WebSchool</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -66,9 +66,13 @@
         </nav>
     </header>
 
-    <main role="main">
+    <main role="main" class="main mb-3">
         @RenderBody()
     </main>
+
+    <footer class="footer bg-primary">
+        <p class="text-light p-2">Footer</p>
+    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/bootstrap-5.0.1-dist/js/bootstrap.bundle.min.js"></script>

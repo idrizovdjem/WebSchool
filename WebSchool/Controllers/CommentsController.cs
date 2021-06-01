@@ -30,13 +30,14 @@ namespace WebSchool.WebApplication.Controllers
                 return Redirect($"/Posts?postId={input.PostId}");
             }
 
-            var post = postsService.GetById(input.PostId);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var post = postsService.GetById(userId, input.PostId);
             if(post == null)
             {
                 return Redirect($"/Posts?postId={input.PostId}");
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.commentsService.CreateAsync(post.Id, input.Content, userId);
 
             return Redirect($"/Posts?postId={input.PostId}");

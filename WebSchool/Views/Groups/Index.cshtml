@@ -1,6 +1,4 @@
 ﻿@using WebSchool.ViewModels.Group
-@using WebSchool.Common.Enumerations
-
 @model GroupViewModel
 
 @{
@@ -10,30 +8,35 @@
 
 <div class="container text-center">
     <h1 class="m-3">@Model.Name</h1>
+    <a asp-controller="Posts" asp-action="Create" asp-route-groupId="@Model.Id" class="btn btn-primary">New Post</a>
 
     <section class="col-md-10 offset-md-1 mt-3 text-start">
         @foreach (var post in Model.NewestPosts)
         {
             <article>
-                <h2><a class="text-decoration-none text-dark" asp-controller="Posts" asp-action="Index" asp-route-postId="@post.Id">@post.Title</a></h2>
-                <p>@post.Content</p>
-                <div>
-                    <span class="badge bg-success">By @post.Creator</span>
-                    <span class="badge bg-primary">@post.CommentsCount Comments</span>
-                    <span class="badge bg-secondary">Posted @post.CreatedOn</span>
+                <a class="text-decoration-none text-dark" asp-controller="Posts" asp-action="Index" asp-route-postId="@post.Id">
 
-                    @if (post.IsCreator == true)
-                    {
-                        <span class="badge bg-danger float-end ms-3">
-                            <a class="text-decoration-none text-light h6" href="#">Delete</a>
-                        </span>
+                    <h2>@post.Title</h2>
+                    <p>@post.Content</p>
+                    <div>
+                        <span class="badge bg-success">By @post.Creator</span>
+                        <span class="badge bg-primary">@post.Comments.Length Comments</span>
+                        <span class="badge bg-secondary">Posted @post.CreatedOn</span>
 
-                        <span class="badge bg-warning float-end">
-                            <a class="text-decoration-none text-light h6" href="#">Edit</a>
-                        </span>
-                    }
+                        @if (post.IsCreator == true)
+                        {
+                            <div class="badge bg-danger float-end ms-3">
+                                <a class="text-decoration-none text-light h6" href="#">Delete</a>
+                            </div>
 
-                </div>
+                            <div class="badge bg-warning float-end">
+                                <a class="text-decoration-none text-light h6" href="#">Edit</a>
+                            </div>
+                        }
+
+                    </div>
+
+                </a>
             </article>
 
             <hr />

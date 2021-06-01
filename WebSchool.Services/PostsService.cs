@@ -7,6 +7,7 @@ using WebSchool.ViewModels.Post;
 
 using WebSchool.Data.Models;
 using WebSchool.Services.Contracts;
+using WebSchool.ViewModels.Comment;
 
 namespace WebSchool.Services
 {
@@ -26,6 +27,7 @@ namespace WebSchool.Services
             var post = new Post()
             {
                 Content = input.Content,
+                Title = input.Title,
                 GroupId = input.GroupId,
                 CreatorId = userId,
                 CreatedOn = DateTime.UtcNow,
@@ -43,25 +45,28 @@ namespace WebSchool.Services
                 .Select(p => new PostViewModel()
                 {
                     Id = p.Id,
+                    Title = p.Title.Length < 50 ? p.Title : p.Title.Substring(0, 50) + "...",
                     Creator = p.Creator.Email,
                     CreatedOn = p.CreatedOn,
                     Content = p.Content.Substring(0, 25) + "...",
-                    CommentsCount = p.Comments.Count
+                    Comments = commentsService.GetPostComments(p.Id)
                 })
                 .ToArray();
         }
 
-        public PostPreviewViewModel GetById(string postId)
+        public PostViewModel GetById(string userId, string postId)
         {
             return dbContext.Posts
                 .Where(p => p.Id == postId && p.IsDeleted == false)
-                .Select(p => new PostPreviewViewModel()
+                .Select(p => new PostViewModel()
                 {
                     Id = p.Id,
+                    Title = p.Title,
                     Creator = p.Creator.Email,
+                    CreatedOn = p.CreatedOn,
                     Content = p.Content,
                     Comments = commentsService.GetPostComments(p.Id),
-                    CreatedOn = p.CreatedOn
+                    IsCreator = p.CreatorId == userId
                 })
                 .FirstOrDefault();
         }
@@ -79,8 +84,8 @@ namespace WebSchool.Services
                     Content = p.Content.Length < 500 ? p.Content : p.Content.Substring(0, 500) + "...",
                     CreatedOn = p.CreatedOn,
                     Creator = p.Creator.Email,
-                    CommentsCount = p.Comments.Count,
-                    IsCreator = p.CreatorId == userId
+                    IsCreator = p.CreatorId == userId,
+                    Comments = commentsService.GetPostComments(p.Id)
                 })
                 .ToArray();
         }

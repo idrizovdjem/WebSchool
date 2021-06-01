@@ -1,43 +1,68 @@
 ﻿@using WebSchool.ViewModels.Post
-@model PostPreviewViewModel
+@model PostViewModel
 
-@{ 
+@{
     Layout = "_Layout";
     ViewData["Title"] = "Post";
 }
 
-<link rel="stylesheet" href="~/css/post.css" />
+<div class="container custom-container">
+    <section class="col-md-8 offset-md-2 mt-3">
+        <article>
+            <h2>@Model.Title</h2>
+            <p>@Model.Content</p>
+            <div>
+                <span class="badge bg-success">By @Model.Creator</span>
+                <span class="badge bg-primary">@Model.Comments.Length Comments</span>
+                <span class="badge bg-secondary">Posted @Model.CreatedOn</span>
 
-<main class="post-container">
-    <article class="post">
-        <header class="post-header">
-            <h3 class="post-creator">@Model.Creator</h3>
-            <span class="post-date">@Model.CreatedOn</span>
-        </header>
-        <p class="post-content">@Model.Content</p>
-    </article>
+                @if (Model.IsCreator == true)
+                {
+                    <span class="badge bg-danger float-end ms-3">
+                        <a class="text-decoration-none text-light h6" href="#">Delete</a>
+                    </span>
 
-    <section class="comments-section">
+                    <span class="badge bg-warning float-end">
+                        <a class="text-decoration-none text-light h6" href="#">Edit</a>
+                    </span>
+                }
+            </div>
+        </article>
+
+        <h2 class="mt-3">Comments</h2>
+        <hr />
+
         @foreach (var comment in Model.Comments)
         {
-            <article class="comment">
-                <header class="comment-header">
-                    <h3 class="comment-creator">@comment.Creator</h3>
-                    <span class="comment-date">@comment.CreatedOn</span>
-                </header>
-                <p class="comment-content">@comment.Content</p>
+            <article>
+                <p>@comment.Content</p>
+                <div>
+                    <span class="badge bg-success">By @comment.Creator</span>
+                    <span class="badge bg-secondary">Posted @comment.CreatedOn</span>
+
+                    @if (Model.IsCreator == true)
+                    {
+                        <span class="badge bg-danger float-end ms-3">
+                            <a class="text-decoration-none text-light h6" href="#">Delete</a>
+                        </span>
+
+                        <span class="badge bg-warning float-end">
+                            <a class="text-decoration-none text-light h6" href="#">Edit</a>
+                        </span>
+                    }
+                </div>
             </article>
+            <hr />
         }
 
-        <form asp-controller="Comments" asp-action="Create" method="post" class="comment-form">
+        <form asp-controller="Comments" asp-action="Create" method="post" class="mt-3">
             <input type="hidden" name="postId" value="@Model.Id" />
 
-            <div class="form-group mt-3">
-                <textarea name="content" rows="4" class="form-control" placeholder="Write your comment..."></textarea>
-
+            <div class="mb-3">
+                <textarea name="content" rows="4" class="form-control" placeholder="Leave your opinion"></textarea>
             </div>
 
-            <button class="btn btn-primary float-right w-25">Send</button>
+            <button class="btn btn-primary w-25">Send</button>
         </form>
     </section>
-</main>
+</div>

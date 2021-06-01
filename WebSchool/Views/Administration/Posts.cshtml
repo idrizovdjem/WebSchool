@@ -25,7 +25,7 @@
                 <tr >
                     <td class="pt-2 h5">@post.Creator</td>
                     <td class="pt-2 h5">@post.Content</td>
-                    <td class="pt-2 h5">@post.CommentsCount</td>
+                    <td class="pt-2 h5">@post.Comments.Length</td>
                     <td class="pt-2 h5">@post.CreatedOn.ToShortDateString()</td>
                     <td><a asp-controller="Posts" asp-action="Index" asp-route-postId="@post.Id" class="btn btn-info w-100 text-white">Details</a></td>
                 </tr>

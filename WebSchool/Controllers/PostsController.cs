@@ -31,6 +31,7 @@ namespace WebSchool.WebApplication.Controllers
             }
 
             ViewData["GroupId"] = groupId;
+            ViewData["GroupName"] = groupName;
             return View();
         }
 
@@ -68,7 +69,9 @@ namespace WebSchool.WebApplication.Controllers
 
         public IActionResult Index(string postId)
         {
-            var post = postsService.GetById(postId);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var post = postsService.GetById(userId, postId);
             if(post == null)
             {
                 return Redirect("/Groups/Index");

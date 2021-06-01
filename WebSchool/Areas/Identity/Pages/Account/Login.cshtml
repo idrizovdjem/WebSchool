@@ -4,31 +4,31 @@
 @{
     ViewData["Title"] = "Log in";
 }
-
-<link rel="stylesheet" href="~/css/login.css" />
  
-<section>
-    <form method="post" class="col-md-4 offset-md-4 mt-3">
-        <h1>Login</h1>
+<div class="container">
+    <section>
+        <form method="post" class="col-md-4 offset-md-4 mt-3">
+            <h1>Login</h1>
 
-        <div class="mb-3 mt-3 ">
-            <label asp-for="Input.Email" class="form-label">Email address</label>
-            <input asp-for="Input.Email" type="email" class="form-control" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        </div>
+            <div class="mb-3 mt-3 ">
+                <label asp-for="Input.Email" class="form-label">Email address</label>
+                <input asp-for="Input.Email" type="email" class="form-control" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
 
-        <div class="mb-3">
-            <label asp-for="Input.Password" class="form-label">Password</label>
-            <input asp-for="Input.Password" type="password" class="form-control" />
-        </div>
+            <div class="mb-3">
+                <label asp-for="Input.Password" class="form-label">Password</label>
+                <input asp-for="Input.Password" type="password" class="form-control" />
+            </div>
 
-        <button type="submit" class="btn btn-primary w-25">Login</button>
+            <button type="submit" class="btn btn-primary w-25">Login</button>
 
-        <div class="mt-3">
-            <a class="form-label" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-        </div>
-    </form>
-</section>
+            <div class="mt-3">
+                <a class="form-label" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+            </div>
+        </form>
+    </section>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

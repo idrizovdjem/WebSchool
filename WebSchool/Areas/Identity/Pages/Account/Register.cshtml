@@ -4,33 +4,33 @@
     ViewData["Title"] = "Register";
 }
 
-<link rel="stylesheet" href="~/css/register.css" />
+<div class="container">
+    <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="col-md-4 offset-md-4 mt-3">
+        <h1>Register</h1>
+        <div asp-validation-summary="All" class="text-danger"></div>
 
-<form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="col-md-4 offset-md-4 mt-3">
-    <h1>Register</h1>
-    <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Input.Email" class="form-label">Email address</label>
+            <input asp-for="Input.Email" class="form-control" />
+        </div>
 
-    <div class="mb-3">
-        <label asp-for="Input.Email" class="form-label">Email address</label>
-        <input asp-for="Input.Email" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label asp-for="Input.Password" class="form-label">Password</label>
+            <input asp-for="Input.Password" class="form-control" />
+        </div>
 
-    <div class="mb-3">
-        <label asp-for="Input.Password" class="form-label">Password</label>
-        <input asp-for="Input.Password" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label asp-for="Input.ConfirmPassword" class="form-label">Confirm Password</label>
+            <input asp-for="Input.ConfirmPassword" class="form-control" />
+        </div>
 
-    <div class="mb-3">
-        <label asp-for="Input.ConfirmPassword" class="form-label">Confirm Password</label>
-        <input asp-for="Input.ConfirmPassword" class="form-control" />
-    </div>
+        <button type="submit" class="btn btn-primary w-25">Register</button>
 
-    <button type="submit" class="btn btn-primary w-25">Register</button>
-
-    <div class="mt-3">
-        <a asp-area="Identity" asp-page="/Account/Login">Already have account?</a>
-    </div>
-</form>
+        <div class="mt-3">
+            <a asp-area="Identity" asp-page="/Account/Login">Already have account?</a>
+        </div>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
