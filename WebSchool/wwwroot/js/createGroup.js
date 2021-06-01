@@ -8,6 +8,8 @@ nameInput.addEventListener('input', async () => {
         return;
     }
 
+    if (groupName.length < 5) return;
+
     const isGroupNameAvailable = await checkGroupName(groupName);
     if (isGroupNameAvailable === false) {
         nameInput.style.borderColor = 'red';

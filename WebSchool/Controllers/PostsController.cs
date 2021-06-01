@@ -15,11 +15,13 @@ namespace WebSchool.WebApplication.Controllers
     {
         private readonly IGroupsService groupsService;
         private readonly IPostsService postsService;
+        private readonly IUsersService usersService;
 
-        public PostsController(IGroupsService groupsService, IPostsService postsService)
+        public PostsController(IGroupsService groupsService, IPostsService postsService, IUsersService usersService)
         {
             this.groupsService = groupsService;
             this.postsService = postsService;
+            this.usersService = usersService;
         }
 
         public IActionResult Create(string groupId)
@@ -57,7 +59,7 @@ namespace WebSchool.WebApplication.Controllers
                 return Redirect("/Groups/Index");
             }
 
-            var isUserInGroup = groupsService.IsUserInGroup(userId, input.GroupId);
+            var isUserInGroup = usersService.IsUserInGroup(userId, input.GroupId);
             if(isUserInGroup == false)
             {
                 return Redirect("/Groups/Index");

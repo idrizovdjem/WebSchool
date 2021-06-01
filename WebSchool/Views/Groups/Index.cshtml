@@ -1,4 +1,5 @@
 ﻿@using WebSchool.ViewModels.Group
+@using WebSchool.Common.Enumerations;
 @model GroupViewModel
 
 @{
@@ -8,7 +9,25 @@
 
 <div class="container text-center">
     <h1 class="mb-3">@Model.Name</h1>
-    <a asp-controller="Posts" asp-action="Create" asp-route-groupId="@Model.Id" class="btn btn-primary">New Post</a>
+    <a asp-controller="Posts" asp-action="Create" asp-route-groupId="@Model.Id" class="btn btn-primary">
+        <i class="fas fa-plus-circle"></i>
+        New Post
+    </a>
+
+    @if (Model.UserRole == GroupRole.Admin)
+    {
+        <a asp-controller="Administration" asp-action="Index" asp-route-groupId="@Model.Id" class="btn btn-primary">
+            <i class="fas fa-cog"></i>
+            Administration
+        </a>
+    }
+    else if (Model.UserRole == GroupRole.Teacher)
+    {
+        <a asp-controller="Assignments" asp-action="Give" asp-route-groupId="@Model.Id" class="btn btn-primary">
+            <i class="fas fa-file-alt"></i>
+            Give assignment
+        </a>
+    }
 
     <section class="col-md-10 offset-md-1 mt-3 text-start">
         @foreach (var post in Model.NewestPosts)

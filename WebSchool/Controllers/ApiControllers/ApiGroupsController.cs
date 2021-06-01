@@ -11,10 +11,12 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
     public class ApiGroupsController : Controller
     {
         private readonly IGroupsService groupsService;
+        private readonly IBrowseService browseService;
 
-        public ApiGroupsController(IGroupsService groupsService)
+        public ApiGroupsController(IGroupsService groupsService, IBrowseService browseService)
         {
             this.groupsService = groupsService;
+            this.browseService = browseService;
         }
 
         public IActionResult GetUserGroups()
@@ -38,8 +40,16 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
         public IActionResult GetGroupsByName(string groupName)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var groups = groupsService.GetGroupsContainingName(userId, groupName);
+            var groups = browseService.GetGroupsContainingName(userId, groupName);
             return Json(groups);
         }
+
+        public IActionResult GetMostPopular()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var groups = browseService.GetMostPopular(userId);
+            return Json(groups);
+        }
+
     }
 }

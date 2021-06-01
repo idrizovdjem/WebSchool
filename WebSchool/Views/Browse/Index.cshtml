@@ -3,26 +3,24 @@
     ViewData["Title"] = "Browse";
 }
 
-<link rel="stylesheet" href="~/css/browse.css" />
+<main class="container">
+    <div class="col-md-8 offset-md-2">
+        <form>
+            <label for="groupNameInput">Group name</label>
+            <input id="groupNameInput" class="form-control" type="text" placeholder="Start typing group name..." />
+        </form>
 
-<main class="browse-container">
-    <form>
-        <input id="groupNameInput" class="group-input" type="text" placeholder="Start typing group name..." />
-        <button id="searchButton" class="search-button" type="button">Search</button>
-    </form>
-
-    <section class="found-groups-container">
-        <table class="table table-sm table-striped table-bordered text-left">
+        <table class="table table-striped mt-3">
             <thead>
                 <tr>
-                    <th>Group Name</th>
-                    <th width="25%">Join</th>
+                    <th width="70%">Group Name</th>
+                    <th>Join</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
             </tbody>
         </table>
-    </section>
+    </div>
 </main>
 
 @section Scripts {

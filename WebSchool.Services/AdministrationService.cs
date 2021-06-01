@@ -5,18 +5,16 @@ namespace WebSchool.Services
 {
     public class AdministrationService : IAdministrationService
     {
-        private readonly IGroupsService groupsService;
         private readonly IUsersService usersService;
 
-        public AdministrationService(IGroupsService groupsService, IUsersService usersService)
+        public AdministrationService(IUsersService usersService)
         {
-            this.groupsService = groupsService;
             this.usersService = usersService;
         }
 
         public bool ValidateIfUserIsAdmin(string userId, string groupId)
         {
-            if (groupsService.IsUserInGroup(userId, groupId) == false)
+            if (usersService.IsUserInGroup(userId, groupId) == false)
             {
                 return false;
             }

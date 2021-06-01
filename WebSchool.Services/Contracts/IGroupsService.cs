@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 using WebSchool.Data.Models;
 using WebSchool.ViewModels.Group;
-using WebSchool.Common.Enumerations;
 using WebSchool.ViewModels.Users;
+using WebSchool.Common.Enumerations;
 
 namespace WebSchool.Services.Contracts
 {
@@ -14,15 +14,11 @@ namespace WebSchool.Services.Contracts
 
         GroupViewModel GetGroupContent(string userId, string groupName);
 
-        bool IsUserInGroup(string userId, string groupId);
-
         bool IsGroupNameAvailable(string name);
 
         bool GroupExists(string id);
 
         string GetName(string groupId);
-
-        BrowseGroupViewModel[] GetGroupsContainingName(string userId, string groupName);
 
         ICollection<string> GetUserGroups(string userId);
 

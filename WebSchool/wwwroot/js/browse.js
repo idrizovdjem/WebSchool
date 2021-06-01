@@ -1,49 +1,55 @@
-﻿const groupNameInput = document.getElementById('groupNameInput');
-const searchButton = document.getElementById('searchButton');
-const tableBody = document.getElementById('tableBody');
+﻿const tableBody = document.getElementById('tableBody');
+const groupNameInput = document.getElementById('groupNameInput');
 
-searchButton.addEventListener('click', async () => {
-    const groupName = groupNameInput.value.trim();
-    const foundGroups = await fetchGroupsNames(groupName);
-    attachGroups(foundGroups);
-});
+window.onload = () => fetchMostPopularGroups();
 
-const fetchGroupsNames = async (groupName) => {
-    return await fetch(`apiGroups/GetGroupsByName?groupName=${groupName}`)
+groupNameInput.oninput = (event) => {
+    const groupName = event.target.value.trim();
+    if (groupName === '') {
+        fetchMostPopularGroups();
+        return;
+    }
+
+    fetch('/apiGroups/GetGroupsByName?groupName=' + groupName)
         .then(response => response.json())
-        .then(data => data)
-        .catch(error => []);
+        .then(data => attachGroups(data))
+        .catch(error => attachGroups([]));
+}
+
+const fetchMostPopularGroups = () => {
+    fetch('/apiGroups/GetMostPopular')
+        .then(response => response.json())
+        .then(data => attachGroups(data))
+        .catch(error => attachGroups([]));
 }
 
 const attachGroups = (groups) => {
     tableBody.innerHTML = '';
 
-    groups.forEach((group, index) => {
-        const tableRow = document.createElement('tr');
+    for (const group of groups) {
+        const row = document.createElement('tr');
+        const name = document.createElement('td');
+        name.textContent = group.name;
 
-        const nameData = document.createElement('td');
-        nameData.textContent = group.name;
-        nameData.classList.add('h5', 'pt-2');
+        const buttonData = document.createElement('td');
+        const button = document.createElement('a');
 
-        const linkData = document.createElement('td');
-        const requestLink = document.createElement('a');
-        
-
-        if (group.requestStatus === 'NotApplied') {
-            requestLink.textContent = 'Send Request';
-            requestLink.href = '/Applications/Apply?groupId=' + group.id;
-            requestLink.classList.add('btn', 'btn-success', 'w-100', 'text-white');
-        } else if (group.requestStatus === 'WaitingApproval') {
-            requestLink.textContent = 'Waiting approval';
-            requestLink.classList.add('btn', 'btn-warning', 'w-100', 'text-black');
+        if (group.requestStatus === "NotApplied") {
+            button.classList.add('btn', 'btn-primary', 'w-100');
+            button.textContent = 'Join';
+            button.href = "/Applications/Apply?groupId=" + group.id;
+        } else if (group.requestStatus === "WaitingApproval") {
+            button.classList.add('btn', 'btn-warning', 'w-100');
+            button.textContent = 'Waiting approval';
         } else if (group.requestStatus === 'InGroup') {
-            requestLink.textContent = 'Joined';
-            requestLink.classList.add('btn', 'btn-primary', 'w-100', 'text-white');
+            button.classList.add('btn', 'btn-success', 'w-100');
+            button.textContent = 'In group';
         }
 
-        linkData.appendChild(requestLink);
-        tableRow.appendChild(nameData);
-        tableRow.appendChild(linkData);
-        tableBody.appendChild(tableRow);
-    });
+        buttonData.appendChild(button);
+
+        row.appendChild(name);
+        row.appendChild(buttonData);
+        tableBody.appendChild(row);
+    }
 }

@@ -98,36 +98,6 @@ namespace WebSchool.Services
             return groupViewModel;
         }
 
-        public BrowseGroupViewModel[] GetGroupsContainingName(string userId, string groupName)
-        {
-            var groups = dbContext.Groups
-                .Where(g => 
-                    g.Name.Contains(groupName) && 
-                    g.IsDeleted == false && 
-                    g.Name != "Global Group")
-                .Select(g => new BrowseGroupViewModel()
-                {
-                    Id = g.Id,
-                    Name = g.Name
-                })
-                .ToArray();
-
-            foreach(var group in groups)
-            {
-                if (IsUserInGroup(userId, group.Id))
-                {
-                    group.RequestStatus = ApplicationStatus.InGroup.ToString();
-                }
-                else
-                {
-                    var applicationStatus = applicationsService.GetApplicationStatus(userId, group.Id);
-                    group.RequestStatus = applicationStatus.ToString();
-                }
-            }
-
-            return groups;
-        }
-
         public UserViewModel[] GetMembers(string adminId, string groupId)
         {
             return dbContext.UserGroups
@@ -177,12 +147,6 @@ namespace WebSchool.Services
         public bool IsGroupNameAvailable(string name)
         {
             return dbContext.Groups.All(g => g.Name != name);
-        }
-
-        public bool IsUserInGroup(string userId, string groupId)
-        {
-            return dbContext.UserGroups
-                .Any(ug => ug.UserId == userId && ug.GroupId == groupId);
         }
     }
 }

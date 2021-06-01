@@ -13,12 +13,14 @@ namespace WebSchool.WebApplication.Controllers
     public class ApplicationsController : Controller
     {
         private readonly IGroupsService groupsService;
+        private readonly IUsersService usersService;
         private readonly IApplicationsService applicationsService;
 
-        public ApplicationsController(IGroupsService groupsService, IApplicationsService applicationsService)
+        public ApplicationsController(IGroupsService groupsService, IApplicationsService applicationsService, IUsersService usersService)
         {
             this.groupsService = groupsService;
             this.applicationsService = applicationsService;
+            this.usersService = usersService;
         }
 
         public async Task<IActionResult> Apply(string groupId)
@@ -27,22 +29,22 @@ namespace WebSchool.WebApplication.Controllers
 
             if (groupsService.GroupExists(groupId) == false)
             {
-                return Redirect("/Groups/Index");
+                return Redirect("/Browse/Index");
             }
 
-            if(groupsService.IsUserInGroup(userId, groupId))
+            if(usersService.IsUserInGroup(userId, groupId))
             {
-                return Redirect("/Groups/Index");
+                return Redirect("/Browse/Index");
             }
 
             if(applicationsService.GetApplicationStatus(userId, groupId) != ApplicationStatus.NotApplied)
             {
-                return Redirect("/Groups/Index");
+                return Redirect("/Browse/Index");
             }
 
             await applicationsService.ApplyAsync(userId, groupId);
 
-            return Redirect("/Groups/Index");
+            return Redirect("/Browse/Index");
         }
     }
 }

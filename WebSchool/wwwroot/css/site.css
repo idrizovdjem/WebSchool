@@ -17,3 +17,9 @@ html, body {
     height: 40px;
     margin-top: -40px;
 }
+
+.auto-complete {
+    top: 85%;
+    right: 95px;
+    width: 198px;
+}

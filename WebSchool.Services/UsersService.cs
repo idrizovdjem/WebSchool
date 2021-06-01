@@ -1,9 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using WebSchool.Data;
 using WebSchool.Services.Contracts;
 using WebSchool.Common.Enumerations;
-using System;
 
 namespace WebSchool.Services
 {
@@ -27,6 +27,12 @@ namespace WebSchool.Services
 
             var role = (GroupRole)Enum.Parse(typeof(GroupRole), roleName);
             return role;
+        }
+
+        public bool IsUserInGroup(string userId, string groupId)
+        {
+            return dbContext.UserGroups
+                .Any(ug => ug.UserId == userId && ug.GroupId == groupId);
         }
     }
 }

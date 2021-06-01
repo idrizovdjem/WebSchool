@@ -7,13 +7,13 @@
 }
 
 
-<form asp-controller="Groups" asp-action="Create" method="post" class=" float-left col-md-5 offset-md-2">
-    <div asp-validation-summary="All" class="text-danger"></div>
+<form asp-controller="Groups" asp-action="Create" method="post" class="col-md-6 offset-md-3">
     <h1>Create new group</h1>
+    <div asp-validation-summary="All" class="text-danger"></div>
 
-    <div class="form-group">
-        <p class="custom-error" id="customError"></p>
-        <input asp-for="Name" class="form-control" placeholder="Group name..." id="nameInput" />
+    <div class="mb-3">
+        <p class="text-danger" id="customError"></p>
+        <input asp-for="Name" class="form-control" placeholder="Group name" id="nameInput" />
     </div>
     <button class="btn btn-primary w-25" id="createButton">Create</button>
 </form>
