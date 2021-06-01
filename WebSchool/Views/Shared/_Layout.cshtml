@@ -25,13 +25,12 @@
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dropdown
+                                    Groups
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <ul class="dropdown-menu" id="groupList" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#">Group name</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    <li><a class="dropdown-item" href="#">All groups</a></li>
                                 </ul>
                             </li>
 
@@ -66,7 +65,8 @@
         </nav>
     </header>
 
-    <main role="main" class="main mb-3">
+
+    <main role="main" class="main mb-3 mt-2">
         @RenderBody()
     </main>
 
@@ -76,6 +76,36 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/bootstrap-5.0.1-dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        if ('@User.Identity.IsAuthenticated' === 'True') {
+            const groupList = document.getElementById('groupList');
+
+            fetch('/apiGroups/GetUserGroups')
+                .then(response => response.json())
+                .then(data => {
+                    groupList.innerHTML = '';
+
+                    for (const groupName of data) {
+                        const listElement = document.createElement('li');
+                        const link = document.createElement('a');
+
+                        link.textContent = groupName;
+                        link.classList.add('dropdown-item');
+                        link.href = `/Groups/Index?groupName=${groupName}`;
+
+                        listElement.appendChild(link);
+                        groupList.appendChild(listElement);
+                    }
+
+                    groupList.innerHTML += `
+<li><hr class="dropdown-divider"></li>
+<li><a class="dropdown-item" href="#">All groups</a></li>
+`;
+                })
+                .catch(error => console.log(error));
+        }
+    </script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
