@@ -47,5 +47,15 @@ namespace WebSchool.Services
                 .OrderByDescending(x => x.CreatedOn)
                 .ToArray();
         }
+
+        public async Task RemoveAllPostCommentsAsync(string postId)
+        {
+            var comments = dbContext.Comments
+                .Where(c => c.PostId == postId)
+                .ToArray();
+
+            dbContext.Comments.RemoveRange(comments);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

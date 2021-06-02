@@ -35,6 +35,7 @@
             <article>
                 <a class="text-decoration-none text-dark" asp-controller="Posts" asp-action="Index" asp-route-postId="@post.Id">
 
+                    <input type="hidden" class="post-id" value="@post.Id" />
                     <h2>@post.Title</h2>
                     <p>@post.Content</p>
                     <div>
@@ -44,18 +45,14 @@
 
                         @if (post.IsCreator == true)
                         {
-                            <div class="badge bg-danger float-end ms-3">
-                                <a class="text-decoration-none text-light h6" href="#">
-                                    <i class="fas fa-trash-alt"></i>
-                                    Delete
-                                </a>
+                            <div class="badge bg-warning">
+                                <i class="fas fa-edit"></i>
+                                Edit
                             </div>
 
-                            <div class="badge bg-warning float-end">
-                                <a class="text-decoration-none text-light h6" href="#">
-                                    <i class="fas fa-edit"></i>
-                                    Edit
-                                </a>
+                            <div class="badge bg-danger delete-post">
+                                <i class="fas fa-trash-alt"></i>
+                                Delete
                             </div>
                         }
                     </div>
@@ -65,5 +62,56 @@
             <hr />
         }
     </section>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="rounded me-2 bg-primary text-white pe-md-2 ps-md-2">Message</div>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">
+                Hello, world! This is a toast message.
+            </div>
+        </div>
+    </div>
 </div>
 
+@section Scripts {
+    <script>
+        const toastMessage = document.getElementById('toastMessage');
+
+        Array.from(document.getElementsByClassName('delete-post')).forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                const deleteConfirm = confirm('Are you sure you want to delete this post ?');
+                if (deleteConfirm === false) {
+                    return;
+                }
+
+                const postElement = event.target.parentNode.parentNode.parentNode;
+                const postIdInput = event.target.parentNode.parentNode.getElementsByClassName('post-id')[0];
+                const postId = postIdInput.value;
+                const postLine = postElement.nextElementSibling;
+
+                fetch('/apiPosts/Remove?postId=' + postId)
+                    .then(response => response.json())
+                    .then(data => showDeleteMessage(data))
+                    .catch(error => showDeleteMessage(false));
+
+                postElement.remove();
+                postLine.remove();
+            })
+        });
+
+        const showDeleteMessage = (isSuccessfull) => {
+            if (isSuccessfull) {
+                toastMessage.textContent = 'Post removed successfully!';
+            } else {
+                toastMessage.textContent = 'Something went wrong while removing the post!';
+            }
+
+            $('.toast').toast('show');
+        }
+    </script>
+}

@@ -7,7 +7,6 @@ using WebSchool.ViewModels.Post;
 
 using WebSchool.Data.Models;
 using WebSchool.Services.Contracts;
-using WebSchool.ViewModels.Comment;
 
 namespace WebSchool.Services
 {
@@ -88,6 +87,29 @@ namespace WebSchool.Services
                     Comments = commentsService.GetPostComments(p.Id)
                 })
                 .ToArray();
+        }
+
+        public async Task<bool> RemoveAsync(string userId, string id)
+        {
+            var post = dbContext.Posts
+                .FirstOrDefault(p => p.Id == id);
+
+            if(post == null)
+            {
+                return false;
+            }
+
+            if(post.CreatorId != userId)
+            {
+                return false;
+            }
+
+            await commentsService.RemoveAllPostCommentsAsync(id);
+
+            dbContext.Remove(post);
+            await dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }

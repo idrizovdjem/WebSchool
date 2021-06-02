@@ -9,5 +9,7 @@ namespace WebSchool.Services.Contracts
         CommentViewModel[] GetPostComments(string postId);
 
         Task CreateAsync(string postId, string content, string userId);
+
+        Task RemoveAllPostCommentsAsync(string postId);
     }
 }
