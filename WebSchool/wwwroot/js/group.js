@@ -1,6 +1,7 @@
 ﻿const toastMessage = document.getElementById('toastMessage');
+const deletePostButtons = Array.from(document.getElementsByClassName('delete-post'));
 
-Array.from(document.getElementsByClassName('delete-post')).forEach(button => {
+deletePostButtons.forEach(button => {
     button.addEventListener('click', (event) => {
         event.preventDefault();
 

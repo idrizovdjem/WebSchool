@@ -88,5 +88,29 @@ namespace WebSchool.WebApplication.Controllers
             await postsService.RemoveAsync(userId, postId);
             return Redirect("/Groups/Index");
         }
+
+        public IActionResult Edit(string postId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var post = postsService.GetForEdit(userId, postId);
+            if(post == null)
+            {
+                return Redirect("/Groups/Index");
+            }
+
+            return View(post);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditPostInputModel input)
+        {
+            if(ModelState.IsValid == false)
+            {
+                return View(input);
+            }
+
+            await postsService.EditAsync(input);
+            return RedirectToAction(nameof(Index), new { postId = input.Id });
+        }
     }
 }

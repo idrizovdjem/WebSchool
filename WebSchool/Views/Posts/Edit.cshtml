@@ -1,20 +1,20 @@
 ﻿@using WebSchool.ViewModels.Post
-@model CreatePostInputModel
+@model EditPostInputModel 
 
-@{
+@{ 
     Layout = "_Layout";
-    ViewData["Title"] = "Create Post";
+    ViewData["Title"] = "Edit post";
 }
 
 <main class="container">
-    <form asp-controller="Posts" asp-action="Create" method="post" class="col-md-4 offset-md-4">
-        <h1>Create a post in @ViewData["GroupName"]</h1>
+    <form class="col-md-4 offset-md-4" method="post" asp-controller="Posts" asp-action="Edit">
+        <h1>Edit post</h1>
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        <input type="hidden" asp-for="GroupId" value="@ViewData["GroupId"]" />
+        <input type="hidden" asp-for="@Model.Id" />
 
         <div class="mb-3">
-            <label asp-for="Title" class="form-label">Title</label>
+            <label asp-for="Title" class="form-label"></label>
             <input asp-for="Title" class="form-control" />
         </div>
 

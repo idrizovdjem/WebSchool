@@ -48,8 +48,10 @@
                         @if (post.IsCreator == true)
                         {
                             <div class="badge bg-warning">
-                                <i class="fas fa-edit"></i>
-                                Edit
+                                <a class="text-decoration-none text-light" asp-controller="Posts" asp-action="Edit" asp-route-postId="@post.Id">
+                                    <i class="fas fa-edit"></i>
+                                    Edit
+                                </a>
                             </div>
 
                             <div class="badge bg-danger delete-post">

@@ -6,7 +6,7 @@
     ViewData["Title"] = "Post";
 }
 
-<div class="container custom-container">
+<main class="container custom-container">
     <section class="col-md-8 offset-md-2">
         <!-- Post -->
         <article>
@@ -19,17 +19,17 @@
 
                 @if (Model.IsCreator == true)
                 {
-                    <div class="badge bg-danger float-end ms-3">
-                        <a class="text-decoration-none text-light h6" asp-controller="Posts" asp-action="Remove" asp-route-postId="@Model.Id" onclick="deletePost(event)">
-                            <i class="fas fa-trash-alt"></i>
-                            Delete
+                    <div class="badge bg-warning">
+                        <a class="text-decoration-none text-light" asp-controller="Posts" asp-action="Edit" asp-route-postId="@Model.Id">
+                            <i class="fas fa-edit"></i>
+                            Edit
                         </a>
                     </div>
 
-                    <div class="badge bg-warning float-end">
-                        <a class="text-decoration-none text-light h6" href="#">
-                            <i class="fas fa-edit"></i>
-                            Edit
+                    <div class="badge bg-danger">
+                        <a class="text-decoration-none text-light" asp-controller="Posts" asp-action="Remove" asp-route-postId="@Model.Id" onclick="deletePost(event)">
+                            <i class="fas fa-trash-alt"></i>
+                            Delete
                         </a>
                     </div>
                 }
@@ -93,7 +93,7 @@
             </div>
         </div>
     </section>
-</div>
+</main>
 
 @section Scripts {
     <script src="~/js/post.js"></script>

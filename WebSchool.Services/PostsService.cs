@@ -37,6 +37,22 @@ namespace WebSchool.Services
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task EditAsync(EditPostInputModel input)
+        {
+            var post = dbContext.Posts
+                .FirstOrDefault(p => p.Id == input.Id);
+
+            if(post == null)
+            {
+                return;
+            }
+
+            post.Title = input.Title;
+            post.Content = input.Content;
+
+            await dbContext.SaveChangesAsync();
+        }
+
         public AdministrationPostViewModel[] GetAll(string groupId)
         {
             return dbContext.Posts
@@ -66,6 +82,19 @@ namespace WebSchool.Services
                     Content = p.Content,
                     Comments = commentsService.GetPostComments(userId, p.Id),
                     IsCreator = p.CreatorId == userId
+                })
+                .FirstOrDefault();
+        }
+
+        public EditPostInputModel GetForEdit(string userId, string postId)
+        {
+            return dbContext.Posts
+                .Where(p => p.Id == postId && p.CreatorId == userId && p.IsDeleted == false)
+                .Select(p => new EditPostInputModel()
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Content = p.Content
                 })
                 .FirstOrDefault();
         }
