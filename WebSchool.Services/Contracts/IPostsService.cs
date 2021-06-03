@@ -12,7 +12,7 @@ namespace WebSchool.Services.Contracts
 
         PostViewModel GetById(string userId, string postId);
 
-        PostViewModel[] GetAll(string groupId);
+        AdministrationPostViewModel[] GetAll(string groupId);
 
         Task<bool> RemoveAsync(string userId, string id);
     }

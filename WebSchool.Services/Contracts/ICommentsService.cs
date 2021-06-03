@@ -6,10 +6,12 @@ namespace WebSchool.Services.Contracts
 {
     public interface ICommentsService
     {
-        CommentViewModel[] GetPostComments(string postId);
+        CommentViewModel[] GetPostComments(string userId, string postId);
 
         Task CreateAsync(string postId, string content, string userId);
 
         Task RemoveAllPostCommentsAsync(string postId);
+
+        int GetCount(string postId);
     }
 }

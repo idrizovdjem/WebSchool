@@ -37,18 +37,18 @@ namespace WebSchool.Services
             await dbContext.SaveChangesAsync();
         }
 
-        public PostViewModel[] GetAll(string groupId)
+        public AdministrationPostViewModel[] GetAll(string groupId)
         {
             return dbContext.Posts
                 .Where(p => p.GroupId == groupId && p.IsDeleted == false)
-                .Select(p => new PostViewModel()
+                .Select(p => new AdministrationPostViewModel()
                 {
                     Id = p.Id,
                     Title = p.Title.Length < 50 ? p.Title : p.Title.Substring(0, 50) + "...",
                     Creator = p.Creator.Email,
                     CreatedOn = p.CreatedOn,
                     Content = p.Content.Substring(0, 25) + "...",
-                    Comments = commentsService.GetPostComments(p.Id)
+                    CommentsCount = commentsService.GetCount(p.Id)
                 })
                 .ToArray();
         }
@@ -64,7 +64,7 @@ namespace WebSchool.Services
                     Creator = p.Creator.Email,
                     CreatedOn = p.CreatedOn,
                     Content = p.Content,
-                    Comments = commentsService.GetPostComments(p.Id),
+                    Comments = commentsService.GetPostComments(userId, p.Id),
                     IsCreator = p.CreatorId == userId
                 })
                 .FirstOrDefault();
@@ -84,7 +84,7 @@ namespace WebSchool.Services
                     CreatedOn = p.CreatedOn,
                     Creator = p.Creator.Email,
                     IsCreator = p.CreatorId == userId,
-                    Comments = commentsService.GetPostComments(p.Id)
+                    Comments = commentsService.GetPostComments(userId, p.Id)
                 })
                 .ToArray();
         }
@@ -106,7 +106,8 @@ namespace WebSchool.Services
 
             await commentsService.RemoveAllPostCommentsAsync(id);
 
-            dbContext.Remove(post);
+            post.IsDeleted = true;
+            post.DeletedOn = DateTime.UtcNow;
             await dbContext.SaveChangesAsync();
 
             return true;

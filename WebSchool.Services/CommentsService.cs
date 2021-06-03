@@ -33,7 +33,13 @@ namespace WebSchool.Services
             await dbContext.SaveChangesAsync();
         }
 
-        public CommentViewModel[] GetPostComments(string postId)
+        public int GetCount(string postId)
+        {
+            return dbContext.Comments
+                .Count(x => x.PostId == postId && x.IsDeleted == false);
+        }
+
+        public CommentViewModel[] GetPostComments(string userId, string postId)
         {
             return this.dbContext.Comments
                 .Where(x => x.PostId == postId && x.IsDeleted == false)
@@ -43,6 +49,7 @@ namespace WebSchool.Services
                     Creator = x.Creator.Email,
                     Content = x.Content,
                     CreatedOn = x.CreatedOn,
+                    IsCreator = x.CreatorId == userId
                 })
                 .OrderByDescending(x => x.CreatedOn)
                 .ToArray();
@@ -52,9 +59,14 @@ namespace WebSchool.Services
         {
             var comments = dbContext.Comments
                 .Where(c => c.PostId == postId)
-                .ToArray();
+                .ToList();
 
-            dbContext.Comments.RemoveRange(comments);
+            foreach(var comment in comments)
+            {
+                comment.IsDeleted = true;
+                comment.DeletedOn = DateTime.UtcNow;
+            }
+
             await dbContext.SaveChangesAsync();
         }
     }

@@ -11,5 +11,7 @@ namespace WebSchool.ViewModels.Comment
         public string Content { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public bool IsCreator { get; set; }
     }
 }
