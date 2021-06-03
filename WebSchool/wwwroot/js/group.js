@@ -9,7 +9,7 @@ Array.from(document.getElementsByClassName('delete-post')).forEach(button => {
             return;
         }
 
-        const postElement = event.target.parentNode.parentNode.parentNode;
+        const postElement = event.currentTarget.parentNode.parentNode.parentNode;
         const postIdInput = event.target.parentNode.parentNode.getElementsByClassName('post-id')[0];
         const postId = postIdInput.value;
         const postLine = postElement.nextElementSibling;

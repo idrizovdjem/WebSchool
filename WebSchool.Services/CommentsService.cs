@@ -69,5 +69,22 @@ namespace WebSchool.Services
 
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task<bool> RemoveAsync(string userId, int commentId)
+        {
+            var comment = dbContext.Comments
+                .FirstOrDefault(c => c.CreatorId == userId && c.Id == commentId);
+
+            if(comment == null)
+            {
+                return false;
+            }
+
+            comment.IsDeleted = true;
+            comment.DeletedOn = DateTime.UtcNow;
+
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }

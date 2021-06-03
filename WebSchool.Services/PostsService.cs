@@ -92,14 +92,9 @@ namespace WebSchool.Services
         public async Task<bool> RemoveAsync(string userId, string id)
         {
             var post = dbContext.Posts
-                .FirstOrDefault(p => p.Id == id);
+                .FirstOrDefault(p => p.Id == id && p.CreatorId == userId);
 
             if(post == null)
-            {
-                return false;
-            }
-
-            if(post.CreatorId != userId)
             {
                 return false;
             }
@@ -108,8 +103,8 @@ namespace WebSchool.Services
 
             post.IsDeleted = true;
             post.DeletedOn = DateTime.UtcNow;
-            await dbContext.SaveChangesAsync();
 
+            await dbContext.SaveChangesAsync();
             return true;
         }
     }

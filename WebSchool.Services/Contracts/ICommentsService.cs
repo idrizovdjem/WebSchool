@@ -13,5 +13,7 @@ namespace WebSchool.Services.Contracts
         Task RemoveAllPostCommentsAsync(string postId);
 
         int GetCount(string postId);
+
+        Task<bool> RemoveAsync(string userId, int commentId);
     }
 }
