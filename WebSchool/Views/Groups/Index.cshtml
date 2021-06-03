@@ -14,6 +14,7 @@
         New Post
     </a>
 
+    <!-- Action buttons -->
     @if (Model.UserRole == GroupRole.Admin)
     {
         <a asp-controller="Administration" asp-action="Index" asp-route-groupId="@Model.Id" class="btn btn-primary">
@@ -29,6 +30,7 @@
         </a>
     }
 
+    <!-- Posts -->
     <section class="col-md-10 offset-md-1 mt-3 text-start">
         @foreach (var post in Model.NewestPosts)
         {
@@ -63,6 +65,7 @@
         }
     </section>
 
+    <!-- Toast Message -->
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
         <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
@@ -77,41 +80,5 @@
 </div>
 
 @section Scripts {
-    <script>
-        const toastMessage = document.getElementById('toastMessage');
-
-        Array.from(document.getElementsByClassName('delete-post')).forEach(button => {
-            button.addEventListener('click', (event) => {
-                event.preventDefault();
-
-                const deleteConfirm = confirm('Are you sure you want to delete this post ?');
-                if (deleteConfirm === false) {
-                    return;
-                }
-
-                const postElement = event.target.parentNode.parentNode.parentNode;
-                const postIdInput = event.target.parentNode.parentNode.getElementsByClassName('post-id')[0];
-                const postId = postIdInput.value;
-                const postLine = postElement.nextElementSibling;
-
-                fetch('/apiPosts/Remove?postId=' + postId)
-                    .then(response => response.json())
-                    .then(data => showDeleteMessage(data))
-                    .catch(error => showDeleteMessage(false));
-
-                postElement.remove();
-                postLine.remove();
-            })
-        });
-
-        const showDeleteMessage = (isSuccessfull) => {
-            if (isSuccessfull) {
-                toastMessage.textContent = 'Post removed successfully!';
-            } else {
-                toastMessage.textContent = 'Something went wrong while removing the post!';
-            }
-
-            $('.toast').toast('show');
-        }
-    </script>
+    <script src="~/js/group.js"></script>
 }

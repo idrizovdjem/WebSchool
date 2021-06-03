@@ -8,6 +8,7 @@
 
 <div class="container custom-container">
     <section class="col-md-8 offset-md-2">
+        <!-- Post -->
         <article>
             <h2>@Model.Title</h2>
             <p>@Model.Content</p>
@@ -19,7 +20,7 @@
                 @if (Model.IsCreator == true)
                 {
                     <div class="badge bg-danger float-end ms-3">
-                        <a class="text-decoration-none text-light h6" href="#">
+                        <a class="text-decoration-none text-light h6" asp-controller="Posts" asp-action="Remove" asp-route-postId="@Model.Id" onclick="deletePost(event)">
                             <i class="fas fa-trash-alt"></i>
                             Delete
                         </a>
@@ -38,6 +39,7 @@
         <h2 class="mt-3">Comments</h2>
         <hr />
 
+        <!-- Comments -->
         @foreach (var comment in Model.Comments)
         {
             <article>
@@ -49,7 +51,7 @@
                     @if (Model.IsCreator == true)
                     {
                         <div class="badge bg-danger float-end ms-3">
-                            <a class="text-decoration-none text-light h6" href="#">
+                            <a class="text-decoration-none text-light h6" >
                                 <i class="fas fa-trash-alt"></i>
                                 Delete
                             </a>
@@ -67,6 +69,7 @@
             <hr />
         }
 
+        <!-- Add new comment form -->
         <form asp-controller="Comments" asp-action="Create" method="post" class="mt-3">
             <input type="hidden" name="postId" value="@Model.Id" />
 
@@ -78,3 +81,7 @@
         </form>
     </section>
 </div>
+
+@section Scripts {
+    <script src="~/js/post.js"></script>
+}

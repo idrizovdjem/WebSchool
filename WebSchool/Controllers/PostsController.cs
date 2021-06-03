@@ -81,5 +81,12 @@ namespace WebSchool.WebApplication.Controllers
 
             return View(post);
         }
+
+        public async Task<IActionResult> Remove(string postId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await postsService.RemoveAsync(userId, postId);
+            return Redirect("/Groups/Index");
+        }
     }
 }
