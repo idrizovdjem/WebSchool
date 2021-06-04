@@ -87,6 +87,13 @@ namespace WebSchool.WebApplication.Controllers
 
         public async Task<IActionResult> Remove(string postId)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userValidation = usersService.ValidatePostRemove(userId, postId);
+            if(userValidation == false)
+            {
+                return Redirect("/Groups/Index");
+            }
+
             await postsService.RemoveAsync(postId);
             return Redirect("/Groups/Index");
         }

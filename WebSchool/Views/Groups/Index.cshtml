@@ -37,7 +37,6 @@
             <article>
                 <a class="text-decoration-none text-dark" asp-controller="Posts" asp-action="Index" asp-route-postId="@post.Id">
 
-                    <input type="hidden" class="post-id" value="@post.Id" />
                     <h2>@post.Title</h2>
                     <p>@post.Content</p>
                     <div>
@@ -54,9 +53,11 @@
                                 </a>
                             </div>
 
-                            <div class="badge bg-danger delete-post">
-                                <i class="fas fa-trash-alt"></i>
-                                Delete
+                            <div class="badge bg-danger delete-post" onclick="deletePost(event, '@post.Id')">
+                                <a href="#" class="text-decoration-none text-light">
+                                    <i class="fas fa-trash-alt"></i>
+                                    Delete
+                                </a>
                             </div>
                         }
                     </div>

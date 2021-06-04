@@ -7,5 +7,9 @@ namespace WebSchool.Services.Contracts
         GroupRole GetRoleInGroup(string userId, string groupId);
 
         bool IsUserInGroup(string userId, string groupId);
+
+        bool IsUserGroupCreator(string userId, string groupId);
+
+        bool ValidatePostRemove(string userId, string postId);
     }
 }
