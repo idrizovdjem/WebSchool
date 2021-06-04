@@ -40,7 +40,7 @@ namespace WebSchool.WebApplication.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangeGroupName(GroupSettingsViewModel input)
+        public async Task<IActionResult> ChangeGroupName(ChangeGroupNameInputModel input)
         {
             if(ModelState.IsValid == false)
             {
