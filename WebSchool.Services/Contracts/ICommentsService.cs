@@ -15,5 +15,9 @@ namespace WebSchool.Services.Contracts
         int GetCount(string postId);
 
         Task<bool> RemoveAsync(string userId, int commentId);
+
+        EditCommentInputModel GetForEdit(int commentId);
+
+        Task<string> EditAsync(EditCommentInputModel input);
     }
 }

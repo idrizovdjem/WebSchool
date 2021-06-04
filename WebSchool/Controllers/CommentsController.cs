@@ -42,5 +42,33 @@ namespace WebSchool.WebApplication.Controllers
 
             return Redirect($"/Posts?postId={input.PostId}");
         }
+
+        public IActionResult Edit(int commentId)
+        {
+            var comment = commentsService.GetForEdit(commentId);
+            if(comment == null)
+            {
+                return Redirect("/Groups/Index");
+            }
+
+            return View(comment);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditCommentInputModel input)
+        {
+            if(ModelState.IsValid == false)
+            {
+                return View(input);
+            }
+
+            var postId = await commentsService.EditAsync(input);
+            if(postId == null)
+            {
+                return Redirect("/Groups/Index");
+            }
+
+            return Redirect("/Posts/Index?postId=" + postId);
+        }
     }
 }

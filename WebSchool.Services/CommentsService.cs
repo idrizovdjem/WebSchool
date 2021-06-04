@@ -33,10 +33,36 @@ namespace WebSchool.Services
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task<string> EditAsync(EditCommentInputModel input)
+        {
+            var comment = dbContext.Comments.Find(input.Id);
+            if(comment == null)
+            {
+                return null;
+            }
+
+            comment.Content = input.Content;
+            await dbContext.SaveChangesAsync();
+            return comment.PostId;
+        }
+
         public int GetCount(string postId)
         {
             return dbContext.Comments
                 .Count(x => x.PostId == postId && x.IsDeleted == false);
+        }
+
+        public EditCommentInputModel GetForEdit(int commentId)
+        {
+            return dbContext.Comments
+                .Where(c => c.Id == commentId)
+                .Select(c => new EditCommentInputModel()
+                {
+                    Id = c.Id,
+                    Content = c.Content
+                })
+                .FirstOrDefault();
+
         }
 
         public CommentViewModel[] GetPostComments(string userId, string postId)
