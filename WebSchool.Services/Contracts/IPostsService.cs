@@ -14,7 +14,7 @@ namespace WebSchool.Services.Contracts
 
         AdministrationPostViewModel[] GetAll(string groupId);
 
-        Task<bool> RemoveAsync(string userId, string id);
+        Task<bool> RemoveAsync(string id);
 
         EditPostInputModel GetForEdit(string userId, string postId);
 

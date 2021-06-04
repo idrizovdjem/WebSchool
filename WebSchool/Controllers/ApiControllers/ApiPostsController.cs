@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using System.Security.Claims;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -20,8 +19,7 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
 
         public async Task<IActionResult> Remove(string postId)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var removeResult = await postsService.RemoveAsync(userId, postId);
+            var removeResult = await postsService.RemoveAsync(postId);
             return Json(removeResult);
         }
     }

@@ -57,6 +57,7 @@ namespace WebSchool.Services
         {
             return dbContext.Posts
                 .Where(p => p.GroupId == groupId && p.IsDeleted == false)
+                .OrderByDescending(p => p.CreatedOn)
                 .Select(p => new AdministrationPostViewModel()
                 {
                     Id = p.Id,
@@ -89,7 +90,7 @@ namespace WebSchool.Services
         public int GetCount(string groupId)
         {
             return dbContext.Posts
-                .Count(p => p.GroupId == groupId);
+                .Count(p => p.GroupId == groupId && p.IsDeleted == false);
         }
 
         public EditPostInputModel GetForEdit(string userId, string postId)
@@ -124,10 +125,10 @@ namespace WebSchool.Services
                 .ToArray();
         }
 
-        public async Task<bool> RemoveAsync(string userId, string id)
+        public async Task<bool> RemoveAsync(string id)
         {
             var post = dbContext.Posts
-                .FirstOrDefault(p => p.Id == id && p.CreatorId == userId);
+                .FirstOrDefault(p => p.Id == id);
 
             if(post == null)
             {

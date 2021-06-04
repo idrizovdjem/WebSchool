@@ -6,10 +6,11 @@
     ViewData["Title"] = "Posts";
 }
 
-<main class="float-left w-75 pl-3">
+<main class="container  col-md-8 offset-md-2">
     <h1>Posts</h1>
 
-    <table class="table table-sm table-striped table-bordered">
+    <!-- Posts table -->
+    <table class="table table-striped w-100">
         <thead>
             <tr>
                 <th>Creator</th>
@@ -17,19 +18,47 @@
                 <th>Comments</th>
                 <th>Created On</th>
                 <th>Details</th>
+                <th>Remove</th>
             </tr>
         </thead>
         <tbody>
-            @foreach(var post in Model)
-            { 
-                <tr >
-                    <td class="pt-2 h5">@post.Creator</td>
-                    <td class="pt-2 h5">@post.Content</td>
-                    <td class="pt-2 h5">@post.CommentsCount</td>
-                    <td class="pt-2 h5">@post.CreatedOn.ToShortDateString()</td>
-                    <td><a asp-controller="Posts" asp-action="Index" asp-route-postId="@post.Id" class="btn btn-info w-100 text-white">Details</a></td>
+            @foreach (var post in Model)
+            {
+                <tr>
+                    <td>@post.Creator</td>
+                    <td>@post.Content</td>
+                    <td>
+                        <span class="badge bg-primary">@post.CommentsCount Comments</span>
+
+                    </td>
+                    <td>@post.CreatedOn.ToLocalTime()</td>
+                    <td>
+                        <a asp-controller="Posts" asp-action="Index" asp-route-postId="@post.Id" class="btn btn-primary w-100">Details</a>
+                    </td>
+                    <td>
+                        <button onclick="deletePost(event, '@post.Id')" class="btn btn-danger w-100 remove-post">
+                            <i class="fa fa-trash-alt"></i>
+                        </button>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+
+    <!-- Toast Message -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="rounded me-2 bg-primary text-white pe-md-2 ps-md-2">Message</div>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">
+                Hello, world! This is a toast message.
+            </div>
+        </div>
+    </div>
 </main>
+
+@section Scripts {
+    <script src="~/js/administration/posts.js"></script>
+}
