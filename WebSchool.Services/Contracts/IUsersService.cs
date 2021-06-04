@@ -11,5 +11,7 @@ namespace WebSchool.Services.Contracts
         bool IsUserGroupCreator(string userId, string groupId);
 
         bool ValidatePostRemove(string userId, string postId);
+
+        bool ValidateCommentRemove(string userId, int commentId);
     }
 }

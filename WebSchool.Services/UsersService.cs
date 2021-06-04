@@ -41,6 +41,19 @@ namespace WebSchool.Services
                 .Any(ug => ug.UserId == userId && ug.GroupId == groupId);
         }
 
+        public bool ValidateCommentRemove(string userId, int commentId)
+        {
+            var comment = dbContext.Comments
+                .FirstOrDefault(c => c.Id == commentId && c.IsDeleted == false);
+
+            if(comment == null)
+            {
+                return false;
+            }
+
+            return comment.CreatorId == userId;
+        }
+
         public bool ValidatePostRemove(string userId, string postId)
         {
             var post = dbContext.Posts
