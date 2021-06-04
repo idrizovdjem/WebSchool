@@ -15,7 +15,9 @@ namespace WebSchool.WebApplication.Controllers
         private readonly IMembersService membersService;
         private readonly IAdministrationService administrationService;
 
-        public MembersController(IMembersService membersService, IAdministrationService administrationService)
+        public MembersController(
+            IMembersService membersService, 
+            IAdministrationService administrationService)
         {
             this.membersService = membersService;
             this.administrationService = administrationService;

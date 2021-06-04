@@ -3,14 +3,15 @@ using System.Collections.Generic;
 
 using WebSchool.Data.Models;
 using WebSchool.ViewModels.Group;
-using WebSchool.ViewModels.Users;
 using WebSchool.Common.Enumerations;
 
 namespace WebSchool.Services.Contracts
 {
     public interface IGroupsService
     {
-        GroupViewModel GetGroupContent(string userId, string groupName);
+        string GetIdByName(string name);
+
+        GroupViewModel GetGroupContent(string userId, string groupId);
 
         bool IsGroupNameAvailable(string name);
 
@@ -18,7 +19,7 @@ namespace WebSchool.Services.Contracts
 
         string GetName(string groupId);
 
-        ICollection<string> GetUserGroups(string userId);
+        ICollection<NavGroupItemViewModel> GetUserGroups(string userId);
 
         Task<Group> CreateAsync(string userId, string name);
 

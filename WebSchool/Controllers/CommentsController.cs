@@ -16,7 +16,9 @@ namespace WebSchool.WebApplication.Controllers
         private readonly ICommentsService commentsService;
         private readonly IPostsService postsService;
 
-        public CommentsController(ICommentsService commentsService, IPostsService postsService)
+        public CommentsController(
+            ICommentsService commentsService, 
+            IPostsService postsService)
         {
             this.commentsService = commentsService;
             this.postsService = postsService;

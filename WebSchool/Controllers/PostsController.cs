@@ -17,7 +17,10 @@ namespace WebSchool.WebApplication.Controllers
         private readonly IPostsService postsService;
         private readonly IUsersService usersService;
 
-        public PostsController(IGroupsService groupsService, IPostsService postsService, IUsersService usersService)
+        public PostsController(
+            IGroupsService groupsService, 
+            IPostsService postsService, 
+            IUsersService usersService)
         {
             this.groupsService = groupsService;
             this.postsService = postsService;
@@ -66,7 +69,7 @@ namespace WebSchool.WebApplication.Controllers
             }
 
             await postsService.CreateAsync(input, userId);
-            return Redirect($"/Groups/Index?groupName={groupName}");
+            return Redirect($"/Groups/Index?groupId={input.GroupId}");
         }
 
         public IActionResult Index(string postId)

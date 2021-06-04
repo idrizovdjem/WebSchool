@@ -12,7 +12,8 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
     {
         private readonly IPostsService postsService;
 
-        public ApiPostsController(IPostsService postsService)
+        public ApiPostsController(
+            IPostsService postsService)
         {
             this.postsService = postsService;
         }

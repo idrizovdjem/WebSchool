@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 using WebSchool.Data;
 using WebSchool.Data.Models;
-using WebSchool.ViewModels.Users;
 using WebSchool.ViewModels.Group;
 using WebSchool.Services.Contracts;
 using WebSchool.Common.Enumerations;
@@ -16,13 +15,13 @@ namespace WebSchool.Services
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IPostsService postsService;
-        private readonly IApplicationsService applicationsService;
 
-        public GroupsService(ApplicationDbContext dbContext, IPostsService postsService, IApplicationsService applicationsService)
+        public GroupsService(
+            ApplicationDbContext dbContext, 
+            IPostsService postsService)
         {
             this.dbContext = dbContext;
             this.postsService = postsService;
-            this.applicationsService = applicationsService;
         }
 
         public async Task AddUserToGroupAsync(string userId, string groupId, GroupRole role)
@@ -68,10 +67,10 @@ namespace WebSchool.Services
             return group;
         }
 
-        public GroupViewModel GetGroupContent(string userId, string groupName)
+        public GroupViewModel GetGroupContent(string userId, string groupId)
         {
             var groupViewModel = dbContext.Groups
-                .Where(g => g.Name == groupName)
+                .Where(g => g.Id == groupId)
                 .Select(g => new GroupViewModel()
                 {
                     Id = g.Id,
@@ -80,7 +79,12 @@ namespace WebSchool.Services
                 })
                 .FirstOrDefault();
 
-            if(groupName != "Global Group")
+            if(groupViewModel == null)
+            {
+                return null;
+            }
+
+            if(groupViewModel.Name != "Global Group")
             {
                 var roleId = dbContext.UserGroups
                 .FirstOrDefault(ug => ug.UserId == userId && ug.GroupId == groupViewModel.Id)?.RoleId;
@@ -98,21 +102,39 @@ namespace WebSchool.Services
             return groupViewModel;
         }
 
+        public string GetIdByName(string name)
+        {
+            return dbContext.Groups
+                .FirstOrDefault(g => g.Name == name)?.Id;
+        }
+
         public string GetName(string groupId)
         {
             return dbContext.Groups
                 .FirstOrDefault(g => g.Id == groupId)?.Name;
         }
 
-        public ICollection<string> GetUserGroups(string userId)
+        public ICollection<NavGroupItemViewModel> GetUserGroups(string userId)
         {
-            var groupNames =  dbContext.UserGroups
+            var groups =  dbContext.UserGroups
                 .Where(ug => ug.UserId == userId)
-                .Select(ug => ug.Group.Name)
+                .Select(ug => new NavGroupItemViewModel()
+                {
+                    Id = ug.GroupId,
+                    Name = ug.Group.Name
+                })
                 .ToList();
 
-            groupNames.Add("Global Group");
-            return groupNames;
+            var globalGroup = dbContext.Groups
+                .Select(g => new NavGroupItemViewModel()
+                { 
+                    Id = g.Id,
+                    Name = g.Name
+                })
+                .First(g => g.Name == "Global Group");
+
+            groups.Add(globalGroup);
+            return groups;
         }
 
         public bool GroupExists(string id)

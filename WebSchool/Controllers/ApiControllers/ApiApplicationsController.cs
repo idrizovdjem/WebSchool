@@ -20,7 +20,10 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
         private readonly IApplicationsService applicationsService;
         private readonly IGroupsService groupsService;
 
-        public ApiApplicationsController(IAdministrationService administrationService, IApplicationsService applicationsService, IGroupsService groupsService)
+        public ApiApplicationsController(
+            IAdministrationService administrationService,
+            IApplicationsService applicationsService, 
+            IGroupsService groupsService)
         {
             this.administrationService = administrationService;
             this.applicationsService = applicationsService;

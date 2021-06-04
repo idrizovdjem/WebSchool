@@ -94,13 +94,13 @@
                 .then(data => {
                     groupList.innerHTML = '';
 
-                    for (const groupName of data) {
+                    for (const group of data) {
                         const listElement = document.createElement('li');
                         const link = document.createElement('a');
 
-                        link.textContent = groupName;
+                        link.textContent = group.name;
                         link.classList.add('dropdown-item');
-                        link.href = `/Groups/Index?groupName=${groupName}`;
+                        link.href = `/Groups/Index?groupId=${group.id}`;
 
                         listElement.appendChild(link);
                         groupList.appendChild(listElement);

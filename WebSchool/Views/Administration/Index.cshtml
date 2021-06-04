@@ -8,6 +8,8 @@
 
 <main class="container">
     <h1>Administration</h1>
+
+    <!-- Administration buttons -->
     <section class="mt-3 mb-3">
         <a asp-controller="Administration" asp-action="Members" asp-route-groupId="@Model.Id" class="btn btn-primary">
             <span class="badge bg-light text-dark">@Model.MembersCount</span>
@@ -26,9 +28,13 @@
         </a>
     </section>
 
+    <hr class="w-50"/>
+
+    <!-- Change group name -->
     <section class="edit-name-section">
         <h2>Change group name</h2>
         <form id="changeNameForm" asp-controller="Administration" asp-action="ChangeGroupName" method="post" class="w-50">
+
             <div id="errorMessages" asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="Id" value="@Model.Id" />
 
@@ -37,7 +43,7 @@
                 <input class="form-control" asp-for="Name" id="groupNameInput" />
             </div>
 
-            <button id="changeNameButton" class="btn btn-primary w-25 mb-2">Save changes</button>
+            <button id="changeNameButton" class="btn btn-primary w-25">Save changes</button>
         </form>
     </section>
 </main>

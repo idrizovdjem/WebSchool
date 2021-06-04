@@ -18,7 +18,12 @@ namespace WebSchool.WebApplication.Controllers
         private readonly IPostsService postsService;
         private readonly IMembersService membersService;
 
-        public AdministrationController(IGroupsService groupsService, IApplicationsService applicationsService, IAdministrationService administrationService, IPostsService postsService, IMembersService membersService)
+        public AdministrationController(
+            IPostsService postsService, 
+            IGroupsService groupsService, 
+            IMembersService membersService,
+            IApplicationsService applicationsService,
+            IAdministrationService administrationService)
         {
             this.groupsService = groupsService;
             this.applicationsService = applicationsService;

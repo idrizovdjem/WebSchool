@@ -13,7 +13,9 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
         private readonly IGroupsService groupsService;
         private readonly IBrowseService browseService;
 
-        public ApiGroupsController(IGroupsService groupsService, IBrowseService browseService)
+        public ApiGroupsController(
+            IGroupsService groupsService, 
+            IBrowseService browseService)
         {
             this.groupsService = groupsService;
             this.browseService = browseService;

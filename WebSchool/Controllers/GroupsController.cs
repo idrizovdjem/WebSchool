@@ -13,22 +13,40 @@ namespace WebSchool.Web.Controllers
     [AutoValidateAntiforgeryToken]
     public class GroupsController : Controller
     {
+        private readonly IUsersService usersService;
         private readonly IGroupsService groupsService;
 
-        public GroupsController(IGroupsService groupsService)
+        public GroupsController(
+            IGroupsService groupsService,
+            IUsersService usersService)
         {
             this.groupsService = groupsService;
+            this.usersService = usersService;
         }
 
-        public IActionResult Index(string groupName = "Global Group")
+        public IActionResult Index(string groupId)
         {
+            if(groupId == null)
+            {
+                if(HttpContext.Request.Cookies.ContainsKey("LastVisited"))
+                {
+                    groupId = HttpContext.Request.Cookies["LastVisited"];
+                }
+                else
+                {
+                    groupId = groupsService.GetIdByName("Global Group");
+                }
+            }
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var groupViewModel = groupsService.GetGroupContent(userId, groupName);
+            var groupViewModel = groupsService.GetGroupContent(userId, groupId);
+
             if(groupViewModel == null)
             {
                 return Redirect("/Groups/Index");
             }
 
+            HttpContext.Response.Cookies.Append("LastVisited", groupId);
             return View(groupViewModel);
         }        
 
@@ -54,7 +72,7 @@ namespace WebSchool.Web.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var createGroup = await groupsService.CreateAsync(userId, input.Name);
 
-            return Redirect($"/Groups/Index/groupName={createGroup.Name}");
+            return Redirect($"/Groups/Index/groupName={createGroup.Id}");
         }
     }
 }

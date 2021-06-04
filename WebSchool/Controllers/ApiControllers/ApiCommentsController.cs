@@ -11,7 +11,8 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
     {
         private readonly ICommentsService commentsService;
 
-        public ApiCommentsController(ICommentsService commentsService)
+        public ApiCommentsController(
+            ICommentsService commentsService)
         {
             this.commentsService = commentsService;
         }

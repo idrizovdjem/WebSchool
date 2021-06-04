@@ -16,7 +16,10 @@ namespace WebSchool.WebApplication.Controllers
         private readonly IUsersService usersService;
         private readonly IApplicationsService applicationsService;
 
-        public ApplicationsController(IGroupsService groupsService, IApplicationsService applicationsService, IUsersService usersService)
+        public ApplicationsController(
+            IGroupsService groupsService, 
+            IApplicationsService applicationsService, 
+            IUsersService usersService)
         {
             this.groupsService = groupsService;
             this.applicationsService = applicationsService;
