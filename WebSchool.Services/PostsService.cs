@@ -86,6 +86,12 @@ namespace WebSchool.Services
                 .FirstOrDefault();
         }
 
+        public int GetCount(string groupId)
+        {
+            return dbContext.Posts
+                .Count(p => p.GroupId == groupId);
+        }
+
         public EditPostInputModel GetForEdit(string userId, string postId)
         {
             return dbContext.Posts

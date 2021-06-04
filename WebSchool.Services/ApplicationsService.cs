@@ -84,6 +84,12 @@ namespace WebSchool.Services
             return application.IsConfirmed ? ApplicationStatus.InGroup : ApplicationStatus.WaitingApproval;
         }
 
+        public int GetCount(string groupId)
+        {
+            return dbContext.Applications
+                .Count(a => a.GroupId == groupId && a.IsConfirmed == false);
+        }
+
         public async Task RemoveAsync(string applicantId, string groupId)
         {
             var application = dbContext.Applications

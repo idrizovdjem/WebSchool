@@ -35,7 +35,7 @@ namespace WebSchool.WebApplication.Controllers
                 return Redirect("/Groups/Index");
             }
 
-            var viewModel = groupsService.GetSettings(groupId);
+            var viewModel = administrationService.GetGroupSettings(groupId);
             return View(viewModel);
         }
 

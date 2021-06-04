@@ -9,6 +9,8 @@ namespace WebSchool.Services.Contracts
     {
         ApplicationStatus GetApplicationStatus(string userId, string groupId);
 
+        int GetCount(string groupId);
+
         Task ApplyAsync(string userId, string groupId);
 
         Task ApproveAsync(string applicantId, string groupId);

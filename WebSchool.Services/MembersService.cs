@@ -75,5 +75,12 @@ namespace WebSchool.Services
                 })
                 .ToArray();
         }
+
+        public int GetCount(string groupId)
+        {
+            // Subtract 1 from the total count, because we don't count the owner as member
+            return dbContext.UserGroups
+                .Count(ug => ug.GroupId == groupId) - 1;
+        }
     }
 }

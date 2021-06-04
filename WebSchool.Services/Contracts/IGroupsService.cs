@@ -10,8 +10,6 @@ namespace WebSchool.Services.Contracts
 {
     public interface IGroupsService
     {
-        GroupSettingsViewModel GetSettings(string groupId);
-
         GroupViewModel GetGroupContent(string userId, string groupName);
 
         bool IsGroupNameAvailable(string name);

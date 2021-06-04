@@ -10,14 +10,17 @@
     <h1>Administration</h1>
     <section class="mt-3 mb-3">
         <a asp-controller="Administration" asp-action="Members" asp-route-groupId="@Model.Id" class="btn btn-primary">
+            <span class="badge bg-light text-dark">@Model.MembersCount</span>
             <i class="fas fa-users"></i>
             Members page
         </a>
         <a asp-controller="Administration" asp-action="Applications" asp-route-groupId="@Model.Id" class="btn btn-primary">
+            <span class="badge bg-light text-dark">@Model.ActiveApplicationsCount</span>
             <i class="fas fa-address-card"></i>
             Applications page
         </a>
         <a asp-controller="Administration" asp-action="Posts" asp-route-groupId="@Model.Id" class="btn btn-primary">
+            <span class="badge bg-light text-dark">@Model.PostsCount</span>
             <i class="fas fa-newspaper"></i>
             Posts page
         </a>

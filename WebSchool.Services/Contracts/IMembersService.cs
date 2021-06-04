@@ -14,5 +14,7 @@ namespace WebSchool.Services.Contracts
         Task RemoveAsync(string memberId, string groupId);
 
         MemberViewModel[] GetMembers(string adminId, string groupId);
+
+        int GetCount(string groupId);
     }
 }

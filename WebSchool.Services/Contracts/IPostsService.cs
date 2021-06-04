@@ -19,5 +19,7 @@ namespace WebSchool.Services.Contracts
         EditPostInputModel GetForEdit(string userId, string postId);
 
         Task EditAsync(EditPostInputModel input);
+
+        int GetCount(string groupId);
     }
 }
