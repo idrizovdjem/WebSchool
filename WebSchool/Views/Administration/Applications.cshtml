@@ -6,16 +6,16 @@
     ViewData["Title"] = "Applications";
 }
 
-<main class="float-left w-50 pl-3">
+<main class="container col-md-8 offset-md-2">
     <h1>Applications</h1>
 
-    <table class="table table-sm table-striped table-bordered">
+    <table class="table table-striped w-100">
         <thead>
             <tr>
                 <th>Applicant</th>
                 <th>Role</th>
-                <th width="15%">Approve</th>
-                <th width="15%">Decline</th>
+                <th width="10%">Approve</th>
+                <th width="10%">Decline</th>
             </tr>
         </thead>
         <tbody>
@@ -23,10 +23,10 @@
                 foreach (var applicant in Model)
                 {
                     <tr>
-                        <td class="h4">@applicant.Applicant</td>
+                        <td>@applicant.Applicant</td>
                         <td>
-                            <div class="form-group">
-                                <select class="form-control mb-0 role-select">
+                            <div>
+                                <select class="form-control m-0 role-select">
                                     <option>Student</option>
                                     <option>Teacher</option>
                                 </select>
