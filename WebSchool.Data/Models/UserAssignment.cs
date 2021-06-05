@@ -15,6 +15,11 @@ namespace WebSchool.Data.Models
 
         public virtual Assignment Assignment { get; set; }
 
+        [Required]
+        public string GroupId { get; set; }
+
+        public virtual Group Group { get; set; }
+
         public DateTime DueDate { get; set; }
 
         public bool IsSolved { get; set; }

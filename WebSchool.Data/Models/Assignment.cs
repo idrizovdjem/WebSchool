@@ -26,14 +26,9 @@ namespace WebSchool.Data.Models
         public int Points { get; set; }
 
         [Required]
-        public string TeacherId { get; set; }
+        public string CreatorId { get; set; }
 
-        public virtual ApplicationUser Teacher { get; set; }
-
-        [Required]
-        public string GroupId { get; set; }
-
-        public virtual Group Group { get; set; }
+        public virtual ApplicationUser Creator { get; set; }
 
         public virtual ICollection<UserAssignment> Students { get; set; }
 
