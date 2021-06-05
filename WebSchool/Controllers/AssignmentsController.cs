@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using WebSchool.Services.Contracts;
+using System.Threading.Tasks;
+using WebSchool.ViewModels.Assignment;
 
 namespace WebSchool.WebApplication.Controllers
 {
@@ -15,6 +17,22 @@ namespace WebSchool.WebApplication.Controllers
         public AssignmentsController(IAssignmentsService assignmentsService)
         {
             this.assignmentsService = assignmentsService;
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateAssignmentInputModel input)
+        {
+            if(ModelState.IsValid == false)
+            {
+                return View(input);
+            }
+
+            return View(input);
         }
 
         public IActionResult Created()

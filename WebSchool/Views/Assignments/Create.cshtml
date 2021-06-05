@@ -1,0 +1,130 @@
+﻿@using WebSchool.ViewModels.Assignment
+@model CreateAssignmentInputModel 
+
+@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "Create assignment";
+}
+
+<main class="container col-md-6 offset-md-3">
+    <h1>Create assignment</h1>
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <form asp-controller="Assignments" asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" placeholder="Assignment title" />
+        </div>
+
+        <hr />
+
+        <div class="mb-3">
+            <label class="form-label d-block"># Question</label>
+
+            <div class="mb-3">
+                <label>Multiple questions:</label>
+                <input asp-for="Questions[0].HasMultipleAnswers" class="form-check-input ms-2" type="checkbox" />
+            </div>
+
+            <textarea asp-for="Questions[0].Question" class="form-control mb-3" placeholder="Question goes here"></textarea>
+
+            <div class="mb-3">
+                <input class="form-check-input align-baseline me-2" type="radio" asp-for="Questions[0].Answers[0].IsCorrect" value="false"/>
+
+                <input class="form-control d-inline-block w-75" placeholder="Answer" asp-for="Questions[0].Answers[0].Content" />
+
+                <button type="button" class="btn btn-danger" style="margin-top: -5px">
+                    <i class="fa fa-trash-alt"></i>
+                </button>
+            </div>
+
+            <div class="mb-3">
+                <input class="form-check-input align-baseline me-2" type="radio" name="answer-1" />
+
+                <input class="form-control d-inline-block w-75" placeholder="Answer" />
+
+                <button type="button" class="btn btn-danger" style="margin-top: -5px">
+                    <i class="fa fa-trash-alt"></i>
+                </button>
+            </div>
+
+            <div class="mb-3">
+                <input class="form-check-input align-baseline me-2" type="radio" name="answer-1" />
+
+                <input class="form-control d-inline-block w-75" placeholder="Answer" />
+
+                <button type="button" class="btn btn-danger" style="margin-top: -5px">
+                    <i class="fa fa-trash-alt"></i>
+                </button>
+            </div>
+
+            <hr />
+        </div>
+
+        <section id="questionsSection">
+
+        </section>
+
+        <button onclick="addNewQuestion()" type="button" class="btn btn-primary">Add question</button>
+
+        <button class="btn btn-primary">Create assignment</button>
+    </form>
+</main>
+
+@section Scripts {
+    <script>
+        const questionsSection = document.getElementById('questionsSection');
+        const questions = [];
+
+        const addNewQuestion = () => {
+            createQuestionHeaders();
+            createAnswer();
+        }
+
+        const createQuestionHeaders = () => {
+            const questionContainer = document.createElement('div');
+            questionContainer.classList.add('mb-3');
+
+            // Question number label
+            const questionNumber = document.createElement('label');
+            questionNumber.classList.add('form-label', 'd-block');
+            questionNumber.textContent = `#${questions.length} Question`;
+            questionContainer.appendChild(questionNumber);
+
+            // question title container
+            const questionTitleContainer = document.createElement('div');
+            questionTitleContainer.classList.add('mb-3');
+            questionContainer.appendChild(questionTitleContainer);
+
+            // multiple questions label
+            const multipleQuestionsLabel = document.createElement('label');
+            multipleQuestionsLabel.textContent = 'Multiple questions:';
+            questionTitleContainer.appendChild(multipleQuestionsLabel);
+
+            // mulitple questions checkbox
+            const multipleQuestionsInput = document.createElement('input');
+            multipleQuestionsInput.name = `Questions[${questions.length}].HasMultipleAnswers`;
+            multipleQuestionsInput.type = 'checkbox';
+            multipleQuestionsInput.classList.add('form-check-input', 'ms-2');
+            questionTitleContainer.appendChild(multipleQuestionsInput);
+
+            // question textarea
+            const questionTextarea = document.createElement('textarea');
+            questionTextarea.classList.add('form-control', 'mb-3');
+            questionTextarea.placeholder = 'Question goes here';
+            questionTextarea.name = `Questions[${questions.length}].Question`;
+            questionContainer.appendChild(questionTextarea);
+
+            questions.push({
+                questionContainer,
+                answers: 0
+            });
+
+            questionsSection.appendChild(questionContainer);
+        }
+
+        const createAnswer = () => {
+
+        }
+    </script>
+}
