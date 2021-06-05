@@ -4,6 +4,6 @@ namespace WebSchool.Services.Contracts
 {
     public interface IAssignmentsService
     {
-        UserAssignmentsViewModel GetUserAssignments(string userId);
+        CreatedAssignmentViewModel[] GetCreated(string userId);
     }
 }

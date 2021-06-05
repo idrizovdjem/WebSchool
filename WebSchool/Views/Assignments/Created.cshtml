@@ -1,0 +1,29 @@
+﻿@using WebSchool.ViewModels.Assignment
+@model CreatedAssignmentViewModel[]
+
+@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "Created assignments";
+}
+
+<main class="container col-md-8 offset-md-2">
+    <h1>Created assignments</h1>
+
+    <table class="table table-striped w-100">
+        <thead>
+            <tr>
+                <th>Assignment title</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var assignment in Model)
+            {
+                <tr>
+                    <td>@assignment.Title</td>
+                    <td><a class="btn btn-primary w-100" asp-controller="Assignments" asp-action="Details" asp-route-assignmentId="@assignment.Id">Details</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>

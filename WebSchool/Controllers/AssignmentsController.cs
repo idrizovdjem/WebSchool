@@ -17,11 +17,11 @@ namespace WebSchool.WebApplication.Controllers
             this.assignmentsService = assignmentsService;
         }
 
-        public IActionResult Index()
+        public IActionResult Created()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userAssignments = assignmentsService.GetUserAssignments(userId);
-            return View(userAssignments);
+            var createdAssignments = assignmentsService.GetCreated(userId);
+            return View(createdAssignments);
         }
     }
 }
