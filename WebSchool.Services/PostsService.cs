@@ -15,7 +15,9 @@ namespace WebSchool.Services
         private readonly ApplicationDbContext dbContext;
         private readonly ICommentsService commentsService;
 
-        public PostsService(ApplicationDbContext context, ICommentsService commentsService)
+        public PostsService(
+            ApplicationDbContext context, 
+            ICommentsService commentsService)
         {
             this.dbContext = context;
             this.commentsService = commentsService;

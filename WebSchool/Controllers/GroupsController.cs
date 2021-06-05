@@ -13,15 +13,11 @@ namespace WebSchool.Web.Controllers
     [AutoValidateAntiforgeryToken]
     public class GroupsController : Controller
     {
-        private readonly IUsersService usersService;
         private readonly IGroupsService groupsService;
 
-        public GroupsController(
-            IGroupsService groupsService,
-            IUsersService usersService)
+        public GroupsController(IGroupsService groupsService)
         {
             this.groupsService = groupsService;
-            this.usersService = usersService;
         }
 
         public IActionResult Index(string groupId)

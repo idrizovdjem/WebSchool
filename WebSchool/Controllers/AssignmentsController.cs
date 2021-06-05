@@ -12,8 +12,7 @@ namespace WebSchool.WebApplication.Controllers
     {
         private readonly IAssignmentsService assignmentsService;
 
-        public AssignmentsController(
-            IAssignmentsService assignmentsService)
+        public AssignmentsController(IAssignmentsService assignmentsService)
         {
             this.assignmentsService = assignmentsService;
         }

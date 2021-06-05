@@ -13,7 +13,10 @@ namespace WebSchool.Services
         private readonly IApplicationsService applicationsService;
         private readonly IUsersService usersService;
 
-        public BrowseService(ApplicationDbContext dbContext, IApplicationsService applicationsService, IUsersService usersService)
+        public BrowseService(
+            ApplicationDbContext dbContext, 
+            IApplicationsService applicationsService,
+            IUsersService usersService)
         {
             this.dbContext = dbContext;
             this.applicationsService = applicationsService;
