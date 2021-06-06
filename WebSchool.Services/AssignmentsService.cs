@@ -168,5 +168,19 @@ namespace WebSchool.Services
                 }
             }
         }
+
+        public AssignmentViewModel GetById(string id)
+        {
+            var assignmentString = dbContext.Assignments
+                .FirstOrDefault(a => a.Id == id)
+                .Content;
+
+            if(assignmentString == null)
+            {
+                return null;
+            }
+
+            return JsonSerializer.Deserialize<AssignmentViewModel>(assignmentString);
+        }
     }
 }

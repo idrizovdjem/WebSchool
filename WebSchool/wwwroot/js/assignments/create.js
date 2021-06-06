@@ -23,7 +23,8 @@ const createQuestionHeaders = () => {
 
     // multiple questions label
     const multipleQuestionsLabel = document.createElement('label');
-    multipleQuestionsLabel.textContent = 'Multiple questions:';
+    multipleQuestionsLabel.classList.add('form-label');
+    multipleQuestionsLabel.textContent = 'Multiple answers:';
     questionTitleContainer.appendChild(multipleQuestionsLabel);
 
     // mulitple questions checkbox

@@ -1,0 +1,56 @@
+﻿@using WebSchool.ViewModels.Assignment
+@model AssignmentViewModel
+
+@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "Details";
+} 
+
+<main class="container col-md-8 offset-md-2">
+    <h1>@Model.Title</h1>
+    <p>Points: @Model.Points</p>
+
+    @{ 
+        var currentQuestionIndex = 0;
+        foreach (var question in Model.Questions)
+        {
+        <div class="mb-3">
+            <hr />
+            <label class="form-label">#@(currentQuestionIndex + 1) Question</label>
+
+            <div class="mb-3">
+                <label class="form-label">Multiple answers: </label>
+                <input type="checkbox" checked="@question.HasMultipleAnswers" class="form-check-input ms-2" disabled />
+            </div>
+
+            <textarea class="form-control mb-3" disabled>@question.Question</textarea>
+
+            <section>
+                @foreach (var answer in question.Answers)
+                {
+                    <div class="mb-3">
+                        @if (question.HasMultipleAnswers)
+                        {
+                            <input type="checkbox" class="form-check-input align-baseline me-2" checked="@answer.IsCorrect" disabled />
+                        }
+                        else
+                        {
+                            <input type="radio" class="form-check-input align-baseline me-2" checked="@answer.IsCorrect" disabled />
+                        }
+
+                        <input class="form-control w-75 d-inline-block" value="@answer.Content" disabled />
+                    </div>
+                }
+            </section>
+        </div>
+
+            currentQuestionIndex++;
+        }
+    }
+</main>
+
+<style>
+    hr {
+        border: 2px solid black;
+    }
+</style>

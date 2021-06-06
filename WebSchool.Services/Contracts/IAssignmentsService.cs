@@ -12,5 +12,7 @@ namespace WebSchool.Services.Contracts
         Task CreateAsync(string userId, CreateAssignmentInputModel input);
 
         AssignmentValidationResult ValidateAssignment(CreateAssignmentInputModel input);
+
+        AssignmentViewModel GetById(string id);
     }
 }

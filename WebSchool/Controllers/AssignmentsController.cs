@@ -58,5 +58,17 @@ namespace WebSchool.WebApplication.Controllers
             var createdAssignments = assignmentsService.GetCreated(userId);
             return View(createdAssignments);
         }
+
+        public IActionResult Details(string assignmentId)
+        {
+            var assigmentViewModel = assignmentsService.GetById(assignmentId);
+            if(assigmentViewModel == null)
+            {
+                return RedirectToAction(nameof(Created));
+            }
+
+            return View(assigmentViewModel);
+        }
     }
 }
+
