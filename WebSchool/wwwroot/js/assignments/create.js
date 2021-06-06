@@ -21,19 +21,20 @@ const createQuestionHeaders = () => {
     questionTitleContainer.classList.add('mb-3');
     questionContainer.appendChild(questionTitleContainer);
 
-    // multiple questions label
-    const multipleQuestionsLabel = document.createElement('label');
-    multipleQuestionsLabel.classList.add('form-label');
-    multipleQuestionsLabel.textContent = 'Multiple answers:';
-    questionTitleContainer.appendChild(multipleQuestionsLabel);
+    // multiple answers label
+    const multipleAnswersLabel = document.createElement('label');
+    multipleAnswersLabel.classList.add('form-label');
+    multipleAnswersLabel.textContent = 'Multiple answers:';
+    questionTitleContainer.appendChild(multipleAnswersLabel);
 
-    // mulitple questions checkbox
-    const multipleQuestionsInput = document.createElement('input');
-    multipleQuestionsInput.type = 'checkbox';
-    multipleQuestionsInput.value = 'false';
-    multipleQuestionsInput.name = `Questions[${questions.length}].HasMultipleAnswers`;
-    multipleQuestionsInput.classList.add('form-check-input', 'ms-2');
-    questionTitleContainer.appendChild(multipleQuestionsInput);
+    // mulitple answers checkbox
+    const multipleAnswersInput = document.createElement('input');
+    multipleAnswersInput.type = 'checkbox';
+    multipleAnswersInput.value = 'false';
+    multipleAnswersInput.name = `Questions[${questions.length}].HasMultipleAnswers`;
+    multipleAnswersInput.classList.add('form-check-input', 'ms-2');
+    multipleAnswersInput.addEventListener('change', (event) => changeQuestionAnswersType(event));
+    questionTitleContainer.appendChild(multipleAnswersInput);
 
     // question textarea
     const questionTextarea = document.createElement('textarea');
@@ -126,4 +127,21 @@ const createAssignment = () => {
 const deleteAnswer = (event) => {
     const answerContainer = event.currentTarget.parentNode;
     answerContainer.remove();
+}
+
+const changeQuestionAnswersType = (event) => {
+    const checkedState = event.target.checked;
+    const answersSection = event.currentTarget.parentNode.nextElementSibling.nextElementSibling;
+    const answerElements = Array.from(answersSection.children);
+
+    const newButtonType = checkedState ? 'checkbox' : 'radio';
+    for (const answer of answerElements) {
+        const answerButton = answer.children[0];
+
+        if (newButtonType === 'radio') {
+            answerButton.checked = false;
+        }
+
+        answerButton.type = newButtonType;
+    }
 }
