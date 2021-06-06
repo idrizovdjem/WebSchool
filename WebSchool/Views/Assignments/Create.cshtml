@@ -18,58 +18,20 @@
 
         <hr />
 
-        <div class="mb-3">
-            <label class="form-label d-block"># Question</label>
-
-            <div class="mb-3">
-                <label>Multiple questions:</label>
-                <input asp-for="Questions[0].HasMultipleAnswers" class="form-check-input ms-2" type="checkbox" />
-            </div>
-
-            <textarea asp-for="Questions[0].Question" class="form-control mb-3" placeholder="Question goes here"></textarea>
-
-            <div class="mb-3">
-                <input class="form-check-input align-baseline me-2" type="radio" asp-for="Questions[0].Answers[0].IsCorrect" value="false"/>
-
-                <input class="form-control d-inline-block w-75" placeholder="Answer" asp-for="Questions[0].Answers[0].Content" />
-
-                <button type="button" class="btn btn-danger" style="margin-top: -5px">
-                    <i class="fa fa-trash-alt"></i>
-                </button>
-            </div>
-
-            <div class="mb-3">
-                <input class="form-check-input align-baseline me-2" type="radio" name="answer-1" />
-
-                <input class="form-control d-inline-block w-75" placeholder="Answer" />
-
-                <button type="button" class="btn btn-danger" style="margin-top: -5px">
-                    <i class="fa fa-trash-alt"></i>
-                </button>
-            </div>
-
-            <div class="mb-3">
-                <input class="form-check-input align-baseline me-2" type="radio" name="answer-1" />
-
-                <input class="form-control d-inline-block w-75" placeholder="Answer" />
-
-                <button type="button" class="btn btn-danger" style="margin-top: -5px">
-                    <i class="fa fa-trash-alt"></i>
-                </button>
-            </div>
-
-            <hr />
-        </div>
-
         <section id="questionsSection">
-
         </section>
 
         <button onclick="addNewQuestion()" type="button" class="btn btn-primary">Add question</button>
 
-        <button class="btn btn-primary">Create assignment</button>
+        <button class="btn btn-primary" onclick="createAssignment(event)">Create assignment</button>
     </form>
 </main>
+
+<style>
+    hr {
+        border: 2px solid black;
+    }
+</style>
 
 @section Scripts {
     <script>
@@ -77,8 +39,8 @@
         const questions = [];
 
         const addNewQuestion = () => {
-            createQuestionHeaders();
-            createAnswer();
+            const question = createQuestionHeaders();
+            addAnswerField(question);
         }
 
         const createQuestionHeaders = () => {
@@ -103,28 +65,97 @@
 
             // mulitple questions checkbox
             const multipleQuestionsInput = document.createElement('input');
-            multipleQuestionsInput.name = `Questions[${questions.length}].HasMultipleAnswers`;
             multipleQuestionsInput.type = 'checkbox';
+            multipleQuestionsInput.value = 'false';
+            multipleQuestionsInput.name = `Questions[${questions.length}].HasMultipleAnswers`;
             multipleQuestionsInput.classList.add('form-check-input', 'ms-2');
             questionTitleContainer.appendChild(multipleQuestionsInput);
 
             // question textarea
             const questionTextarea = document.createElement('textarea');
-            questionTextarea.classList.add('form-control', 'mb-3');
+            questionTextarea.classList.add('form-control', 'mb-3', 'question-textarea');
             questionTextarea.placeholder = 'Question goes here';
             questionTextarea.name = `Questions[${questions.length}].Question`;
             questionContainer.appendChild(questionTextarea);
 
-            questions.push({
-                questionContainer,
-                answers: 0
-            });
+            // answers section
+            const answersSection = document.createElement('section');
+            questionContainer.appendChild(answersSection);
 
+            const question = {
+                element: questionContainer,
+                answersSection,
+                answers: 0,
+                index: questions.length
+            };
+
+            // add new answer button
+            const newAnswerButton = document.createElement('button');
+            newAnswerButton.textContent = 'Add answer';
+            newAnswerButton.classList.add('btn', 'btn-primary');
+            newAnswerButton.type = 'button';
+            newAnswerButton.addEventListener('click', () => addAnswerField(question));
+            questionContainer.appendChild(newAnswerButton);
+
+            const horizontalLine = document.createElement('hr');
+            questionContainer.appendChild(horizontalLine);
+
+            questions.push(question);
             questionsSection.appendChild(questionContainer);
+            return question;
         }
 
-        const createAnswer = () => {
+        const addAnswerField = (question) => {
+            const answersContainer = document.createElement('div');
+            answersContainer.classList.add('mb-3');
 
+            const answerRadioButton = document.createElement('input');
+            answerRadioButton.classList.add('form-check-input', 'align-baseline', 'me-2');
+            answerRadioButton.type = 'radio';
+            answerRadioButton.name = `answer-${questions.index}`;
+            answersContainer.appendChild(answerRadioButton);
+
+            const answerInputField = document.createElement('input');
+            answerInputField.classList.add('form-control', 'd-inline-block', 'w-75');
+            answerInputField.placeholder = 'Answer';
+            answerInputField.name = `Questions[${question.index}].Answers[${question.answers}].Content`;
+            answersContainer.appendChild(answerInputField);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.classList.add('btn', 'btn-danger', 'ms-2');
+            deleteButton.style.marginTop = '-5px';
+            deleteButton.innerHTML = '<i class="fa fa-trash-alt"></i>';
+            answersContainer.appendChild(deleteButton);
+
+            question.answers++;
+            question.answersSection.appendChild(answersContainer);
+        }
+
+        const createAssignment = (event) => {
+            let questionIndex = 0;
+            for (const question of questions) {
+                const questionTextarea = question.element.querySelector('#questionsSection > div > textarea');
+                questionTextarea.name = `Questions[${questionIndex}].Question`;
+
+                const multipleAnswersInput = question.element.querySelector('#questionsSection > div > div > input');
+                multipleAnswersInput.name = `Questions[${questionIndex}].HasMultipleAnswers`;
+                multipleAnswersInput.value = multipleAnswersInput.checked;
+
+                let answerIndex = 0;
+                const answers = Array.from(question.answersSection.children);
+                for (const answer of answers) {
+                    const valueButton = answer.children[0];
+                    valueButton.name = `Questions[${questionIndex}].Answers[${answerIndex}].IsCorrect`;
+                    valueButton.value = valueButton.checked;
+
+                    const answerInput = answer.children[1];
+                    answerInput.name = `Questions[${questionIndex}].Answers[${answerIndex}].Content`;
+                    answerIndex++;
+                }
+
+                questionIndex++;
+            }
         }
     </script>
 }
