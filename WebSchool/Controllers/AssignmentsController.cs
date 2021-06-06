@@ -1,10 +1,10 @@
-﻿using System.Security.Claims;
+﻿using System.Threading.Tasks;
+using System.Security.Claims;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using WebSchool.Services.Contracts;
-using System.Threading.Tasks;
 using WebSchool.ViewModels.Assignment;
 
 namespace WebSchool.WebApplication.Controllers
@@ -32,7 +32,24 @@ namespace WebSchool.WebApplication.Controllers
                 return View(input);
             }
 
-            return View(input);
+            var validationResult = assignmentsService.ValidateAssignment(input);
+            if(validationResult.IsValid == false)
+            {
+                foreach(var key in validationResult.Errors.Keys)
+                {
+                    foreach(var message in validationResult.Errors[key])
+                    {
+                        ModelState.AddModelError(key, message);
+                    }
+                }
+
+                return View(input);
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await assignmentsService.CreateAsync(userId, input);
+
+            return RedirectToAction(nameof(Created));
         }
 
         public IActionResult Created()

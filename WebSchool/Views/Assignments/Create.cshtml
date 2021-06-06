@@ -16,6 +16,11 @@
             <input asp-for="Title" class="form-control" placeholder="Assignment title" />
         </div>
 
+        <div class="mb-3">
+            <label asp-for="Points" class="form-label"></label>
+            <input asp-for="Points" class="form-control" placeholder="Assignment points" />
+        </div>
+
         <hr />
 
         <section id="questionsSection">
@@ -112,7 +117,7 @@
             const answerRadioButton = document.createElement('input');
             answerRadioButton.classList.add('form-check-input', 'align-baseline', 'me-2');
             answerRadioButton.type = 'radio';
-            answerRadioButton.name = `answer-${questions.index}`;
+            answerRadioButton.name = `answer-${question.index}`;
             answersContainer.appendChild(answerRadioButton);
 
             const answerInputField = document.createElement('input');
