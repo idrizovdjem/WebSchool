@@ -13,7 +13,7 @@ const createQuestionHeaders = () => {
     // Question number label
     const questionNumber = document.createElement('label');
     questionNumber.classList.add('form-label', 'd-block');
-    questionNumber.textContent = `#${questions.length} Question`;
+    questionNumber.textContent = `#${questions.length  + 1} Question`;
     questionContainer.appendChild(questionNumber);
 
     // question title container
@@ -33,7 +33,7 @@ const createQuestionHeaders = () => {
     multipleAnswersInput.value = 'false';
     multipleAnswersInput.name = `Questions[${questions.length}].HasMultipleAnswers`;
     multipleAnswersInput.classList.add('form-check-input', 'ms-2');
-    multipleAnswersInput.addEventListener('change', (event) => changeQuestionAnswersType(event));
+    multipleAnswersInput.addEventListener('change', changeQuestionAnswersType);
     questionTitleContainer.appendChild(multipleAnswersInput);
 
     // question textarea
@@ -61,6 +61,14 @@ const createQuestionHeaders = () => {
     newAnswerButton.type = 'button';
     newAnswerButton.addEventListener('click', () => addAnswerField(question));
     questionContainer.appendChild(newAnswerButton);
+
+    // delete question button
+    const deleteQuestionButton = document.createElement('button');
+    deleteQuestionButton.textContent = 'Delete question';
+    deleteQuestionButton.classList.add('btn', 'btn-danger', 'ms-2');
+    deleteQuestionButton.type = 'button';
+    deleteQuestionButton.addEventListener('click', (event) => deleteQuestion(event, question));
+    questionContainer.appendChild(deleteQuestionButton);
 
     const horizontalLine = document.createElement('hr');
     questionContainer.appendChild(horizontalLine);
@@ -143,5 +151,23 @@ const changeQuestionAnswersType = (event) => {
         }
 
         answerButton.type = newButtonType;
+    }
+}
+
+const deleteQuestion = (event, question) => {
+    const deleteConfirm = confirm('Are you sure you want to delete this question ?');
+    if (deleteConfirm === false) {
+        return;
+    }
+
+    const questionIndex = questions.indexOf(question);
+    questions.splice(questionIndex, 1);
+    question.element.remove();
+
+    let currentQuestionIndex = 1;
+    for (const question of questions) {
+        const questionLabel = question.element.children[0];
+        questionLabel.textContent = `#${currentQuestionIndex} Question`;
+        currentQuestionIndex++;
     }
 }
