@@ -2,9 +2,9 @@
 {
     public static class AnswerConstants
     {
-        public const int MinimumContentLength = 1;
+        public const byte MinimumContentLength = 1;
 
-        public const int MaximumContentLength = 500;
+        public const ushort MaximumContentLength = 500;
 
         public const string ContentIsRequiredMessage = "Content is required";
 

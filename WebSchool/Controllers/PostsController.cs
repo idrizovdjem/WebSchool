@@ -47,6 +47,7 @@ namespace WebSchool.WebApplication.Controllers
         {
             if(ModelState.IsValid == false)
             {
+                ViewData["GroupId"] = input.GroupId;
                 return View(input);
             }
 

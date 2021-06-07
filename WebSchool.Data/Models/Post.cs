@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using WebSchool.Data.BaseModels;
+using WebSchool.Common.Constants;
 
 namespace WebSchool.Data.Models
 {
@@ -15,7 +16,7 @@ namespace WebSchool.Data.Models
         }
 
         [Required]
-        [MaxLength(150)]
+        [MaxLength(PostConstants.MaximumTitleLength)]
         public string Title { get; set; }
 
         [Required]

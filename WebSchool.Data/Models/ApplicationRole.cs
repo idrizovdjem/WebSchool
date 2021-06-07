@@ -14,7 +14,7 @@ namespace WebSchool.Data.Models
         public ApplicationRole(string name)
             : base(name)
         {
-            this.Id = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid().ToString();
         }
     }
 }

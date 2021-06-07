@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using WebSchool.Data.BaseModels;
+using WebSchool.Common.Constants;
 
 namespace WebSchool.Data.Models
 {
@@ -16,7 +17,7 @@ namespace WebSchool.Data.Models
         }
 
         [Required]
-        [MaxLength(250)]
+        [MaxLength(GroupConstants.MaximumNameLength)]
         public string Name { get; set; }
 
         public string OwnerId { get; set; }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using WebSchool.Common.Constants;
+
 namespace WebSchool.Data.Models
 {
     public class Assignment
@@ -17,7 +19,7 @@ namespace WebSchool.Data.Models
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(200)]
+        [MaxLength(AssignmentConstants.MaximumTitleLength)]
         public string Title { get; set; }
 
         [Required]

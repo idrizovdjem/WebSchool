@@ -2,17 +2,17 @@
 {
     public static class QuestionConstsants
     {
-        public const int MinimumQuestionLength = 1;
+        public const byte MinimumQuestionLength = 1;
 
-        public const int MaximumQuestionLength = 5000;
+        public const ushort MaximumQuestionLength = 5000;
 
-        public const int MinimumAnswersCount = 1;
+        public const byte MinimumAnswersCount = 1;
 
-        public const int MaximumAnswersCount = 20;
+        public const byte MaximumAnswersCount = 20;
 
-        public const int MinimumPoints = 0;
+        public const byte MinimumPoints = 0;
 
-        public const int MaximumPoints = 100;
+        public const byte MaximumPoints = 100;
 
         public const string QuestionIsRequiredMessage = "Question is required";
 
