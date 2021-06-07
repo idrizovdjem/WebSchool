@@ -2,9 +2,9 @@
 
 using WebSchool.Common.Constants;
 
-namespace WebSchool.ViewModels.Assignment
+namespace WebSchool.ViewModels.Answer
 {
-    public class QuestionAnswerInputModel
+    public class AnswerInputModel
     {
         [Required(ErrorMessage = AnswerConstants.ContentIsRequiredMessage)]
         [MinLength(AnswerConstants.MinimumContentLength, ErrorMessage = AnswerConstants.ContentLengthMessage)]

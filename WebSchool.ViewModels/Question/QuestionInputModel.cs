@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 using WebSchool.Common.Constants;
+using WebSchool.ViewModels.Answer;
 
-namespace WebSchool.ViewModels.Assignment
+namespace WebSchool.ViewModels.Question
 {
-    public class AssignmentQuestionInputModel
+    public class QuestionInputModel
     {
         [Required(ErrorMessage = QuestionConstsants.QuestionIsRequiredMessage)]
         [MinLength(QuestionConstsants.MinimumQuestionLength, ErrorMessage = QuestionConstsants.QuestionLengthMessage)]
@@ -16,6 +17,6 @@ namespace WebSchool.ViewModels.Assignment
         [Range(QuestionConstsants.MinimumPoints, QuestionConstsants.MaximumPoints, ErrorMessage = QuestionConstsants.InvalidPointsMessage)]
         public byte Points { get; set; }
 
-        public QuestionAnswerInputModel[] Answers { get; set; }
+        public AnswerInputModel[] Answers { get; set; }
     }
 }

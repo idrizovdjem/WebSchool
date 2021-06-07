@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 using WebSchool.Common.Constants;
+using WebSchool.ViewModels.Question;
 
 namespace WebSchool.ViewModels.Assignment
 {
@@ -11,6 +12,6 @@ namespace WebSchool.ViewModels.Assignment
         [MaxLength(AssignmentConstants.MaximumTitleLength, ErrorMessage = AssignmentConstants.TitleLengthMessage)]
         public string Title { get; set; }
 
-        public AssignmentQuestionInputModel[] Questions { get; set; }
+        public QuestionInputModel[] Questions { get; set; }
     }
 }

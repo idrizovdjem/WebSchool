@@ -1,4 +1,6 @@
-﻿namespace WebSchool.ViewModels.Assignment
+﻿using WebSchool.ViewModels.Question;
+
+namespace WebSchool.ViewModels.Assignment
 {
     public class AssignmentViewModel
     {

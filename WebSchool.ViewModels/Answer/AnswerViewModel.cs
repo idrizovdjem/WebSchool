@@ -1,4 +1,4 @@
-﻿namespace WebSchool.ViewModels.Assignment
+﻿namespace WebSchool.ViewModels.Answer
 {
     public class AnswerViewModel
     {
