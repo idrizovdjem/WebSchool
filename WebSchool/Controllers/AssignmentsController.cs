@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 using WebSchool.Services.Contracts;
 using WebSchool.ViewModels.Assignment;
+using System.Linq;
 
 namespace WebSchool.WebApplication.Controllers
 {
@@ -66,6 +67,9 @@ namespace WebSchool.WebApplication.Controllers
             {
                 return RedirectToAction(nameof(Created));
             }
+
+            assigmentViewModel.AllPoints = assigmentViewModel.Questions
+                .Sum(q => q.Points);
 
             return View(assigmentViewModel);
         }

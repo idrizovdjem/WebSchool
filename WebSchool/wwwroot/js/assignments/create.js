@@ -36,6 +36,22 @@ const createQuestionHeaders = () => {
     multipleAnswersInput.addEventListener('change', (event) => changeQuestionAnswersType(event, question));
     questionTitleContainer.appendChild(multipleAnswersInput);
 
+    const pointsContainer = document.createElement('div');
+    pointsContainer.classList.add('mb-3');
+    questionTitleContainer.appendChild(pointsContainer);
+
+    const pointsLabel = document.createElement('label');
+    pointsLabel.textContent = 'Points: ';
+    pointsLabel.classList.add('form-label');
+    pointsContainer.appendChild(pointsLabel);
+
+    const pointsInput = document.createElement('input');
+    pointsInput.type = 'number';
+    pointsInput.classList.add('form-control', 'd-inline-block', 'w-25', 'ms-2');
+    pointsInput.placeholder = 'Points';
+    pointsInput.name = `Questions[${questions.length}].Points`;
+    pointsContainer.appendChild(pointsInput);
+
     // question textarea
     const questionTextarea = document.createElement('textarea');
     questionTextarea.classList.add('form-control', 'mb-3', 'question-textarea');
@@ -116,6 +132,9 @@ const createAssignment = () => {
         const multipleAnswersInput = question.element.querySelector('#questionsSection > div > div > input');
         multipleAnswersInput.name = `Questions[${questionIndex}].HasMultipleAnswers`;
         multipleAnswersInput.value = multipleAnswersInput.checked;
+
+        const pointsInput = question.element.children[1].children[2].children[1];
+        pointsInput.name = `Questions[${questionIndex}].Points`;
 
         let answerIndex = 0;
         const answers = Array.from(question.answersSection.children);

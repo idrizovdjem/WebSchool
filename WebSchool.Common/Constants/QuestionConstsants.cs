@@ -10,10 +10,16 @@
 
         public const int MaximumAnswersCount = 20;
 
+        public const int MinimumPoints = 0;
+
+        public const int MaximumPoints = 100;
+
         public const string QuestionIsRequiredMessage = "Question is required";
 
         public const string QuestionLengthMessage = "Question must be between 1 and 5000 symbols";
 
         public const string AnswersLengthMessage = "Answers must be between 1 and 20";
+
+        public const string InvalidPointsMessage = "Points must be between 0 and 100";
     }
 }

@@ -91,6 +91,11 @@ namespace WebSchool.Services
                     }
                 }
 
+                if(question.Points < QuestionConstsants.MinimumPoints || QuestionConstsants.MaximumPoints < question.Points)
+                {
+                    validationResult.AddErrorMessage($"Question {questionIndex}", QuestionConstsants.InvalidPointsMessage);
+                }
+
                 if(question.Answers.Length < QuestionConstsants.MinimumAnswersCount || QuestionConstsants.MaximumAnswersCount < question.Answers.Length)
                 {
                     validationResult.AddErrorMessage($"Question {questionIndex}", QuestionConstsants.AnswersLengthMessage);

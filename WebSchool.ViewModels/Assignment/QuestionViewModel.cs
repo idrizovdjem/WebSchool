@@ -6,6 +6,8 @@
 
         public bool HasMultipleAnswers { get; set; }
 
+        public byte Points { get; set; }
+
         public AnswerViewModel[] Answers { get; set; }
     }
 }

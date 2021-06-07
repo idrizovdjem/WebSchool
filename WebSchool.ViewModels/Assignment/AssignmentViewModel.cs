@@ -4,6 +4,8 @@
     {
         public string Title { get; set; }
 
+        public int AllPoints { get; set; }
+
         public QuestionViewModel[] Questions { get; set; }
     }
 }

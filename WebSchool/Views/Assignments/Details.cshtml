@@ -8,6 +8,7 @@
 
 <main class="container col-md-8 offset-md-2">
     <h1>@Model.Title</h1>
+    <p>Max points: @Model.AllPoints</p>
 
     @{ 
         var currentQuestionIndex = 0;
@@ -21,6 +22,8 @@
                 <label class="form-label">Multiple answers: </label>
                 <input type="checkbox" checked="@question.HasMultipleAnswers" class="form-check-input ms-2" disabled />
             </div>
+
+            <label class="form-label">Points: @question.Points</label>
 
             <textarea class="form-control mb-3" disabled>@question.Question</textarea>
 
