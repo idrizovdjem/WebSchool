@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using WebSchool.Data;
-using WebSchool.ViewModels.Post;
-
 using WebSchool.Data.Models;
+using WebSchool.ViewModels.Post;
+using WebSchool.Common.Constants;
 
 namespace WebSchool.Services.Posts
 {
@@ -107,7 +107,7 @@ namespace WebSchool.Services.Posts
                 .FirstOrDefault();
         }
 
-        public PostViewModel[] GetNewestPosts(string userId, string groupId, int count = 10)
+        public PostViewModel[] GetNewestPosts(string userId, string groupId, int count = PostConstants.MostPopularPostsCount)
         {
             return dbContext.Posts
                 .Where(p => p.GroupId == groupId && p.IsDeleted == false)
@@ -116,8 +116,8 @@ namespace WebSchool.Services.Posts
                 .Select(p => new PostViewModel()
                 {
                     Id = p.Id,
-                    Title = p.Title.Length < 50 ? p.Title : p.Title.Substring(0, 50) + "...",
-                    Content = p.Content.Length < 500 ? p.Content : p.Content.Substring(0, 500) + "...",
+                    Title = p.Title.Length < PostConstants.MaximumTitlePreviewLength ? p.Title : p.Title.Substring(0, PostConstants.MaximumTitlePreviewLength) + "...",
+                    Content = p.Content.Length < PostConstants.MaximumContentPreviewLength ? p.Content : p.Content.Substring(0, PostConstants.MaximumContentPreviewLength) + "...",
                     CreatedOn = p.CreatedOn,
                     Creator = p.Creator.Email,
                     IsCreator = p.CreatorId == userId,

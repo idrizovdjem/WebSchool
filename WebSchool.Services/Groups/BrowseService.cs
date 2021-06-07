@@ -3,6 +3,7 @@
 using WebSchool.Data;
 using WebSchool.Services.Common;
 using WebSchool.ViewModels.Group;
+using WebSchool.Common.Constants;
 using WebSchool.Common.Enumerations;
 using WebSchool.Services.Administration;
 
@@ -47,7 +48,7 @@ namespace WebSchool.Services.Groups
             var groups = dbContext.Groups
                 .Where(g => g.Name != "Global Group")
                 .OrderByDescending(g => g.Users.Count)
-                .Take(10)
+                .Take(GroupConstants.MostPopularGroupsCount)
                 .Select(g => new BrowseGroupViewModel()
                 {
                     Id = g.Id,

@@ -7,6 +7,7 @@ using WebSchool.Data;
 using WebSchool.Data.Models;
 using WebSchool.Services.Posts;
 using WebSchool.ViewModels.Group;
+using WebSchool.Common.Constants;
 using WebSchool.Common.Enumerations;
 
 namespace WebSchool.Services.Groups
@@ -75,7 +76,7 @@ namespace WebSchool.Services.Groups
                 {
                     Id = g.Id,
                     Name = g.Name,
-                    NewestPosts = postsService.GetNewestPosts(userId, g.Id, 10)
+                    NewestPosts = postsService.GetNewestPosts(userId, g.Id, PostConstants.MostPopularPostsCount)
                 })
                 .FirstOrDefault();
 

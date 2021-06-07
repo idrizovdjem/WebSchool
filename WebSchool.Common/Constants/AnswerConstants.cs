@@ -1,6 +1,6 @@
 ﻿namespace WebSchool.Common.Constants
 {
-    public class AnswerConstants
+    public static class AnswerConstants
     {
         public const int MinimumContentLength = 1;
 

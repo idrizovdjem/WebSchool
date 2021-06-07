@@ -5,8 +5,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-using WebSchool.ViewModels.Assignment;
 using WebSchool.Services.Assignments;
+using WebSchool.ViewModels.Assignment;
 
 namespace WebSchool.WebApplication.Controllers
 {

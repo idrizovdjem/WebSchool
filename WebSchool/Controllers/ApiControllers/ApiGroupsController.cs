@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using WebSchool.Services.Groups;
+using WebSchool.Common.Constants;
 
 namespace WebSchool.WebApplication.Controllers.ApiControllers
 {
@@ -30,7 +31,7 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
 
         public IActionResult IsNameValid(string groupName)
         {
-            if(groupName.Length < 5 || groupName.Length > 250)
+            if(groupName.Length < GroupConstants.MinimumNameLength || GroupConstants.MaximumNameLength < groupName.Length)
             {
                 return Json(false);
             }
