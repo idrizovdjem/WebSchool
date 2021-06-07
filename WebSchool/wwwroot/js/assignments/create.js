@@ -171,3 +171,22 @@ const deleteQuestion = (event, question) => {
         currentQuestionIndex++;
     }
 }
+
+window.onload = () => {
+    const generatedQuestions = Array.from(questionsSection.children);
+    generatedQuestions.forEach((questionElement, index) => {
+        const answersSection = questionElement.getElementsByTagName('section')[0];
+
+        const question = {
+            element: questionElement,
+            answersSection,
+            answers: answersSection.children.length,
+            index
+        };
+
+        const addAnswerButton = questionElement.getElementsByClassName('add-answer')[0];
+        addAnswerButton.addEventListener('click', () => addAnswerField(question));
+
+        questions.push(question);
+    });
+}
