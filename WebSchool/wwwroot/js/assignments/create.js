@@ -21,11 +21,15 @@ const createQuestionHeaders = () => {
     questionTitleContainer.classList.add('mb-3');
     questionContainer.appendChild(questionTitleContainer);
 
+    const mutlipleAnswersContainer = document.createElement('div');
+    mutlipleAnswersContainer.classList.add('mb-3');
+    questionContainer.appendChild(mutlipleAnswersContainer);
+
     // multiple answers label
     const multipleAnswersLabel = document.createElement('label');
     multipleAnswersLabel.classList.add('form-label');
     multipleAnswersLabel.textContent = 'Multiple answers:';
-    questionTitleContainer.appendChild(multipleAnswersLabel);
+    mutlipleAnswersContainer.appendChild(multipleAnswersLabel);
 
     // mulitple answers checkbox
     const multipleAnswersInput = document.createElement('input');
@@ -34,17 +38,20 @@ const createQuestionHeaders = () => {
     multipleAnswersInput.name = `Questions[${questions.length}].HasMultipleAnswers`;
     multipleAnswersInput.classList.add('form-check-input', 'ms-2');
     multipleAnswersInput.addEventListener('change', (event) => changeQuestionAnswersType(event, question));
-    questionTitleContainer.appendChild(multipleAnswersInput);
+    mutlipleAnswersContainer.appendChild(multipleAnswersInput);
 
+    // points container
     const pointsContainer = document.createElement('div');
     pointsContainer.classList.add('mb-3');
     questionTitleContainer.appendChild(pointsContainer);
 
+    // points label
     const pointsLabel = document.createElement('label');
     pointsLabel.textContent = 'Points: ';
     pointsLabel.classList.add('form-label');
     pointsContainer.appendChild(pointsLabel);
 
+    // points input
     const pointsInput = document.createElement('input');
     pointsInput.type = 'number';
     pointsInput.classList.add('form-control', 'd-inline-block', 'w-25', 'ms-2');
@@ -61,6 +68,7 @@ const createQuestionHeaders = () => {
 
     // answers section
     const answersSection = document.createElement('section');
+    answersSection.classList.add('answer-section');
     questionContainer.appendChild(answersSection);
 
     const question = {
@@ -133,7 +141,7 @@ const createAssignment = () => {
         multipleAnswersInput.name = `Questions[${questionIndex}].HasMultipleAnswers`;
         multipleAnswersInput.value = multipleAnswersInput.checked;
 
-        const pointsInput = question.element.children[1].children[2].children[1];
+        const pointsInput = question.element.querySelector('#questionsSection > div > div:nth-child(3) > input');
         pointsInput.name = `Questions[${questionIndex}].Points`;
 
         let answerIndex = 0;
@@ -159,7 +167,7 @@ const deleteAnswer = (event) => {
 
 const changeQuestionAnswersType = (event, question) => {
     const checkedState = event.target.checked;
-    const answersSection = event.currentTarget.parentNode.nextElementSibling.nextElementSibling;
+    const answersSection = question.answersSection;
     const answerElements = Array.from(answersSection.children);
 
     const newButtonType = checkedState ? 'checkbox' : 'radio';
@@ -203,11 +211,15 @@ window.onload = () => {
             element: questionElement,
             answersSection,
             answers: answersSection.children.length,
-            index
+            index,
+            hasMultipleAnswers: false
         };
 
         const addAnswerButton = questionElement.getElementsByClassName('add-answer')[0];
         addAnswerButton.addEventListener('click', () => addAnswerField(question));
+
+        const multipleAnswersInput = questionElement.getElementsByClassName('mutliple-answers')[0];
+        multipleAnswersInput.addEventListener('click', (event) => changeQuestionAnswersType(event, question));
 
         questions.push(question);
     });

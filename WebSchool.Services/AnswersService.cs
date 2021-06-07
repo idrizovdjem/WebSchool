@@ -13,19 +13,15 @@ namespace WebSchool.Services
             var correctAnswersCount = 0;
             var answerIndex = 1;
 
+            if(answers == null)
+            {
+                validationResult.AddErrorMessage("Answers", QuestionConstsants.AnswersLengthMessage);
+                return validationResult;
+            }
+
             foreach (var answer in answers)
             {
-                if (string.IsNullOrWhiteSpace(answer.Content))
-                {
-                    validationResult.AddErrorMessage($"Answer {answerIndex}", AnswerConstants.ContentIsRequiredMessage);
-                }
-                else
-                {
-                    if (answer.Content.Length < AnswerConstants.MinimumContentLength || AnswerConstants.MaximumContentLength < answer.Content.Length)
-                    {
-                        validationResult.AddErrorMessage($"Answer {answerIndex}", AnswerConstants.ContentLengthMessage);
-                    }
-                }
+                ValidateContent(answer.Content, validationResult, answerIndex);
 
                 if (answer.IsCorrect)
                 {
@@ -35,6 +31,28 @@ namespace WebSchool.Services
                 answerIndex++;
             }
 
+            ValidateCorrectAnswers(correctAnswersCount, validationResult, hasMutlipleAnswers);
+
+            return validationResult;
+        }
+
+        private static void ValidateContent(string content, AnswerValidationResult validationResult, int index)
+        {
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                validationResult.AddErrorMessage($"Answer {index}", AnswerConstants.ContentIsRequiredMessage);
+            }
+            else
+            {
+                if (content.Length < AnswerConstants.MinimumContentLength || AnswerConstants.MaximumContentLength < content.Length)
+                {
+                    validationResult.AddErrorMessage($"Answer {index}", AnswerConstants.ContentLengthMessage);
+                }
+            }
+        }
+
+        private static void ValidateCorrectAnswers(int correctAnswersCount, AnswerValidationResult validationResult, bool hasMutlipleAnswers)
+        {
             if (correctAnswersCount == 0)
             {
                 validationResult.AddErrorMessage("Overall", AnswerConstants.MissingCorrectAnswerMessage);
@@ -43,8 +61,6 @@ namespace WebSchool.Services
             {
                 validationResult.AddErrorMessage("Overall", AnswerConstants.TooMuchCorrectAnswersMessage);
             }
-
-            return validationResult;
         }
     }
 }

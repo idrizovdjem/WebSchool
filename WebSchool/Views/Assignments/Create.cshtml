@@ -20,7 +20,8 @@
 
         <section id="questionsSection">
             @{
-                if (Model != null)
+
+                if (Model != null && Model.Questions != null)
                 {
                     var currentQuestionIndex = 0;
                     foreach (var question in Model.Questions)
@@ -31,7 +32,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Multiple answers: </label>
-                                <input type="checkbox" onclick="changeQuestionAnswersType(event)" checked="@question.HasMultipleAnswers" class="form-check-input ms-2" />
+                                <input type="checkbox" checked="@question.HasMultipleAnswers" class="form-check-input ms-2 mutliple-answers" />
                             </div>
 
                             <div class="mb-3">
@@ -42,24 +43,29 @@
                             <textarea class="form-control mb-3" placeholder="Question">@question.Question</textarea>
 
                             <section>
-                                @foreach (var answer in question.Answers)
-                                {
-                                    <div class="mb-3">
-                                        @if (question.HasMultipleAnswers)
+                                @{
+                                    if (question.Answers != null)
+                                    {
+                                        foreach (var answer in question.Answers)
                                         {
-                                            <input type="checkbox" class="form-check-input align-baseline me-2" checked="@answer.IsCorrect" />
-                                        }
-                                        else
-                                        {
-                                            <input type="radio" class="form-check-input align-baseline me-2" checked="@answer.IsCorrect" />
-                                        }
+                                            <div class="mb-3">
+                                                @if (question.HasMultipleAnswers)
+                                                {
+                                                    <input type="checkbox" class="form-check-input align-baseline me-2" checked="@answer.IsCorrect" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="radio" class="form-check-input align-baseline me-2" checked="@answer.IsCorrect" />
+                                                }
 
-                                        <input class="form-control w-75 d-inline-block" value="@answer.Content" placeholder="Answer" />
+                                                <input class="form-control w-75 d-inline-block" value="@answer.Content" placeholder="Answer" />
 
-                                        <button onclick="deleteAnswer(event)" type="button" class="btn btn-danger" style="margin-top: -5px">
-                                            <i class="fa fa-trash-alt"></i>
-                                        </button>
-                                    </div>
+                                                <button onclick="deleteAnswer(event)" type="button" class="btn btn-danger" style="margin-top: -5px">
+                                                    <i class="fa fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        }
+                                    }
                                 }
                             </section>
 
