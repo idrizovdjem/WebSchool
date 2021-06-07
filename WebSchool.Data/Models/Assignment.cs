@@ -23,8 +23,6 @@ namespace WebSchool.Data.Models
         [Required]
         public string Content { get; set; }
 
-        public int Points { get; set; }
-
         [Required]
         public string CreatorId { get; set; }
 

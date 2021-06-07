@@ -27,8 +27,7 @@ namespace WebSchool.Services
             {
                 CreatorId = userId,
                 Content = assignmentString,
-                Title = input.Title,
-                Points = input.Points
+                Title = input.Title
             };
 
             await dbContext.Assignments.AddAsync(assignment);
@@ -51,8 +50,7 @@ namespace WebSchool.Services
         {
             var validationResult = new AssignmentValidationResult();
             ValidateTitle(input.Title, validationResult);
-            ValidatePoints(input.Points, validationResult);
-            
+
             var questionsValidationResult = ValidateQuestions(input.Questions);
             MergeErrorMessages(questionsValidationResult, validationResult);
 
@@ -71,14 +69,6 @@ namespace WebSchool.Services
                 {
                     validationResult.AddErrorMessage("Title", AssignmentConstants.TitleLengthMessage);
                 }
-            }
-        }
-
-        private static void ValidatePoints(ushort points, AssignmentValidationResult validationResult)
-        {
-            if(points < AssignmentConstants.MinimumPoints || AssignmentConstants.MaximumPoints < points)
-            {
-                validationResult.AddErrorMessage("Points", AssignmentConstants.InvalidPointsMessage);
             }
         }
 

@@ -33,7 +33,7 @@ const createQuestionHeaders = () => {
     multipleAnswersInput.value = 'false';
     multipleAnswersInput.name = `Questions[${questions.length}].HasMultipleAnswers`;
     multipleAnswersInput.classList.add('form-check-input', 'ms-2');
-    multipleAnswersInput.addEventListener('change', changeQuestionAnswersType);
+    multipleAnswersInput.addEventListener('change', (event) => changeQuestionAnswersType(event, question));
     questionTitleContainer.appendChild(multipleAnswersInput);
 
     // question textarea
@@ -51,7 +51,8 @@ const createQuestionHeaders = () => {
         element: questionContainer,
         answersSection,
         answers: 0,
-        index: questions.length
+        index: questions.length,
+        hasMultipleAnswers: false
     };
 
     // add new answer button
@@ -82,11 +83,11 @@ const addAnswerField = (question) => {
     const answerContainer = document.createElement('div');
     answerContainer.classList.add('mb-3');
 
-    const answerRadioButton = document.createElement('input');
-    answerRadioButton.classList.add('form-check-input', 'align-baseline', 'me-2');
-    answerRadioButton.type = 'radio';
-    answerRadioButton.name = `answer-${question.index}`;
-    answerContainer.appendChild(answerRadioButton);
+    const answerButton = document.createElement('input');
+    answerButton.classList.add('form-check-input', 'align-baseline', 'me-2');
+    answerButton.type = question.hasMultipleAnswers ? 'checkbox' : 'radio';
+    answerButton.name = `answer-${question.index}`;
+    answerContainer.appendChild(answerButton);
 
     const answerInputField = document.createElement('input');
     answerInputField.classList.add('form-control', 'd-inline-block', 'w-75');
@@ -137,7 +138,7 @@ const deleteAnswer = (event) => {
     answerContainer.remove();
 }
 
-const changeQuestionAnswersType = (event) => {
+const changeQuestionAnswersType = (event, question) => {
     const checkedState = event.target.checked;
     const answersSection = event.currentTarget.parentNode.nextElementSibling.nextElementSibling;
     const answerElements = Array.from(answersSection.children);
@@ -152,6 +153,8 @@ const changeQuestionAnswersType = (event) => {
 
         answerButton.type = newButtonType;
     }
+
+    question.hasMultipleAnswers = checkedState;
 }
 
 const deleteQuestion = (event, question) => {
