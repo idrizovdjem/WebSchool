@@ -51,7 +51,7 @@ namespace WebSchool.Services.Posts
                 .Count(x => x.PostId == postId && x.IsDeleted == false);
         }
 
-        public EditCommentInputModel GetForEdit(int commentId)
+        public EditCommentInputModel GetForEdit(string commentId)
         {
             return dbContext.Comments
                 .Where(c => c.Id == commentId)
@@ -95,7 +95,7 @@ namespace WebSchool.Services.Posts
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> RemoveAsync(string userId, int commentId)
+        public async Task<bool> RemoveAsync(string userId, string commentId)
         {
             var comment = dbContext.Comments
                 .FirstOrDefault(c => c.CreatorId == userId && c.Id == commentId);

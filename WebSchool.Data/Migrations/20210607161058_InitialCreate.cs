@@ -26,8 +26,6 @@ namespace WebSchool.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -50,23 +48,6 @@ namespace WebSchool.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AssignmentResults",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AssignmentId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StudentId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Points = table.Column<int>(type: "int", nullable: false),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Stage = table.Column<byte>(type: "tinyint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AssignmentResults", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -180,19 +161,16 @@ namespace WebSchool.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TeacherId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AssignmentTitle = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Signature = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AssignmentContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Points = table.Column<int>(type: "int", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Assignments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Assignments_AspNetUsers_TeacherId",
-                        column: x => x.TeacherId,
+                        name: "FK_Assignments_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -204,8 +182,7 @@ namespace WebSchool.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    MaxParticipants = table.Column<int>(type: "int", nullable: false),
-                    OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -219,6 +196,57 @@ namespace WebSchool.Data.Migrations
                         column: x => x.OwnerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssignmentResults",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AssignmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Points = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssignmentResults", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AssignmentResults_AspNetUsers_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AssignmentResults_Assignments_AssignmentId",
+                        column: x => x.AssignmentId,
+                        principalTable: "Assignments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Applications",
+                columns: table => new
+                {
+                    GroupId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsConfirmed = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Applications", x => new { x.GroupId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_Applications_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Applications_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -227,6 +255,7 @@ namespace WebSchool.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     GroupId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -253,12 +282,45 @@ namespace WebSchool.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserAssignments",
+                columns: table => new
+                {
+                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AssignmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    GroupId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsSolved = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAssignments", x => new { x.StudentId, x.AssignmentId });
+                    table.ForeignKey(
+                        name: "FK_UserAssignments_AspNetUsers_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserAssignments_Assignments_AssignmentId",
+                        column: x => x.AssignmentId,
+                        principalTable: "Assignments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserAssignments_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserGroups",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     GroupId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -268,7 +330,7 @@ namespace WebSchool.Data.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserGroups_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -287,8 +349,7 @@ namespace WebSchool.Data.Migrations
                 name: "Comments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -313,6 +374,11 @@ namespace WebSchool.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Applications_UserId",
+                table: "Applications",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -354,9 +420,19 @@ namespace WebSchool.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assignments_TeacherId",
+                name: "IX_AssignmentResults_AssignmentId",
+                table: "AssignmentResults",
+                column: "AssignmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssignmentResults_StudentId",
+                table: "AssignmentResults",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assignments_CreatorId",
                 table: "Assignments",
-                column: "TeacherId");
+                column: "CreatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_CreatorId",
@@ -384,6 +460,16 @@ namespace WebSchool.Data.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserAssignments_AssignmentId",
+                table: "UserAssignments",
+                column: "AssignmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAssignments_GroupId",
+                table: "UserAssignments",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserGroups_GroupId",
                 table: "UserGroups",
                 column: "GroupId");
@@ -396,6 +482,9 @@ namespace WebSchool.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Applications");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -415,16 +504,19 @@ namespace WebSchool.Data.Migrations
                 name: "AssignmentResults");
 
             migrationBuilder.DropTable(
-                name: "Assignments");
+                name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "Comments");
+                name: "UserAssignments");
 
             migrationBuilder.DropTable(
                 name: "UserGroups");
 
             migrationBuilder.DropTable(
                 name: "Posts");
+
+            migrationBuilder.DropTable(
+                name: "Assignments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

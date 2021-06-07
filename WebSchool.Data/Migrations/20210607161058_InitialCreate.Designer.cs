@@ -10,7 +10,7 @@ using WebSchool.Data;
 namespace WebSchool.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210521072038_InitialCreate")]
+    [Migration("20210607161058_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,6 +129,24 @@ namespace WebSchool.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("WebSchool.Data.Models.Application", b =>
+                {
+                    b.Property<string>("GroupId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
+                    b.HasKey("GroupId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Applications");
+                });
+
             modelBuilder.Entity("WebSchool.Data.Models.ApplicationRole", b =>
                 {
                     b.Property<string>("Id")
@@ -181,18 +199,8 @@ namespace WebSchool.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -248,32 +256,22 @@ namespace WebSchool.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AssignmentContent")
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AssignmentTitle")
+                    b.Property<string>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Points")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Signature")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TeacherId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("TeacherId");
+                    b.HasIndex("CreatorId");
 
                     b.ToTable("Assignments");
                 });
@@ -285,36 +283,28 @@ namespace WebSchool.Data.Migrations
 
                     b.Property<string>("AssignmentId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Points")
                         .HasColumnType("int");
 
-                    b.Property<byte>("Stage")
-                        .HasColumnType("tinyint");
-
                     b.Property<string>("StudentId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AssignmentId");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("AssignmentResults");
                 });
 
             modelBuilder.Entity("WebSchool.Data.Models.Comment", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -363,9 +353,6 @@ namespace WebSchool.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MaxParticipants")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -375,7 +362,6 @@ namespace WebSchool.Data.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("OwnerId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -414,6 +400,11 @@ namespace WebSchool.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
@@ -421,6 +412,33 @@ namespace WebSchool.Data.Migrations
                     b.HasIndex("GroupId");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("WebSchool.Data.Models.UserAssignment", b =>
+                {
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AssignmentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GroupId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsSolved")
+                        .HasColumnType("bit");
+
+                    b.HasKey("StudentId", "AssignmentId");
+
+                    b.HasIndex("AssignmentId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("UserAssignments");
                 });
 
             modelBuilder.Entity("WebSchool.Data.Models.UserGroup", b =>
@@ -432,6 +450,7 @@ namespace WebSchool.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RoleId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId", "GroupId");
@@ -494,15 +513,53 @@ namespace WebSchool.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebSchool.Data.Models.Assignment", b =>
+            modelBuilder.Entity("WebSchool.Data.Models.Application", b =>
                 {
-                    b.HasOne("WebSchool.Data.Models.ApplicationUser", "Teacher")
+                    b.HasOne("WebSchool.Data.Models.Group", "Group")
                         .WithMany()
-                        .HasForeignKey("TeacherId")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Teacher");
+                    b.HasOne("WebSchool.Data.Models.ApplicationUser", "User")
+                        .WithMany("Applications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebSchool.Data.Models.Assignment", b =>
+                {
+                    b.HasOne("WebSchool.Data.Models.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+                });
+
+            modelBuilder.Entity("WebSchool.Data.Models.AssignmentResult", b =>
+                {
+                    b.HasOne("WebSchool.Data.Models.Assignment", "Assignment")
+                        .WithMany("Results")
+                        .HasForeignKey("AssignmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("WebSchool.Data.Models.ApplicationUser", "Student")
+                        .WithMany("Results")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Assignment");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("WebSchool.Data.Models.Comment", b =>
@@ -528,9 +585,7 @@ namespace WebSchool.Data.Migrations
                 {
                     b.HasOne("WebSchool.Data.Models.ApplicationUser", "Owner")
                         .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
                 });
@@ -554,6 +609,33 @@ namespace WebSchool.Data.Migrations
                     b.Navigation("Group");
                 });
 
+            modelBuilder.Entity("WebSchool.Data.Models.UserAssignment", b =>
+                {
+                    b.HasOne("WebSchool.Data.Models.Assignment", "Assignment")
+                        .WithMany("Students")
+                        .HasForeignKey("AssignmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("WebSchool.Data.Models.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebSchool.Data.Models.ApplicationUser", "Student")
+                        .WithMany("Assignments")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Assignment");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("WebSchool.Data.Models.UserGroup", b =>
                 {
                     b.HasOne("WebSchool.Data.Models.Group", "Group")
@@ -564,7 +646,9 @@ namespace WebSchool.Data.Migrations
 
                     b.HasOne("WebSchool.Data.Models.ApplicationRole", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WebSchool.Data.Models.ApplicationUser", "User")
                         .WithMany("Groups")
@@ -581,11 +665,24 @@ namespace WebSchool.Data.Migrations
 
             modelBuilder.Entity("WebSchool.Data.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("Applications");
+
+                    b.Navigation("Assignments");
+
                     b.Navigation("Comments");
 
                     b.Navigation("Groups");
 
                     b.Navigation("Posts");
+
+                    b.Navigation("Results");
+                });
+
+            modelBuilder.Entity("WebSchool.Data.Models.Assignment", b =>
+                {
+                    b.Navigation("Results");
+
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("WebSchool.Data.Models.Group", b =>

@@ -4,7 +4,7 @@ namespace WebSchool.ViewModels.Comment
 {
     public class CommentViewModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string Creator { get; set; }
 

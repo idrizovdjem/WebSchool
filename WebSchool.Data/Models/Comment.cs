@@ -5,8 +5,13 @@ namespace WebSchool.Data.Models
 {
     public class Comment
     {
+        public Comment()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public string Content { get; set; }

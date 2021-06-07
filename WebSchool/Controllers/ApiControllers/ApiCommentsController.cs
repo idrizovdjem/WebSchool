@@ -20,7 +20,7 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
             this.usersService = usersService;
         }
 
-        public async Task<IActionResult> Remove(int commentId)
+        public async Task<IActionResult> Remove(string commentId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if(usersService.ValidateCommentRemove(userId, commentId) == false)

@@ -14,9 +14,9 @@ namespace WebSchool.Services.Posts
 
         int GetCount(string postId);
 
-        Task<bool> RemoveAsync(string userId, int commentId);
+        Task<bool> RemoveAsync(string userId, string commentId);
 
-        EditCommentInputModel GetForEdit(int commentId);
+        EditCommentInputModel GetForEdit(string commentId);
 
         Task<string> EditAsync(EditCommentInputModel input);
     }

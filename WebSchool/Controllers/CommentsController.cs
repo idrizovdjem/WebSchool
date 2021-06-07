@@ -45,7 +45,7 @@ namespace WebSchool.WebApplication.Controllers
             return Redirect($"/Posts?postId={input.PostId}");
         }
 
-        public IActionResult Edit(int commentId)
+        public IActionResult Edit(string commentId)
         {
             var comment = commentsService.GetForEdit(commentId);
             if(comment == null)

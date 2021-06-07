@@ -4,7 +4,7 @@ namespace WebSchool.ViewModels.Comment
 {
     public class EditCommentInputModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public string Content { get; set; }

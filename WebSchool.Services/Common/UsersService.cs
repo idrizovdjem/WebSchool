@@ -40,7 +40,7 @@ namespace WebSchool.Services.Common
                 .Any(ug => ug.UserId == userId && ug.GroupId == groupId);
         }
 
-        public bool ValidateCommentRemove(string userId, int commentId)
+        public bool ValidateCommentRemove(string userId, string commentId)
         {
             var comment = dbContext.Comments
                 .FirstOrDefault(c => c.Id == commentId && c.IsDeleted == false);

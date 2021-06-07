@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSchool.ViewModels", "Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSchool.Tests", "WebSchool.Tests\WebSchool.Tests.csproj", "{0A155021-401D-4AE7-8600-EE74CB6A986E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSchool.Common", "WebSchool.Common\WebSchool.Common.csproj", "{B160A16A-77ED-4DAD-A0E2-0F461417CAFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSchool.Common", "WebSchool.Common\WebSchool.Common.csproj", "{B160A16A-77ED-4DAD-A0E2-0F461417CAFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

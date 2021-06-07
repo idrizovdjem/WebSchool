@@ -12,6 +12,6 @@ namespace WebSchool.Services.Common
 
         bool ValidatePostRemove(string userId, string postId);
 
-        bool ValidateCommentRemove(string userId, int commentId);
+        bool ValidateCommentRemove(string userId, string commentId);
     }
 }
