@@ -7,11 +7,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using WebSchool.Data;
-using WebSchool.Services;
 using WebSchool.Data.Models;
 using WebSchool.Data.Seeders;
-using WebSchool.Services.Contracts;
-
+using WebSchool.Services.Posts;
+using WebSchool.Services.Groups;
+using WebSchool.Services.Common;
+using WebSchool.Services.Assignments;
+using WebSchool.Services.Administration;
 
 namespace WebSchool
 {

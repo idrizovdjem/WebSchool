@@ -3,7 +3,7 @@
 using WebSchool.Common.Enumerations;
 using WebSchool.ViewModels.Application;
 
-namespace WebSchool.Services.Contracts
+namespace WebSchool.Services.Administration
 {
     public interface IApplicationsService
     {

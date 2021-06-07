@@ -6,9 +6,8 @@ using WebSchool.Data;
 using WebSchool.ViewModels.Post;
 
 using WebSchool.Data.Models;
-using WebSchool.Services.Contracts;
 
-namespace WebSchool.Services
+namespace WebSchool.Services.Posts
 {
     public class PostsService : IPostsService
     {

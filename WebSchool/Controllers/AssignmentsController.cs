@@ -1,12 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Security.Claims;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-using WebSchool.Services.Contracts;
 using WebSchool.ViewModels.Assignment;
-using System.Linq;
+using WebSchool.Services.Assignments;
 
 namespace WebSchool.WebApplication.Controllers
 {

@@ -3,7 +3,7 @@
 using WebSchool.ViewModels.Assignment;
 using WebSchool.Common.ValidationResults;
 
-namespace WebSchool.Services.Contracts
+namespace WebSchool.Services.Assignments
 {
     public interface IAssignmentsService
     {

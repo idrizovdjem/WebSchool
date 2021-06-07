@@ -4,8 +4,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
+using WebSchool.Services.Posts;
 using WebSchool.ViewModels.Comment;
-using WebSchool.Services.Contracts;
 
 namespace WebSchool.WebApplication.Controllers
 {

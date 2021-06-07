@@ -1,6 +1,6 @@
 ﻿using WebSchool.Common.Enumerations;
 
-namespace WebSchool.Services.Contracts
+namespace WebSchool.Services.Common
 {
     public interface IUsersService
     {

@@ -3,7 +3,7 @@
 using WebSchool.ViewModels.Users;
 using WebSchool.Common.Enumerations;
 
-namespace WebSchool.Services.Contracts
+namespace WebSchool.Services.Administration
 {
     public interface IMembersService
     {

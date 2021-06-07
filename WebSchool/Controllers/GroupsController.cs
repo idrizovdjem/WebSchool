@@ -4,8 +4,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
+using WebSchool.Services.Groups;
 using WebSchool.ViewModels.Group;
-using WebSchool.Services.Contracts;
 
 namespace WebSchool.Web.Controllers
 {

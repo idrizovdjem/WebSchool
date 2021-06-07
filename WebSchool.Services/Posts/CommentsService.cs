@@ -4,10 +4,9 @@ using System.Threading.Tasks;
 
 using WebSchool.Data;
 using WebSchool.Data.Models;
-using WebSchool.Services.Contracts;
 using WebSchool.ViewModels.Comment;
 
-namespace WebSchool.Services
+namespace WebSchool.Services.Posts
 {
     public class CommentsService : ICommentsService
     {

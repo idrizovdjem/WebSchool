@@ -2,7 +2,7 @@
 
 using WebSchool.ViewModels.Post;
 
-namespace WebSchool.Services.Contracts
+namespace WebSchool.Services.Posts
 {
     public interface IPostsService
     {

@@ -1,7 +1,7 @@
 ﻿using WebSchool.ViewModels.Answer;
 using WebSchool.Common.ValidationResults;
 
-namespace WebSchool.Services.Contracts
+namespace WebSchool.Services.Assignments
 {
     public interface IAnswersService
     {

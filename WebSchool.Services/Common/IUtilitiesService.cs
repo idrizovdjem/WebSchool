@@ -1,6 +1,6 @@
 ﻿using WebSchool.Common.ValidationResults;
 
-namespace WebSchool.Services.Contracts
+namespace WebSchool.Services.Common
 {
     public interface IUtilitiesService
     {

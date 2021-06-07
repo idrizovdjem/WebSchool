@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-using WebSchool.Services.Contracts;
+using WebSchool.Services.Groups;
 
 namespace WebSchool.WebApplication.Controllers.ApiControllers
 {

@@ -2,7 +2,7 @@
 
 using WebSchool.ViewModels.Comment;
 
-namespace WebSchool.Services.Contracts
+namespace WebSchool.Services.Posts
 {
     public interface ICommentsService
     {

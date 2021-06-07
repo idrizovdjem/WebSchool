@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 
 using WebSchool.Data;
 using WebSchool.Data.Models;
+using WebSchool.Services.Common;
 using WebSchool.Common.Constants;
-using WebSchool.Services.Contracts;
 using WebSchool.ViewModels.Assignment;
 using WebSchool.Common.ValidationResults;
 
-namespace WebSchool.Services
+namespace WebSchool.Services.Assignments
 {
     public class AssignmentsService : IAssignmentsService
     {

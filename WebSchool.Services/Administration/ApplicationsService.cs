@@ -3,11 +3,10 @@ using System.Threading.Tasks;
 
 using WebSchool.Data;
 using WebSchool.Data.Models;
-using WebSchool.Services.Contracts;
 using WebSchool.Common.Enumerations;
 using WebSchool.ViewModels.Application;
 
-namespace WebSchool.Services
+namespace WebSchool.Services.Administration
 {
     public class ApplicationsService : IApplicationsService
     {

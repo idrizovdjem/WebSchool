@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 
 using WebSchool.Data;
+using WebSchool.Services.Posts;
+using WebSchool.Services.Common;
 using WebSchool.ViewModels.Group;
-using WebSchool.Services.Contracts;
 using WebSchool.Common.Enumerations;
 
-namespace WebSchool.Services
+namespace WebSchool.Services.Administration
 {
     public class AdministrationService : IAdministrationService
     {

@@ -5,7 +5,7 @@ using WebSchool.Data.Models;
 using WebSchool.ViewModels.Group;
 using WebSchool.Common.Enumerations;
 
-namespace WebSchool.Services.Contracts
+namespace WebSchool.Services.Groups
 {
     public interface IGroupsService
     {

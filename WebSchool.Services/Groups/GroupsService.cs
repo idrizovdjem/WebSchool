@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 using WebSchool.Data;
 using WebSchool.Data.Models;
+using WebSchool.Services.Posts;
 using WebSchool.ViewModels.Group;
-using WebSchool.Services.Contracts;
 using WebSchool.Common.Enumerations;
 
-namespace WebSchool.Services
+namespace WebSchool.Services.Groups
 {
     public class GroupsService : IGroupsService
     {

@@ -2,10 +2,9 @@
 using System.Linq;
 
 using WebSchool.Data;
-using WebSchool.Services.Contracts;
 using WebSchool.Common.Enumerations;
 
-namespace WebSchool.Services
+namespace WebSchool.Services.Common
 {
     public class UsersService : IUsersService
     {

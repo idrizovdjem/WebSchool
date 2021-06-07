@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
-
-using WebSchool.Services.Contracts;
+using WebSchool.Services.Posts;
+using WebSchool.Services.Common;
 
 namespace WebSchool.WebApplication.Controllers.ApiControllers
 {

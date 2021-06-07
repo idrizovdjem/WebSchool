@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using WebSchool.ViewModels.Post;
-using WebSchool.Services.Contracts;
+using WebSchool.Services.Posts;
+using WebSchool.Services.Groups;
+using WebSchool.Services.Common;
 
 namespace WebSchool.WebApplication.Controllers
 {

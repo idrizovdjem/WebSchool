@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 
 using WebSchool.Data;
+using WebSchool.Services.Common;
 using WebSchool.ViewModels.Users;
-using WebSchool.Services.Contracts;
 using WebSchool.Common.Enumerations;
 
-namespace WebSchool.Services
+namespace WebSchool.Services.Administration
 {
     public class MembersService : IMembersService
     {

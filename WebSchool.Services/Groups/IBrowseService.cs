@@ -1,6 +1,6 @@
 ﻿using WebSchool.ViewModels.Group;
 
-namespace WebSchool.Services.Contracts
+namespace WebSchool.Services.Groups
 {
     public interface IBrowseService
     {

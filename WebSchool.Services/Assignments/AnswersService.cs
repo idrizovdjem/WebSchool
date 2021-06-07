@@ -1,9 +1,8 @@
 ﻿using WebSchool.Common.Constants;
 using WebSchool.ViewModels.Answer;
-using WebSchool.Services.Contracts;
 using WebSchool.Common.ValidationResults;
 
-namespace WebSchool.Services
+namespace WebSchool.Services.Assignments
 {
     public class AnswersService : IAnswersService
     {

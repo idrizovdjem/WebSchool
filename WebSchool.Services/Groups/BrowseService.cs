@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 
 using WebSchool.Data;
+using WebSchool.Services.Common;
 using WebSchool.ViewModels.Group;
-using WebSchool.Services.Contracts;
 using WebSchool.Common.Enumerations;
+using WebSchool.Services.Administration;
 
-namespace WebSchool.Services
+namespace WebSchool.Services.Groups
 {
     public class BrowseService : IBrowseService
     {

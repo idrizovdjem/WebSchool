@@ -1,10 +1,10 @@
-﻿using WebSchool.Common.Constants;
+﻿using WebSchool.Services.Common;
+using WebSchool.Common.Constants;
 using WebSchool.ViewModels.Answer;
-using WebSchool.Services.Contracts;
 using WebSchool.ViewModels.Question;
 using WebSchool.Common.ValidationResults;
 
-namespace WebSchool.Services
+namespace WebSchool.Services.Assignments
 {
     public class QuestionsService : IQuestionsService
     {
