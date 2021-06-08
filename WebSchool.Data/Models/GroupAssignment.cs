@@ -5,6 +5,13 @@ namespace WebSchool.Data.Models
 {
     public class GroupAssignment
     {
+        public GroupAssignment()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+
+        [Key]
+        public string Id { get; set; }
 
         [Required]
         public string AssignmentId { get; set; }

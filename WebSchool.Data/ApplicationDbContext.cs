@@ -77,8 +77,6 @@ namespace WebSchool.Data
 
             builder.Entity<GroupAssignment>(entity =>
             {
-                entity.HasKey(ga => new { ga.GroupId, ga.AssignmentId });
-
                 entity
                     .HasOne(ga => ga.Group)
                     .WithMany(s => s.Assignments)
