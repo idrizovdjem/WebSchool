@@ -37,18 +37,13 @@ namespace WebSchool.WebApplication.Controllers
                 return Redirect("/Browse/Index");
             }
 
-            if(usersService.IsUserInGroup(userId, groupId))
-            {
-                return Redirect("/Browse/Index");
-            }
-
-            if(applicationsService.GetApplicationStatus(userId, groupId) != ApplicationStatus.NotApplied)
+            var applicationStatus = applicationsService.GetApplicationStatus(userId, groupId);
+            if (applicationStatus != ApplicationStatus.NotApplied)
             {
                 return Redirect("/Browse/Index");
             }
 
             await applicationsService.ApplyAsync(userId, groupId);
-
             return Redirect("/Browse/Index");
         }
     }

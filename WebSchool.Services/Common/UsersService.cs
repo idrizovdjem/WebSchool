@@ -21,9 +21,7 @@ namespace WebSchool.Services.Common
                 .First(ug => ug.UserId == userId && ug.GroupId == groupId)
                 .RoleId;
 
-            var roleName = dbContext.Roles
-                .Find(roleId).Name;
-
+            var roleName = dbContext.Roles.Find(roleId).Name;
             var role = (GroupRole)Enum.Parse(typeof(GroupRole), roleName);
             return role;
         }

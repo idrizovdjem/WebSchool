@@ -52,22 +52,10 @@ namespace WebSchool.WebApplication.Controllers
                 return View(input);
             }
 
-            var groupName = groupsService.GetName(input.GroupId);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if(groupName == null)
-            {
-                return Redirect("/Groups/Index");
-            }
-
-            if(groupName == GroupConstants.GlobalGroupName)
-            {
-                await postsService.CreateAsync(input, userId);
-                return Redirect("/Groups/Index");
-            }
-
             var isUserInGroup = usersService.IsUserInGroup(userId, input.GroupId);
-            if(isUserInGroup == false)
+            if (isUserInGroup == false)
             {
                 return Redirect("/Groups/Index");
             }

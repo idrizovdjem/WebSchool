@@ -53,6 +53,5 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
             var groups = browseService.GetMostPopular(userId);
             return Json(groups);
         }
-
     }
 }

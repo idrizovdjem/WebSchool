@@ -28,9 +28,7 @@ namespace WebSchool.Services.Groups
         public BrowseGroupViewModel[] GetGroupsContainingName(string userId, string groupName)
         {
             var groups = dbContext.Groups
-                .Where(g =>
-                    g.Name.Contains(groupName) &&
-                    g.IsDeleted == false)
+                .Where(g => g.Name.Contains(groupName) && g.IsDeleted == false)
                 .Select(g => new BrowseGroupViewModel()
                 {
                     Id = g.Id,

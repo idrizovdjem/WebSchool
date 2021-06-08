@@ -68,7 +68,7 @@ namespace WebSchool.Web.Controllers
             var groupId = await groupsService.CreateAsync(userId, input.Name);
             await groupsService.AddUserToGroupAsync(userId, groupId, GroupRole.Admin);
 
-            return Redirect($"/Groups/Index/groupName={groupId}");
+            return RedirectToAction(nameof(Index), new { groupId });
         }
     }
 }

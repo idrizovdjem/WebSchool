@@ -9,6 +9,7 @@ using WebSchool.Services.Groups;
 using WebSchool.Common.Enumerations;
 using WebSchool.ViewModels.Application;
 using WebSchool.Services.Administration;
+using WebSchool.Services.Common;
 
 namespace WebSchool.WebApplication.Controllers.ApiControllers
 {
@@ -20,23 +21,26 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
         private readonly IAdministrationService administrationService;
         private readonly IApplicationsService applicationsService;
         private readonly IGroupsService groupsService;
+        private readonly IUsersService usersService;
 
         public ApiApplicationsController(
             IAdministrationService administrationService,
             IApplicationsService applicationsService, 
-            IGroupsService groupsService)
+            IGroupsService groupsService,
+            IUsersService usersService)
         {
             this.administrationService = administrationService;
             this.applicationsService = applicationsService;
             this.groupsService = groupsService;
+            this.usersService = usersService;
         }
 
         [HttpPost]
         public async Task<IActionResult> Approve(ApplicationReviewInputModel input)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if(administrationService.ValidateIfUserIsAdmin(userId, input.GroupId) == false)
+            var userRole = usersService.GetRoleInGroup(userId, input.GroupId);
+            if (userRole != GroupRole.Admin)
             {
                 return BadRequest();
             }
@@ -62,8 +66,8 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
         public async Task<IActionResult> Decline(ApplicationReviewInputModel input)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (administrationService.ValidateIfUserIsAdmin(userId, input.GroupId) == false)
+            var userRole = usersService.GetRoleInGroup(userId, input.GroupId);
+            if (userRole != GroupRole.Admin)
             {
                 return BadRequest();
             }

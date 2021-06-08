@@ -62,10 +62,10 @@ namespace WebSchool.Services.Posts
                 .Select(p => new AdministrationPostViewModel()
                 {
                     Id = p.Id,
-                    Title = p.Title.Length < 50 ? p.Title : p.Title.Substring(0, 50) + "...",
+                    Title = p.Title.Length < PostConstants.MaximumTitlePreviewLength ? p.Title : p.Title.Substring(0, PostConstants.MaximumTitlePreviewLength) + "...",
                     Creator = p.Creator.Email,
                     CreatedOn = p.CreatedOn,
-                    Content = p.Content.Substring(0, 25) + "...",
+                    Content = p.Content.Substring(0, PostConstants.MaximumGetAllContentPreviewLength) + "...",
                     CommentsCount = commentsService.GetCount(p.Id)
                 })
                 .ToArray();
@@ -128,9 +128,7 @@ namespace WebSchool.Services.Posts
 
         public async Task<bool> RemoveAsync(string id)
         {
-            var post = dbContext.Posts
-                .FirstOrDefault(p => p.Id == id);
-
+            var post = dbContext.Posts.FirstOrDefault(p => p.Id == id);
             if(post == null)
             {
                 return false;

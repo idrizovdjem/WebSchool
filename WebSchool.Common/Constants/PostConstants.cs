@@ -16,6 +16,8 @@
 
         public const ushort MaximumContentPreviewLength = 500;
 
+        public const byte MaximumGetAllContentPreviewLength = 25;
+
         public const string InvalidContentLengthMessage = "Post content must be between 5 and 5000 symbols";
 
         public const string ContentIsRequiredMessage = "Post content is required";

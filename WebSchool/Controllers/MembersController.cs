@@ -7,26 +7,28 @@ using Microsoft.AspNetCore.Mvc;
 using WebSchool.ViewModels.Users;
 using WebSchool.Common.Enumerations;
 using WebSchool.Services.Administration;
+using WebSchool.Services.Common;
 
 namespace WebSchool.WebApplication.Controllers
 {
     public class MembersController : Controller
     {
         private readonly IMembersService membersService;
-        private readonly IAdministrationService administrationService;
+        private readonly IUsersService usersService;
 
         public MembersController(
             IMembersService membersService, 
-            IAdministrationService administrationService)
+            IUsersService usersService)
         {
             this.membersService = membersService;
-            this.administrationService = administrationService;
+            this.usersService = usersService;
         }
 
         public IActionResult Settings(string memberId, string groupId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (administrationService.ValidateIfUserIsAdmin(userId, groupId) == false)
+            var userRole = usersService.GetRoleInGroup(userId, groupId);
+            if (userRole != GroupRole.Admin)
             {
                 return Redirect("/Groups/Index");
             }
@@ -43,7 +45,8 @@ namespace WebSchool.WebApplication.Controllers
         public async Task<IActionResult> SaveChanges(MemberInputModel input)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if(administrationService.ValidateIfUserIsAdmin(userId, input.GroupId) == false)
+            var userRole = usersService.GetRoleInGroup(userId, input.GroupId);
+            if(userRole != GroupRole.Admin)
             {
                 return Redirect("/Groups/Index");
             }
@@ -67,7 +70,8 @@ namespace WebSchool.WebApplication.Controllers
         public async Task<IActionResult> Remove(string memberId, string groupId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (administrationService.ValidateIfUserIsAdmin(userId, groupId) == false)
+            var userRole = usersService.GetRoleInGroup(userId, groupId);
+            if (userRole != GroupRole.Admin)
             {
                 return Redirect("/Groups/Index");
             }

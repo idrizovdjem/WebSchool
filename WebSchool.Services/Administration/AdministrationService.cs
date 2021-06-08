@@ -4,7 +4,6 @@ using WebSchool.Data;
 using WebSchool.Services.Posts;
 using WebSchool.Services.Common;
 using WebSchool.ViewModels.Group;
-using WebSchool.Common.Enumerations;
 
 namespace WebSchool.Services.Administration
 {
@@ -13,37 +12,18 @@ namespace WebSchool.Services.Administration
         private readonly ApplicationDbContext dbContext;
         private readonly IApplicationsService applicationsService;
         private readonly IMembersService membersService;
-        private readonly IUsersService usersService;
         private readonly IPostsService postsService;
 
         public AdministrationService(
             ApplicationDbContext dbContext, 
-            IUsersService usersService, 
             IApplicationsService applicationsService, 
             IMembersService membersService,
             IPostsService postsService)
         {
             this.dbContext = dbContext;
-            this.usersService = usersService;
             this.applicationsService = applicationsService;
             this.membersService = membersService;
             this.postsService = postsService;
-        }
-
-        public bool ValidateIfUserIsAdmin(string userId, string groupId)
-        {
-            if (usersService.IsUserInGroup(userId, groupId) == false)
-            {
-                return false;
-            }
-
-            var userRole = usersService.GetRoleInGroup(userId, groupId);
-            if (userRole != GroupRole.Admin)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         public GroupSettingsViewModel GetGroupSettings(string groupId)

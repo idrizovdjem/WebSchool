@@ -68,9 +68,7 @@ namespace WebSchool.WebApplication.Controllers
                 return RedirectToAction(nameof(Created));
             }
 
-            assigmentViewModel.AllPoints = assigmentViewModel.Questions
-                .Sum(q => q.Points);
-
+            assigmentViewModel.AllPoints = assigmentViewModel.Questions.Sum(q => q.Points);
             return View(assigmentViewModel);
         }
     }
