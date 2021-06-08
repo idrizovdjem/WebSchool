@@ -14,8 +14,7 @@ namespace WebSchool.Data.Models
             Comments = new HashSet<Comment>();
             Groups = new HashSet<UserGroup>();
             Applications = new HashSet<Application>();
-            Results = new HashSet<AssignmentResult>();
-            Assignments = new HashSet<UserAssignment>();
+            AssignmentResults = new HashSet<AssignmentResult>();
         }
 
         public virtual ICollection<Post> Posts { get; set; }
@@ -26,8 +25,6 @@ namespace WebSchool.Data.Models
 
         public virtual ICollection<Application> Applications { get; set; }
 
-        public virtual ICollection<UserAssignment> Assignments { get; set; }
-
-        public virtual ICollection<AssignmentResult> Results { get; set; }
+        public virtual ICollection<AssignmentResult> AssignmentResults { get; set; }
     }
 }

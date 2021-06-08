@@ -21,7 +21,7 @@ namespace WebSchool.Data
 
         public DbSet<Assignment> Assignments { get; set; }
 
-        public DbSet<UserAssignment> UserAssignments { get; set; }
+        public DbSet<GroupAssignment> UserAssignments { get; set; }
 
         public DbSet<AssignmentResult> AssignmentResults { get; set; }
 
@@ -75,18 +75,18 @@ namespace WebSchool.Data
                 entity.HasKey(ap => new { ap.GroupId, ap.UserId });
             });
 
-            builder.Entity<UserAssignment>(entity =>
+            builder.Entity<GroupAssignment>(entity =>
             {
-                entity.HasKey(ua => new { ua.StudentId, ua.AssignmentId });
+                entity.HasKey(ga => new { ga.GroupId, ga.AssignmentId });
 
                 entity
-                    .HasOne(ua => ua.Student)
+                    .HasOne(ga => ga.Group)
                     .WithMany(s => s.Assignments)
                     .OnDelete(DeleteBehavior.Restrict);
 
                 entity
-                    .HasOne(ua => ua.Assignment)
-                    .WithMany(a => a.Students)
+                    .HasOne(ga => ga.Assignment)
+                    .WithMany(a => a.Groups)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -99,7 +99,7 @@ namespace WebSchool.Data
 
                 entity
                     .HasOne(ar => ar.Student)
-                    .WithMany(s => s.Results)
+                    .WithMany(s => s.AssignmentResults)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 

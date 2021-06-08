@@ -3,12 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebSchool.Data.Models
 {
-    public class UserAssignment
+    public class GroupAssignment
     {
-        [Required]
-        public string StudentId { get; set; }
-
-        public virtual ApplicationUser Student { get; set; }
 
         [Required]
         public string AssignmentId { get; set; }
@@ -21,7 +17,5 @@ namespace WebSchool.Data.Models
         public virtual Group Group { get; set; }
 
         public DateTime DueDate { get; set; }
-
-        public bool IsSolved { get; set; }
     }
 }
