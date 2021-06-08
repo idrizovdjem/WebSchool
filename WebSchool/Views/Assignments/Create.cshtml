@@ -29,12 +29,12 @@
                         <div class="mb-3">
                             <label class="form-label">#@(currentQuestionIndex + 1) Question</label>
 
-                            <div class="mb-3">
+                            <div class="mb-3 multiple-answers">
                                 <label class="form-label">Multiple answers: </label>
                                 <input type="checkbox" checked="@question.HasMultipleAnswers" class="form-check-input ms-2 mutliple-answers" />
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-3 points">
                                 <label class="form-label">Points: </label>
                                 <input type="number" class="form-control w-25 d-inline-block ms-2" placeholder="Points" value="@question.Points" />
                             </div>
@@ -69,8 +69,8 @@
                             </section>
 
                             <button type="button" class="btn btn-primary add-answer">Add answer</button>
+                            <hr />
                         </div>
-                        <hr />
                         currentQuestionIndex++;
                     }
                 }
