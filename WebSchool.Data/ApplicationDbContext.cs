@@ -21,7 +21,7 @@ namespace WebSchool.Data
 
         public DbSet<Assignment> Assignments { get; set; }
 
-        public DbSet<GroupAssignment> UserAssignments { get; set; }
+        public DbSet<GroupAssignment> GroupAssignments { get; set; }
 
         public DbSet<AssignmentResult> AssignmentResults { get; set; }
 

@@ -92,5 +92,18 @@ namespace WebSchool.Services.Assignments
                 }
             }
         }
+
+        public async Task GiveAsync(GiveAssignmentInputModel input)
+        {
+            var groupAssignment = new GroupAssignment()
+            {
+                AssignmentId = input.AssignmentId,
+                GroupId = input.GroupId,
+                DueDate = input.DueDate
+            };
+
+            await dbContext.GroupAssignments.AddAsync(groupAssignment);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

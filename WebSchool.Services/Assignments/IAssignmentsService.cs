@@ -14,5 +14,7 @@ namespace WebSchool.Services.Assignments
         AssignmentValidationResult ValidateAssignment(CreateAssignmentInputModel input);
 
         AssignmentViewModel GetById(string id);
+
+        Task GiveAsync(GiveAssignmentInputModel input);
     }
 }

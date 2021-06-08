@@ -7,9 +7,11 @@
 }
 
 <main class="container">
-    <form class="col-md-4 offset-md-4">
+    <form class="col-md-4 offset-md-4" asp-controller="Assignments" asp-action="Give" method="post">
         <h1>Give assignment</h1>
         <div asp-validation-summary="All" class="text-danger"></div>
+
+        <input type="hidden" asp-for="GroupId" />
 
         <div class="mb-3">
             <label>Assignment</label>
@@ -19,7 +21,7 @@
 
         <div class="mb-3">
             <label asp-for="DueDate"></label>
-            <input asp-for="DueDate" class="form-control" />
+            <input asp-for="DueDate" class="form-control" value="@DateTime.Now" />
         </div>
 
         <button class="btn btn-primary">Give assignment</button>
@@ -27,24 +29,5 @@
 </main>
 
 @section Scripts {
-    <script>
-        window.onload = () => {
-            fetch('/apiAssignments/All')
-                .then(response => response.json())
-                .then(data => attachAssignments(data))
-                .catch(() => attachAssignments([]));
-        }
-
-        const attachAssignments = (assignments) => {
-            const assignmentsSelect = document.getElementById('assignmentsSelect');
-            assignmentsSelect.innerHTML = '';
-            assignments.forEach(assignment => {
-                const optionElement = document.createElement('option');
-                optionElement.textContent = assignment.title;
-                optionElement.value = assignment.id;
-
-                assignmentsSelect.appendChild(optionElement);
-            });
-        }
-    </script>
+    <script src="~/js/assignments/give.js"></script>
 }

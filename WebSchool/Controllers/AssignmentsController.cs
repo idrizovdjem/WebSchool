@@ -1,10 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
+using WebSchool.Services.Common;
+using WebSchool.Common.Enumerations;
 using WebSchool.Services.Assignments;
 using WebSchool.ViewModels.Assignment;
 
@@ -14,10 +17,14 @@ namespace WebSchool.WebApplication.Controllers
     public class AssignmentsController : Controller
     {
         private readonly IAssignmentsService assignmentsService;
+        private readonly IUsersService usersService;
 
-        public AssignmentsController(IAssignmentsService assignmentsService)
+        public AssignmentsController(
+            IAssignmentsService assignmentsService,
+            IUsersService usersService)
         {
             this.assignmentsService = assignmentsService;
+            this.usersService = usersService;
         }
 
         public IActionResult Create()
@@ -74,7 +81,38 @@ namespace WebSchool.WebApplication.Controllers
 
         public IActionResult Give(string groupId)
         {
-            return View();
+            return View(new GiveAssignmentInputModel() { GroupId = groupId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Give(GiveAssignmentInputModel input)
+        {
+            if(ModelState.IsValid == false)
+            {
+                return View(input);
+            }
+
+            if(input.DueDate < DateTime.Now.AddHours(1))
+            {
+                ModelState.AddModelError("DueDate", "Minimum date difference is 1 hour");
+                return View(input);
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if(usersService.IsUserInGroup(userId, input.GroupId) == false)
+            {
+                return Redirect("/Groups/Index");
+            }
+
+            var userRole = usersService.GetRoleInGroup(userId, input.GroupId);
+            if(userRole != GroupRole.Teacher)
+            {
+                return Redirect("/Groups/Index");
+            }
+
+            await assignmentsService.GiveAsync(input);
+
+            return Redirect("/Groups/Index");
         }
     }
 }
