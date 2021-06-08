@@ -18,5 +18,7 @@ namespace WebSchool.Services.Assignments
         Task GiveAsync(GiveAssignmentInputModel input);
 
         GivenAssignmentViewModel[] GetGiven(string userId);
+
+        GivenAssignmentViewModel[] GetMyAssignments(string userId);
     }
 }

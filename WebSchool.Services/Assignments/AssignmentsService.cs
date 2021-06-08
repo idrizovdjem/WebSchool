@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -8,7 +9,6 @@ using WebSchool.Services.Common;
 using WebSchool.Common.Constants;
 using WebSchool.ViewModels.Assignment;
 using WebSchool.Common.ValidationResults;
-using System;
 using WebSchool.Common.Enumerations;
 
 namespace WebSchool.Services.Assignments
@@ -112,6 +112,29 @@ namespace WebSchool.Services.Assignments
         {
             return dbContext.GroupAssignments
                 .Where(ga => ga.Assignment.CreatorId == userId)
+                .Select(ga => new GivenAssignmentViewModel()
+                {
+                    DueDate = ga.DueDate,
+                    GroupAssignmentId = ga.Id,
+                    GroupName = ga.Group.Name,
+                    Title = ga.Assignment.Title,
+                    Status = DateTime.UtcNow > ga.DueDate ? GivenAssignmentStatus.Finished : GivenAssignmentStatus.StillGoing
+                })
+                .ToArray();
+        }
+
+        public GivenAssignmentViewModel[] GetMyAssignments(string userId)
+        {
+            var studentRoleId = dbContext.Roles
+                .FirstOrDefault(r => r.Name == "Student").Id;
+
+            var userGroupIds = dbContext.UserGroups
+                .Where(ug => ug.UserId == userId && ug.RoleId == studentRoleId)
+                .Select(ug => ug.GroupId)
+                .ToArray();
+
+            return dbContext.GroupAssignments
+                .Where(ga => userGroupIds.Contains(ga.GroupId))
                 .Select(ga => new GivenAssignmentViewModel()
                 {
                     DueDate = ga.DueDate,

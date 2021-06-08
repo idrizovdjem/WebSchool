@@ -121,6 +121,13 @@ namespace WebSchool.WebApplication.Controllers
             var givenAssignments = assignmentsService.GetGiven(userId);
             return View(givenAssignments);
         }
+
+        public IActionResult My()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var myAssignments = assignmentsService.GetMyAssignments(userId);
+            return View(myAssignments);
+        }
     }
 }
 

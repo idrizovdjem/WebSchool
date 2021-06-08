@@ -1,0 +1,54 @@
+﻿@using WebSchool.ViewModels.Assignment
+@using WebSchool.Common.Enumerations
+@model GivenAssignmentViewModel[]
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "My assignments";
+}
+
+<main class="container col-md-8 offset-md-2">
+    <h1>Given assignments</h1>
+
+    <table class="table table-striped w-100">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Group name</th>
+                <th>Due date</th>
+                <th>Status</th>
+                <th>Solve</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var assignment in Model)
+            {
+                <tr>
+                    <td class="align-middle">@assignment.Title</td>
+                    <td class="align-middle">@assignment.GroupName</td>
+                    <td class="align-middle">@assignment.DueDate.ToLocalTime()</td>
+                    <td>
+                        @if (assignment.Status == GivenAssignmentStatus.StillGoing)
+                        {
+                            <button class="btn btn-primary w-100">Still going</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-success w-100">Finished</button>
+                        }
+                    </td>
+                    <td>
+                        @if (assignment.Status == GivenAssignmentStatus.StillGoing)
+                        {
+                            <a asp-controller="Assignments" asp-action="Solve" asp-route-groupAssignmentId="@assignment.GroupAssignmentId" class="btn btn-info w-100 text-light">Solve</a>
+                        }
+                        else
+                        {
+                            <button class="btn btn-info w-100 text-light">Solve</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>
