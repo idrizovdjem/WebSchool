@@ -71,6 +71,11 @@ namespace WebSchool.WebApplication.Controllers
             assigmentViewModel.AllPoints = assigmentViewModel.Questions.Sum(q => q.Points);
             return View(assigmentViewModel);
         }
+
+        public IActionResult Give(string groupId)
+        {
+            return View();
+        }
     }
 }
 
