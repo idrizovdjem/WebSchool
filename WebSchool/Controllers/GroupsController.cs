@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 
 using WebSchool.Services.Groups;
 using WebSchool.ViewModels.Group;
+using WebSchool.Common.Constants;
+using WebSchool.Common.Enumerations;
 
 namespace WebSchool.Web.Controllers
 {
@@ -30,7 +32,7 @@ namespace WebSchool.Web.Controllers
                 }
                 else
                 {
-                    groupId = groupsService.GetIdByName("Global Group");
+                    groupId = groupsService.GetIdByName(GroupConstants.GlobalGroupName);
                 }
             }
 
@@ -66,9 +68,10 @@ namespace WebSchool.Web.Controllers
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var createGroup = await groupsService.CreateAsync(userId, input.Name);
+            var groupId = await groupsService.CreateAsync(userId, input.Name);
+            await groupsService.AddUserToGroupAsync(userId, groupId, GroupRole.Admin);
 
-            return Redirect($"/Groups/Index/groupName={createGroup.Id}");
+            return Redirect($"/Groups/Index/groupName={groupId}");
         }
     }
 }

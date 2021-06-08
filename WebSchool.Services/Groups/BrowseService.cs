@@ -30,8 +30,7 @@ namespace WebSchool.Services.Groups
             var groups = dbContext.Groups
                 .Where(g =>
                     g.Name.Contains(groupName) &&
-                    g.IsDeleted == false &&
-                    g.Name != "Global Group")
+                    g.IsDeleted == false)
                 .Select(g => new BrowseGroupViewModel()
                 {
                     Id = g.Id,
@@ -46,7 +45,7 @@ namespace WebSchool.Services.Groups
         public BrowseGroupViewModel[] GetMostPopular(string userId)
         {
             var groups = dbContext.Groups
-                .Where(g => g.Name != "Global Group")
+                .Where(g => g.Name != GroupConstants.GlobalGroupName)
                 .OrderByDescending(g => g.Users.Count)
                 .Take(GroupConstants.MostPopularGroupsCount)
                 .Select(g => new BrowseGroupViewModel()

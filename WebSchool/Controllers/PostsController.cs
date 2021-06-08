@@ -8,6 +8,7 @@ using WebSchool.ViewModels.Post;
 using WebSchool.Services.Posts;
 using WebSchool.Services.Groups;
 using WebSchool.Services.Common;
+using WebSchool.Common.Constants;
 
 namespace WebSchool.WebApplication.Controllers
 {
@@ -59,7 +60,7 @@ namespace WebSchool.WebApplication.Controllers
                 return Redirect("/Groups/Index");
             }
 
-            if(groupName == "Global Group")
+            if(groupName == GroupConstants.GlobalGroupName)
             {
                 await postsService.CreateAsync(input, userId);
                 return Redirect("/Groups/Index");

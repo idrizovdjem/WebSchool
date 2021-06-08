@@ -19,9 +19,9 @@ namespace WebSchool.Services.Groups
 
         string GetName(string groupId);
 
-        ICollection<NavGroupItemViewModel> GetUserGroups(string userId);
+        NavGroupItemViewModel[] GetUserGroups(string userId);
 
-        Task<Group> CreateAsync(string userId, string name);
+        Task<string> CreateAsync(string userId, string name);
 
         Task AddUserToGroupAsync(string userId, string groupId, GroupRole role);
 

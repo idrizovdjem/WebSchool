@@ -2,6 +2,7 @@
 using System.Linq;
 
 using WebSchool.Data.Models;
+using WebSchool.Common.Constants;
 
 namespace WebSchool.Data.Seeders
 {
@@ -16,20 +17,18 @@ namespace WebSchool.Data.Seeders
 
         public void Seed()
         {
-            if(dbContext.Groups.Any(g => g.Name == "Global Group"))
+            if(dbContext.Groups.Any(g => g.Name == GroupConstants.GlobalGroupName) == false)
             {
-                return;
+                var globalGroup = new Group()
+                {
+                    Name = GroupConstants.GlobalGroupName,
+                    CreatedOn = DateTime.UtcNow,
+                    IsDeleted = false
+                };
+
+                dbContext.Groups.AddAsync(globalGroup).GetAwaiter().GetResult();
+                dbContext.SaveChangesAsync().GetAwaiter().GetResult();
             }
-
-            var globalGroup = new Group()
-            {
-                Name = "Global Group",
-                CreatedOn = DateTime.UtcNow,
-                IsDeleted = false
-            };
-
-            dbContext.Groups.AddAsync(globalGroup).GetAwaiter().GetResult();
-            dbContext.SaveChangesAsync().GetAwaiter().GetResult();
         }
     }
 }
