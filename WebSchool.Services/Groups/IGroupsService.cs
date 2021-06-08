@@ -19,7 +19,7 @@ namespace WebSchool.Services.Groups
 
         string GetName(string groupId);
 
-        NavGroupItemViewModel[] GetUserGroups(string userId);
+        GroupItemViewModel[] GetUserGroups(string userId);
 
         Task<string> CreateAsync(string userId, string name);
 

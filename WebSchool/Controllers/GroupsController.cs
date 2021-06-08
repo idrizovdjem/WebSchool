@@ -70,5 +70,12 @@ namespace WebSchool.Web.Controllers
 
             return RedirectToAction(nameof(Index), new { groupId });
         }
+
+        public IActionResult JoinedGroups()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var joinedGroups = groupsService.GetUserGroups(userId);
+            return View(joinedGroups);
+        }
     }
 }

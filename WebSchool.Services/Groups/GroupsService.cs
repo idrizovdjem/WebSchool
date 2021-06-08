@@ -101,11 +101,11 @@ namespace WebSchool.Services.Groups
                 .FirstOrDefault(g => g.Id == groupId)?.Name;
         }
 
-        public NavGroupItemViewModel[] GetUserGroups(string userId)
+        public GroupItemViewModel[] GetUserGroups(string userId)
         {
             return dbContext.UserGroups
                 .Where(ug => ug.UserId == userId)
-                .Select(ug => new NavGroupItemViewModel()
+                .Select(ug => new GroupItemViewModel()
                 {
                     Id = ug.GroupId,
                     Name = ug.Group.Name

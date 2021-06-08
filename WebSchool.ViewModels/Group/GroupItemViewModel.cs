@@ -1,6 +1,6 @@
 ﻿namespace WebSchool.ViewModels.Group
 {
-    public class NavGroupItemViewModel
+    public class GroupItemViewModel
     {
         public string Id { get; set; }
 
