@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
+using WebSchool.Services.Common;
 using WebSchool.Services.Groups;
 using WebSchool.ViewModels.Group;
 using WebSchool.Common.Constants;
@@ -16,34 +17,30 @@ namespace WebSchool.Web.Controllers
     public class GroupsController : Controller
     {
         private readonly IGroupsService groupsService;
+        private readonly IUsersService usersService;
 
-        public GroupsController(IGroupsService groupsService)
+        public GroupsController(
+            IGroupsService groupsService,
+            IUsersService usersService)
         {
             this.groupsService = groupsService;
+            this.usersService = usersService;
         }
 
         public IActionResult Index(string groupId)
         {
-            if(groupId == null)
+            if(groupId == null && HttpContext.Request.Cookies.ContainsKey("LastVisited"))
             {
-                if(HttpContext.Request.Cookies.ContainsKey("LastVisited"))
-                {
-                    groupId = HttpContext.Request.Cookies["LastVisited"];
-                }
-                else
-                {
-                    groupId = groupsService.GetIdByName(GroupConstants.GlobalGroupName);
-                }
+                groupId = HttpContext.Request.Cookies["LastVisited"];
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var groupViewModel = groupsService.GetGroupContent(userId, groupId);
-
-            if(groupViewModel == null)
+            if (groupId == null || usersService.IsUserInGroup(userId, groupId) == false)
             {
-                return Redirect("/Groups/Index");
+                groupId = groupsService.GetIdByName(GroupConstants.GlobalGroupName);
             }
 
+            var groupViewModel = groupsService.GetGroupContent(userId, groupId);
             HttpContext.Response.Cookies.Append("LastVisited", groupId);
             return View(groupViewModel);
         }        
