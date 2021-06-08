@@ -6,7 +6,7 @@
     ViewData["Title"] = "Joined groups";
 }
 
-<main class="container col-md-8 offset-md-2">
+<main class="container col-md-6 offset-md-3">
     <h1>All joined groups</h1>
 
     <table class="table table-striped w-100">
@@ -20,7 +20,7 @@
             @foreach(var group in Model)
             {
                 <tr>
-                    <td>@group.Name</td>
+                    <td class="align-middle">@group.Name</td>
                     <td><a class="btn btn-primary w-100" asp-controller="Groups" asp-action="Index" asp-route-groupId="@group.Id">Page</a></td>
                 </tr>
             }

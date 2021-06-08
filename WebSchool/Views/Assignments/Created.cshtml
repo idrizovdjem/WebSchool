@@ -20,7 +20,7 @@
             @foreach(var assignment in Model)
             {
                 <tr>
-                    <td>@assignment.Title</td>
+                    <td class="align-middle">@assignment.Title</td>
                     <td><a class="btn btn-primary w-100" asp-controller="Assignments" asp-action="Details" asp-route-assignmentId="@assignment.Id">Details</a></td>
                 </tr>
             }

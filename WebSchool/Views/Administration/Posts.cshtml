@@ -25,13 +25,12 @@
             @foreach (var post in Model)
             {
                 <tr>
-                    <td>@post.Creator</td>
-                    <td>@post.Content</td>
-                    <td>
+                    <td class="align-middle">@post.Creator</td>
+                    <td class="align-middle">@post.Content</td>
+                    <td class="align-middle">
                         <span class="badge bg-primary">@post.CommentsCount Comments</span>
-
                     </td>
-                    <td>@post.CreatedOn.ToLocalTime()</td>
+                    <td class="align-middle">@post.CreatedOn.ToLocalTime()</td>
                     <td>
                         <a asp-controller="Posts" asp-action="Index" asp-route-postId="@post.Id" class="btn btn-primary w-100">Details</a>
                     </td>
