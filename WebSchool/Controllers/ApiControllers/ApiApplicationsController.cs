@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
+using WebSchool.Services.Common;
 using WebSchool.Services.Groups;
 using WebSchool.Common.Enumerations;
 using WebSchool.ViewModels.Application;
 using WebSchool.Services.Administration;
-using WebSchool.Services.Common;
 
 namespace WebSchool.WebApplication.Controllers.ApiControllers
 {
@@ -18,21 +18,25 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
     [Route("/apiApplications/[action]")]
     public class ApiApplicationsController : Controller
     {
-        private readonly IAdministrationService administrationService;
         private readonly IApplicationsService applicationsService;
         private readonly IGroupsService groupsService;
         private readonly IUsersService usersService;
 
         public ApiApplicationsController(
-            IAdministrationService administrationService,
             IApplicationsService applicationsService, 
             IGroupsService groupsService,
             IUsersService usersService)
         {
-            this.administrationService = administrationService;
             this.applicationsService = applicationsService;
             this.groupsService = groupsService;
             this.usersService = usersService;
+        }
+
+        public async Task<IActionResult> Apply(string groupId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await applicationsService.ApplyAsync(userId, groupId);
+            return Ok();
         }
 
         [HttpPost]

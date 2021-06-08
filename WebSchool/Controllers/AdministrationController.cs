@@ -28,13 +28,15 @@ namespace WebSchool.WebApplication.Controllers
             IGroupsService groupsService, 
             IMembersService membersService,
             IApplicationsService applicationsService,
-            IAdministrationService administrationService)
+            IAdministrationService administrationService,
+            IUsersService usersService)
         {
             this.groupsService = groupsService;
             this.applicationsService = applicationsService;
             this.administrationService = administrationService;
             this.postsService = postsService;
             this.membersService = membersService;
+            this.usersService = usersService;
         }
 
         public IActionResult Index(string groupId)

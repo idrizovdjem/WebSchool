@@ -32,12 +32,12 @@ const attachGroups = (groups) => {
         name.textContent = group.name;
 
         const buttonData = document.createElement('td');
-        const button = document.createElement('a');
+        const button = document.createElement('button');
 
         if (group.requestStatus === "NotApplied") {
             button.classList.add('btn', 'btn-primary', 'w-100');
             button.textContent = 'Join';
-            button.href = "/Applications/Apply?groupId=" + group.id;
+            button.addEventListener('click', (event) => applyToGroup(event, group.id));
         } else if (group.requestStatus === "WaitingApproval") {
             button.classList.add('btn', 'btn-warning', 'w-100');
             button.textContent = 'Waiting approval';
@@ -52,4 +52,11 @@ const attachGroups = (groups) => {
         row.appendChild(buttonData);
         tableBody.appendChild(row);
     }
+}
+
+const applyToGroup = (event, groupId) => {
+    fetch('/apiApplications/Apply?groupId=' + groupId);
+    event.target.classList.remove('btn-primary');
+    event.target.classList.add('btn-warning');
+    event.target.textContent = 'Waiting approval';
 }
