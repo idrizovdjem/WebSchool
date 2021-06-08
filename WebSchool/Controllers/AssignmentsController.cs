@@ -92,7 +92,7 @@ namespace WebSchool.WebApplication.Controllers
                 return View(input);
             }
 
-            if(input.DueDate < DateTime.Now.AddHours(1))
+            if(input.DueDate.ToUniversalTime() < DateTime.UtcNow.AddHours(1))
             {
                 ModelState.AddModelError("DueDate", "Minimum date difference is 1 hour");
                 return View(input);
@@ -113,6 +113,13 @@ namespace WebSchool.WebApplication.Controllers
             await assignmentsService.GiveAsync(input);
 
             return Redirect("/Groups/Index");
+        }
+
+        public IActionResult Given()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var givenAssignments = assignmentsService.GetGiven(userId);
+            return View(givenAssignments);
         }
     }
 }

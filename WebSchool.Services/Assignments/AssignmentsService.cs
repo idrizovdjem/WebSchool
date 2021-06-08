@@ -8,6 +8,8 @@ using WebSchool.Services.Common;
 using WebSchool.Common.Constants;
 using WebSchool.ViewModels.Assignment;
 using WebSchool.Common.ValidationResults;
+using System;
+using WebSchool.Common.Enumerations;
 
 namespace WebSchool.Services.Assignments
 {
@@ -99,11 +101,26 @@ namespace WebSchool.Services.Assignments
             {
                 AssignmentId = input.AssignmentId,
                 GroupId = input.GroupId,
-                DueDate = input.DueDate
+                DueDate = input.DueDate.ToUniversalTime()
             };
 
             await dbContext.GroupAssignments.AddAsync(groupAssignment);
             await dbContext.SaveChangesAsync();
+        }
+
+        public GivenAssignmentViewModel[] GetGiven(string userId)
+        {
+            return dbContext.GroupAssignments
+                .Where(ga => ga.Assignment.CreatorId == userId)
+                .Select(ga => new GivenAssignmentViewModel()
+                {
+                    DueDate = ga.DueDate,
+                    GroupAssignmentId = ga.Id,
+                    GroupName = ga.Group.Name,
+                    Title = ga.Assignment.Title,
+                    Status = DateTime.UtcNow > ga.DueDate ? GivenAssignmentStatus.Finished : GivenAssignmentStatus.StillGoing
+                })
+                .ToArray();
         }
     }
 }

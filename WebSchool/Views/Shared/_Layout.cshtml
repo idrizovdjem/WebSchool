@@ -41,10 +41,12 @@
                                     Assignments
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="assignmentsDropdown">
-                                    <li><a asp-controller="Assignments" asp-action="Created" class="dropdown-item">All created</a></li>
-                                    <li><a href="#" class="dropdown-item">All given</a></li>
+                                    <li><a asp-controller="Assignments" asp-action="Created" class="dropdown-item">Created assignments</a></li>
+                                    <li><a asp-controller="Assignments" asp-action="Given" class="dropdown-item">Given assignments</a></li>
+                                    <li><a asp-controller="Assignments" asp-action="My" class="dropdown-item">My assignments</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a asp-controller="Assignments" asp-action="Create" class="dropdown-item">New assignment</a></li>
+
                                 </ul>
                             </li>
 
