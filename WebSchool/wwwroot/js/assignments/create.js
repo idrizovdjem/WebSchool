@@ -23,7 +23,7 @@ const createQuestionHeaders = () => {
 
     const mutlipleAnswersContainer = document.createElement('div');
     mutlipleAnswersContainer.classList.add('mb-3');
-    questionContainer.appendChild(mutlipleAnswersContainer);
+    questionTitleContainer.appendChild(mutlipleAnswersContainer);
 
     // multiple answers label
     const multipleAnswersLabel = document.createElement('label');
@@ -137,11 +137,11 @@ const createAssignment = () => {
         const questionTextarea = question.element.querySelector('#questionsSection > div > textarea');
         questionTextarea.name = `Questions[${questionIndex}].Question`;
 
-        const multipleAnswersInput = question.element.querySelector('#questionsSection > div > div > input');
+        const multipleAnswersInput = question.element.children[1].children[1];
         multipleAnswersInput.name = `Questions[${questionIndex}].HasMultipleAnswers`;
         multipleAnswersInput.value = multipleAnswersInput.checked;
 
-        const pointsInput = question.element.querySelector('#questionsSection > div > div:nth-child(3) > input');
+        const pointsInput = question.element.children[2].children[1];
         pointsInput.name = `Questions[${questionIndex}].Points`;
 
         let answerIndex = 0;
