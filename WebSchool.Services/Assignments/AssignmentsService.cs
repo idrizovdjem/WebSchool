@@ -7,9 +7,9 @@ using WebSchool.Data;
 using WebSchool.Data.Models;
 using WebSchool.Services.Common;
 using WebSchool.Common.Constants;
+using WebSchool.Common.Enumerations;
 using WebSchool.ViewModels.Assignment;
 using WebSchool.Common.ValidationResults;
-using WebSchool.Common.Enumerations;
 
 namespace WebSchool.Services.Assignments
 {
@@ -77,22 +77,10 @@ namespace WebSchool.Services.Assignments
                 return null;
             }
 
-            return JsonSerializer.Deserialize<AssignmentViewModel>(assignmentString);
-        }
-
-        private static void ValidateTitle(string title, AssignmentValidationResult validationResult)
-        {
-            if (string.IsNullOrWhiteSpace(title))
-            {
-                validationResult.AddErrorMessage("Title", AssignmentConstants.TitleIsRequiredMessage);
-            }
-            else
-            {
-                if (title.Length < AssignmentConstants.MinimumTitleLength || AssignmentConstants.MaximumTitleLength < title.Length)
-                {
-                    validationResult.AddErrorMessage("Title", AssignmentConstants.TitleLengthMessage);
-                }
-            }
+            var assignmentViewModel = JsonSerializer.Deserialize<AssignmentViewModel>(assignmentString);
+            assignmentViewModel.AllPoints = assignmentViewModel.Questions
+                .Sum(q => q.Points);
+            return assignmentViewModel;
         }
 
         public async Task GiveAsync(GiveAssignmentInputModel input)
@@ -171,6 +159,39 @@ namespace WebSchool.Services.Assignments
             }
 
             await dbContext.SaveChangesAsync();
+        }
+
+        private static void ValidateTitle(string title, AssignmentValidationResult validationResult)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                validationResult.AddErrorMessage("Title", AssignmentConstants.TitleIsRequiredMessage);
+            }
+            else
+            {
+                if (title.Length < AssignmentConstants.MinimumTitleLength || AssignmentConstants.MaximumTitleLength < title.Length)
+                {
+                    validationResult.AddErrorMessage("Title", AssignmentConstants.TitleLengthMessage);
+                }
+            }
+        }
+
+        public AssignmentResultViewModel[] GetResults(string groupAssignmentId)
+        {
+            var assignmentId = dbContext.GroupAssignments
+                .First(ga => ga.Id == groupAssignmentId).AssignmentId;
+            var maxPoints = GetById(assignmentId).AllPoints;
+
+            return dbContext.AssignmentResults
+                .Where(ar => ar.GroupAssignmentId == groupAssignmentId)
+                .Select(ar => new AssignmentResultViewModel()
+                {
+                    StudentName = ar.Student.Email,
+                    IsSolved = ar.IsSolved,
+                    Points = ar.Points,
+                    MaxPoints = maxPoints
+                })
+                .ToArray();
         }
     }
 }

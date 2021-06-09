@@ -1,0 +1,40 @@
+﻿@using WebSchool.ViewModels.Assignment
+@model AssignmentResultViewModel[]
+
+@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "Results";
+} 
+
+<main class="container col-md-8 col-md-2">
+    <h1>Assignment results</h1>
+
+    <table class="table table-striped w-100">
+        <thead>
+            <tr>
+                <th>Student name</th>
+                <th width="15%" class="text-center">Is solved</th>
+                <th width="15%" class="text-center">Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var assignmentResult in Model)
+            {
+            <tr>
+                <td class="align-middle">@assignmentResult.StudentName</td>
+                <td>
+                    @if (assignmentResult.IsSolved)
+                    {
+                        <a class="btn btn-success w-100">Solved</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-warning w-100">Not solved</a>
+                    }
+                </td>
+                <td class="align-middle text-center">@assignmentResult.Points / @assignmentResult.MaxPoints</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</main>

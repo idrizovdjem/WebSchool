@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 
@@ -75,7 +74,6 @@ namespace WebSchool.WebApplication.Controllers
                 return RedirectToAction(nameof(Created));
             }
 
-            assigmentViewModel.AllPoints = assigmentViewModel.Questions.Sum(q => q.Points);
             return View(assigmentViewModel);
         }
 
@@ -127,6 +125,12 @@ namespace WebSchool.WebApplication.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var myAssignments = assignmentsService.GetMyAssignments(userId);
             return View(myAssignments);
+        }
+
+        public IActionResult Results(string groupAssignmentId)
+        {
+            var assignmentResults = assignmentsService.GetResults(groupAssignmentId);
+            return View(assignmentResults);
         }
     }
 }
