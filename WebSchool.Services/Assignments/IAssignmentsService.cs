@@ -22,5 +22,11 @@ namespace WebSchool.Services.Assignments
         MyAssignmentViewModel[] GetMyAssignments(string userId);
 
         AssignmentResultViewModel[] GetResults(string groupAssignmentId);
+
+        AssignmentViewModel GetForSolve(string groupAssignmentId);
+
+        SolveValidationResult ValidateSolve(SolveAssignmentInputModel input);
+
+        Task ReviewSolveAsync(SolveAssignmentInputModel input, string studentId);
     }
 }

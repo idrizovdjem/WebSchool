@@ -30,17 +30,17 @@
                     <td>
                         @if (assignment.Status == GivenAssignmentStatus.StillGoing)
                         {
-                            <button class="btn btn-primary w-100">Still going</button>
+                            <a class="btn btn-primary w-100">Still going</a>
                         }
                         else
                         {
-                            <button class="btn btn-success w-100">Finished</button>
+                            <a class="btn btn-success w-100">Finished</a>
                         }
                     </td>
                     <td>
                         @if (assignment.Status == GivenAssignmentStatus.StillGoing && assignment.IsSolved == false)
                         {
-                            <a class="btn btn-primary w-100" asp-controller="Assignmnets" asp-action="Solve" asp-route-groupAssignmentId="@assignment.GroupAssignmentId">Solve</a>
+                            <a class="btn btn-primary w-100" asp-controller="Assignments" asp-action="Solve" asp-route-groupAssignmentId="@assignment.GroupAssignmentId">Solve</a>
                         }
                         else
                         {

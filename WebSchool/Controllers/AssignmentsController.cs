@@ -9,6 +9,7 @@ using WebSchool.Services.Common;
 using WebSchool.Common.Enumerations;
 using WebSchool.Services.Assignments;
 using WebSchool.ViewModels.Assignment;
+using WebSchool.ViewModels.Question;
 
 namespace WebSchool.WebApplication.Controllers
 {
@@ -131,6 +132,32 @@ namespace WebSchool.WebApplication.Controllers
         {
             var assignmentResults = assignmentsService.GetResults(groupAssignmentId);
             return View(assignmentResults);
+        }
+
+        public IActionResult Solve(string groupAssignmentId)
+        {
+            var assignmentViewModel = assignmentsService.GetForSolve(groupAssignmentId);
+            ViewData["GroupAssignmentId"] = groupAssignmentId;
+            return View(assignmentViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Solve(SolveAssignmentInputModel input)
+        {
+            // TODO validate if the assignment exists
+
+            var validationResult = assignmentsService.ValidateSolve(input);
+            if(validationResult.IsValid == false)
+            {
+                var assignmentViewModel = assignmentsService.GetForSolve(input.GroupAssignmentId);
+                ViewData["GroupAssignmentId"] = input.GroupAssignmentId;
+                return View(assignmentViewModel);
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await assignmentsService.ReviewSolveAsync(input, userId);
+
+            return RedirectToAction(nameof(My));
         }
     }
 }

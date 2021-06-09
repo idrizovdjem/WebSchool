@@ -193,5 +193,122 @@ namespace WebSchool.Services.Assignments
                 })
                 .ToArray();
         }
+
+        public AssignmentViewModel GetForSolve(string groupAssignmentId)
+        {
+            var assignmentId = dbContext.GroupAssignments
+                .First(g => g.Id == groupAssignmentId).AssignmentId;
+
+            var assignmentContent = dbContext.Assignments
+                .Where(a => a.Id == assignmentId)
+                .Select(a => a.Content)
+                .FirstOrDefault();
+
+            var assignmentViewModel = JsonSerializer.Deserialize<AssignmentViewModel>(assignmentContent);
+            foreach(var question in assignmentViewModel.Questions)
+            {
+                foreach(var answer in question.Answers)
+                {
+                    answer.IsCorrect = false;
+                }
+            }
+
+            return assignmentViewModel;
+        }
+
+        public SolveValidationResult ValidateSolve(SolveAssignmentInputModel input)
+        {
+            var solveValidationResult = new SolveValidationResult();
+
+            var assignmentId = dbContext.GroupAssignments
+                .Where(ga => ga.Id == input.GroupAssignmentId)
+                .Select(ga => ga.AssignmentId)
+                .FirstOrDefault();
+
+            var assignmentContent = dbContext.Assignments
+                .Where(a => a.Id == assignmentId)
+                .Select(a => a.Content)
+                .FirstOrDefault();
+
+            // check if the assignment exists
+            if(string.IsNullOrWhiteSpace(assignmentContent))
+            {
+                solveValidationResult.AddErrorMessage("Assignment", "Invalid assignment");
+                return solveValidationResult;
+            }
+
+            var assignmentModel = JsonSerializer.Deserialize<AssignmentViewModel>(assignmentContent);
+
+            // check if the questions count is correct
+            if(assignmentModel.Questions.Length != input.Questions.Length)
+            {
+                solveValidationResult.AddErrorMessage("Questions", "Questions count is invalid");
+                return solveValidationResult;
+            }
+
+            // check if all questions answers count is correct
+            for(var i = 0; i < input.Questions.Length; i++)
+            {
+                if(input.Questions[i].Answers.Length != assignmentModel.Questions[i].Answers.Length)
+                {
+                    solveValidationResult.AddErrorMessage("Answers", "Answers count is invalid");
+                    return solveValidationResult;
+                }
+            }
+
+            return solveValidationResult;
+        }
+
+        public async Task ReviewSolveAsync(SolveAssignmentInputModel input, string studentId)
+        {
+            var assignmentId = dbContext.GroupAssignments
+                .Where(ga => ga.Id == input.GroupAssignmentId)
+                .Select(ga => ga.AssignmentId)
+                .FirstOrDefault();
+
+            var assignmentContent = dbContext.Assignments
+                .Where(a => a.Id == assignmentId)
+                .Select(a => a.Content)
+                .FirstOrDefault();
+
+            var assignmentModel = JsonSerializer.Deserialize<AssignmentViewModel>(assignmentContent);
+            var points = 0;
+
+            for(var questionIndex = 0; questionIndex < input.Questions.Length; questionIndex++)
+            {
+                var originalCorrectAnswers = assignmentModel.Questions[questionIndex].Answers
+                    .Count(a => a.IsCorrect);
+                var currentCorrectAnswers = input.Questions[questionIndex].Answers
+                    .Count(a => a.IsCorrect);
+
+                if(originalCorrectAnswers != currentCorrectAnswers)
+                {
+                    continue;
+                }
+
+                var isCorrect = true;
+                for(var answerIndex = 0; answerIndex < input.Questions[questionIndex].Answers.Length; answerIndex++)
+                {
+                    if(input.Questions[questionIndex].Answers[answerIndex].IsCorrect != assignmentModel.Questions[questionIndex].Answers[answerIndex].IsCorrect)
+                    {
+                        isCorrect = false;
+                        break;
+                    }
+                }
+
+                if(isCorrect)
+                {
+                    points += assignmentModel.Questions[questionIndex].Points;
+                }
+            }
+
+            var assignmentResult = dbContext.AssignmentResults
+                .FirstOrDefault(ar => ar.StudentId == studentId && ar.GroupAssignmentId == input.GroupAssignmentId);
+
+            assignmentResult.Points = points;
+            assignmentResult.IsSolved = true;
+
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

@@ -1,0 +1,71 @@
+﻿@using WebSchool.ViewModels.Assignment
+@model AssignmentViewModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Solve assignment";
+}
+
+<main class="container col-md-8 offset-md-2">
+    <h1>@Model.Title</h1>
+    <hr />
+
+    <form asp-controller="Assignments" asp-action="Solve" method="post">
+        <input type="hidden" value="@ViewData["GroupAssignmentId"]" name="GroupAssignmentId" />
+
+        @{
+            var currentQuestionIndex = 0;
+            foreach (var question in Model.Questions)
+            {
+                <div class="mb-3">
+                    <label class="form-label">#@(currentQuestionIndex + 1) Question</label>
+
+                    <p>Points: @question.Points</p>
+
+                    <textarea class="form-control mb-3" disabled>@question.Question</textarea>
+
+                    <section class="answer-section">
+                        @{
+                            var answerIndex = 0;
+                            foreach (var answer in question.Answers)
+                            {
+                                <div class="mb-3">
+                                    <input type="checkbox" class="form-check-input align-baseline me-2" checked="@answer.IsCorrect" asp-for="Questions[currentQuestionIndex].Answers[answerIndex].IsCorrect" />
+
+                                    <input class="form-control d-inline-block w-75" value="@answer.Content" disabled />
+                                </div>
+                                answerIndex++;
+                            }
+                        }
+                    </section>
+                    <hr />
+                </div>
+
+                currentQuestionIndex++;
+            }
+
+            <button class="btn btn-primary mt-3 w-25" onclick="submitAssignment()">Submit</button>
+        }
+    </form>
+</main>
+
+<style>
+    hr {
+        border: 2px solid black;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        const submitAssignment = () => {
+            const answerSection = Array.from(document.getElementsByClassName('answer-section'));
+            answerSection.forEach((section, questionIndex) => {
+                Array.from(section.children).forEach((answer, answerIndex) => {
+                    const answerInput = answer.children[0];
+                    //answerInput.name = `Questions[${questionIndex}].Answers[${answerIndex}].IsCorrect`;
+                    // answerInput.value = true;
+                });
+            });
+        }
+    </script>
+}
