@@ -21,7 +21,7 @@ namespace WebSchool.Data
 
         public DbSet<Assignment> Assignments { get; set; }
 
-        public DbSet<GroupAssignment> GroupAssignments { get; set; }
+        public DbSet<GivenAssignment> GivenAssignments { get; set; }
 
         public DbSet<AssignmentResult> AssignmentResults { get; set; }
 
@@ -75,7 +75,7 @@ namespace WebSchool.Data
                 entity.HasKey(ap => new { ap.GroupId, ap.UserId });
             });
 
-            builder.Entity<GroupAssignment>(entity =>
+            builder.Entity<GivenAssignment>(entity =>
             {
                 entity
                     .HasOne(ga => ga.Group)

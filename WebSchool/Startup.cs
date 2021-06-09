@@ -51,6 +51,7 @@ namespace WebSchool
             services.AddTransient<IAssignmentsService, AssignmentsService>();
             services.AddTransient<IApplicationsService, ApplicationsService>();
             services.AddTransient<IAdministrationService, AdministrationService>();
+            services.AddTransient<IGivenAssignmentsService, GivenAssignmentsService>();
 
             services.AddAntiforgery();
         }

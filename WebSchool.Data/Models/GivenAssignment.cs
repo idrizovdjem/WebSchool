@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebSchool.Data.Models
 {
-    public class GroupAssignment
+    public class GivenAssignment
     {
-        public GroupAssignment()
+        public GivenAssignment()
         {
             Id = Guid.NewGuid().ToString();
             Results = new HashSet<AssignmentResult>();

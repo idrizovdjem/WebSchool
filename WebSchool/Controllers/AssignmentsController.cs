@@ -9,7 +9,6 @@ using WebSchool.Services.Common;
 using WebSchool.Common.Enumerations;
 using WebSchool.Services.Assignments;
 using WebSchool.ViewModels.Assignment;
-using WebSchool.ViewModels.Question;
 
 namespace WebSchool.WebApplication.Controllers
 {
@@ -18,13 +17,16 @@ namespace WebSchool.WebApplication.Controllers
     {
         private readonly IAssignmentsService assignmentsService;
         private readonly IUsersService usersService;
+        private readonly IGivenAssignmentsService givenAssignmentsService;
 
         public AssignmentsController(
             IAssignmentsService assignmentsService,
-            IUsersService usersService)
+            IUsersService usersService,
+            IGivenAssignmentsService givenAssignmentsService)
         {
             this.assignmentsService = assignmentsService;
             this.usersService = usersService;
+            this.givenAssignmentsService = givenAssignmentsService;
         }
 
         public IActionResult Create()
@@ -136,7 +138,7 @@ namespace WebSchool.WebApplication.Controllers
 
         public IActionResult Solve(string groupAssignmentId)
         {
-            var assignmentViewModel = assignmentsService.GetForSolve(groupAssignmentId);
+            var assignmentViewModel = givenAssignmentsService.GetForSolve(groupAssignmentId);
             ViewData["GroupAssignmentId"] = groupAssignmentId;
             return View(assignmentViewModel);
         }
@@ -144,18 +146,16 @@ namespace WebSchool.WebApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Solve(SolveAssignmentInputModel input)
         {
-            // TODO validate if the assignment exists
-
-            var validationResult = assignmentsService.ValidateSolve(input);
+            var validationResult = givenAssignmentsService.ValidateSolve(input);
             if(validationResult.IsValid == false)
             {
-                var assignmentViewModel = assignmentsService.GetForSolve(input.GroupAssignmentId);
+                var assignmentViewModel = givenAssignmentsService.GetForSolve(input.GroupAssignmentId);
                 ViewData["GroupAssignmentId"] = input.GroupAssignmentId;
                 return View(assignmentViewModel);
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await assignmentsService.ReviewSolveAsync(input, userId);
+            await givenAssignmentsService.ReviewSolveAsync(input, userId);
 
             return RedirectToAction(nameof(My));
         }

@@ -16,7 +16,7 @@ namespace WebSchool.Data.Models
         [Required]
         public string GroupAssignmentId { get; set; }
 
-        public GroupAssignment GroupAssignment { get; set; }
+        public GivenAssignment GroupAssignment { get; set; }
 
         [Required]
         public string StudentId { get; set; }

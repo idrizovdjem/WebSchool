@@ -11,7 +11,7 @@ namespace WebSchool.Data.Models
         public Assignment()
         {
             Id = Guid.NewGuid().ToString();
-            Groups = new HashSet<GroupAssignment>();
+            Groups = new HashSet<GivenAssignment>();
             Results = new HashSet<AssignmentResult>();
         }
 
@@ -30,7 +30,7 @@ namespace WebSchool.Data.Models
 
         public virtual ApplicationUser Creator { get; set; }
 
-        public virtual ICollection<GroupAssignment> Groups { get; set; }
+        public virtual ICollection<GivenAssignment> Groups { get; set; }
 
         public virtual ICollection<AssignmentResult> Results { get; set; }
     }
