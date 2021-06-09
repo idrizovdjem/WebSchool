@@ -106,6 +106,8 @@ namespace WebSchool.Services.Assignments
 
             await dbContext.GroupAssignments.AddAsync(groupAssignment);
             await dbContext.SaveChangesAsync();
+
+            await PopulateAssignmentResults(groupAssignment.Id, input.GroupId);
         }
 
         public GivenAssignmentViewModel[] GetGiven(string userId)
@@ -123,7 +125,7 @@ namespace WebSchool.Services.Assignments
                 .ToArray();
         }
 
-        public GivenAssignmentViewModel[] GetMyAssignments(string userId)
+        public MyAssignmentViewModel[] GetMyAssignments(string userId)
         {
             var studentRoleId = dbContext.Roles
                 .FirstOrDefault(r => r.Name == "Student").Id;
@@ -135,15 +137,40 @@ namespace WebSchool.Services.Assignments
 
             return dbContext.GroupAssignments
                 .Where(ga => userGroupIds.Contains(ga.GroupId))
-                .Select(ga => new GivenAssignmentViewModel()
+                .Select(ga => new MyAssignmentViewModel()
                 {
                     DueDate = ga.DueDate,
                     GroupAssignmentId = ga.Id,
                     GroupName = ga.Group.Name,
                     Title = ga.Assignment.Title,
-                    Status = DateTime.UtcNow > ga.DueDate ? GivenAssignmentStatus.Finished : GivenAssignmentStatus.StillGoing
+                    Status = DateTime.UtcNow > ga.DueDate ? GivenAssignmentStatus.Finished : GivenAssignmentStatus.StillGoing,
+                    IsSolved = dbContext.AssignmentResults
+                        .First(ar => ar.StudentId == userId && ar.GroupAssignmentId == ga.Id).IsSolved
                 })
                 .ToArray();
+        }
+
+        private async Task PopulateAssignmentResults(string groupAssignmentId, string groupId)
+        {
+            var studentIds = dbContext.UserGroups
+                .Where(ug => ug.GroupId == groupId && ug.Role.Name == "Student")
+                .Select(ug => ug.UserId)
+                .ToArray();
+
+            foreach(var studentId in studentIds)
+            {
+                var assignmentResult = new AssignmentResult()
+                {
+                    GroupAssignmentId = groupAssignmentId,
+                    StudentId = studentId,
+                    IsSolved = false,
+                    Points = 0
+                };
+
+                await dbContext.AssignmentResults.AddAsync(assignmentResult);
+            }
+
+            await dbContext.SaveChangesAsync();
         }
     }
 }

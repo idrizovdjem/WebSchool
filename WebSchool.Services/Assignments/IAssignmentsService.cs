@@ -19,6 +19,6 @@ namespace WebSchool.Services.Assignments
 
         GivenAssignmentViewModel[] GetGiven(string userId);
 
-        GivenAssignmentViewModel[] GetMyAssignments(string userId);
+        MyAssignmentViewModel[] GetMyAssignments(string userId);
     }
 }

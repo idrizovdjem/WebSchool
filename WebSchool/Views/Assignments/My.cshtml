@@ -1,6 +1,6 @@
 ﻿@using WebSchool.ViewModels.Assignment
 @using WebSchool.Common.Enumerations
-@model GivenAssignmentViewModel[]
+@model MyAssignmentViewModel[]
 
 @{
     Layout = "_Layout";
@@ -8,7 +8,7 @@
 }
 
 <main class="container col-md-8 offset-md-2">
-    <h1>Given assignments</h1>
+    <h1>My assignments</h1>
 
     <table class="table table-striped w-100">
         <thead>
@@ -38,13 +38,13 @@
                         }
                     </td>
                     <td>
-                        @if (assignment.Status == GivenAssignmentStatus.StillGoing)
+                        @if (assignment.Status == GivenAssignmentStatus.StillGoing && assignment.IsSolved == false)
                         {
-                            <a asp-controller="Assignments" asp-action="Solve" asp-route-groupAssignmentId="@assignment.GroupAssignmentId" class="btn btn-info w-100 text-light">Solve</a>
+                            <a class="btn btn-primary w-100" asp-controller="Assignmnets" asp-action="Solve" asp-route-groupAssignmentId="@assignment.GroupAssignmentId">Solve</a>
                         }
                         else
                         {
-                            <button class="btn btn-info w-100 text-light">Solve</button>
+                            <button class="btn btn-warning w-100">Over</button>
                         }
                     </td>
                 </tr>
