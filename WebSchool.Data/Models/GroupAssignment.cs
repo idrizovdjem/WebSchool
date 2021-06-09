@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebSchool.Data.Models
@@ -8,6 +9,7 @@ namespace WebSchool.Data.Models
         public GroupAssignment()
         {
             Id = Guid.NewGuid().ToString();
+            Results = new HashSet<AssignmentResult>();
         }
 
         [Key]
@@ -24,5 +26,7 @@ namespace WebSchool.Data.Models
         public virtual Group Group { get; set; }
 
         public DateTime DueDate { get; set; }
+
+        public virtual ICollection<AssignmentResult> Results { get; set; }
     }
 }

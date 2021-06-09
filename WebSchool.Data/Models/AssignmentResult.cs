@@ -14,9 +14,9 @@ namespace WebSchool.Data.Models
         public string Id { get; set; }
 
         [Required]
-        public string AssignmentId { get; set; }
+        public string GroupAssignmentId { get; set; }
 
-        public virtual Assignment Assignment { get; set; }
+        public GroupAssignment GroupAssignment { get; set; }
 
         [Required]
         public string StudentId { get; set; }
@@ -24,5 +24,7 @@ namespace WebSchool.Data.Models
         public virtual ApplicationUser Student { get; set; }
 
         public int Points { get; set; }
+
+        public bool IsSolved { get; set; }
     }
 }

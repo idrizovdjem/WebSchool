@@ -91,7 +91,7 @@ namespace WebSchool.Data
             builder.Entity<AssignmentResult>(entity =>
             {
                 entity
-                    .HasOne(ar => ar.Assignment)
+                    .HasOne(ar => ar.GroupAssignment)
                     .WithMany(a => a.Results)
                     .OnDelete(DeleteBehavior.Restrict);
 
