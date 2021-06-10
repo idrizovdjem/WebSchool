@@ -125,7 +125,7 @@ namespace WebSchool.Services.Assignments
                 .Select(ug => ug.GroupId)
                 .ToArray();
 
-            return dbContext.GivenAssignments
+            var assignments = dbContext.GivenAssignments
                 .Where(ga => userGroupIds.Contains(ga.GroupId))
                 .Select(ga => new MyAssignmentViewModel()
                 {
@@ -138,6 +138,18 @@ namespace WebSchool.Services.Assignments
                         .First(ar => ar.StudentId == userId && ar.GroupAssignmentId == ga.Id).IsSolved
                 })
                 .ToArray();
+
+            foreach(var assignment in assignments)
+            {
+                var assignmentViewModel = GetByGivenId(assignment.GroupAssignmentId);
+                assignment.MaxPoints = assignmentViewModel.AllPoints;
+                assignment.Points = dbContext.AssignmentResults
+                    .Where(ar => ar.GroupAssignmentId == assignment.GroupAssignmentId && ar.StudentId == userId)
+                    .Select(ar => ar.Points)
+                    .First();
+            }
+
+            return assignments;
         }
 
         public AssignmentResultSummaryViewModel GetResults(string groupAssignmentId)
@@ -237,7 +249,9 @@ namespace WebSchool.Services.Assignments
                 return null;
             }
 
-            return JsonSerializer.Deserialize<AssignmentViewModel>(assignmentContent);
+            var assignmentViewModel = JsonSerializer.Deserialize<AssignmentViewModel>(assignmentContent);
+            assignmentViewModel.AllPoints = assignmentViewModel.Questions.Sum(q => q.Points);
+            return assignmentViewModel;
         }
 
         public AssignmentResultPreviewViewModel GetPreview(string groupAssignmentId, string studentId)
