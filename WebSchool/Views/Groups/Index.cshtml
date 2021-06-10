@@ -21,6 +21,11 @@
             <i class="fas fa-cog"></i>
             Administration
         </a>
+
+        <a asp-controller="Assignments" asp-action="Give" asp-route-groupId="@Model.Id" class="btn btn-primary">
+            <i class="fas fa-file-alt"></i>
+            Give assignment
+        </a>
     }
     else if (Model.UserRole == GroupRole.Teacher)
     {

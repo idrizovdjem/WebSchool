@@ -103,7 +103,7 @@ namespace WebSchool.WebApplication.Controllers
             }
 
             var userRole = usersService.GetRoleInGroup(userId, input.GroupId);
-            if(userRole != GroupRole.Teacher)
+            if(userRole == GroupRole.Student)
             {
                 return Redirect("/Groups/Index");
             }
