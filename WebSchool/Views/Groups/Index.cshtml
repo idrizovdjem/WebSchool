@@ -35,6 +35,11 @@
         </a>
     }
 
+    <a asp-controller="Groups" asp-action="Results" asp-route-groupId="@Model.Id" class="btn btn-primary">
+        <i class="fas fa-poll"></i>
+        Results
+    </a>
+
     <!-- Posts -->
     <section class="col-md-10 offset-md-1 mt-3 text-start">
         @foreach (var post in Model.NewestPosts)

@@ -1,0 +1,29 @@
+﻿@using WebSchool.ViewModels.Group
+@model GroupAssignmentResultViewModel[]
+
+@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "Group results";
+}
+
+<main class="container col-md-6 offset-md-3">
+    <h1>Group results</h1>
+
+    <table class="table table-striped w-100">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th width="20%">Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var result in Model)
+            { 
+                <tr>
+                    <td>@result.Title</td>
+                    <td>@result.Points / @result.MaxPoints</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>

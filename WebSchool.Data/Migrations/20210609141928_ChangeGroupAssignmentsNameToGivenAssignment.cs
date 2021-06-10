@@ -8,7 +8,7 @@ namespace WebSchool.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_AssignmentResults_GroupAssignments_GroupAssignmentId",
+                name: "FK_AssignmentResults_GroupAssignments_groupAssignmentId",
                 table: "AssignmentResults");
 
             migrationBuilder.DropTable(
@@ -51,9 +51,9 @@ namespace WebSchool.Data.Migrations
                 column: "GroupId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_AssignmentResults_GivenAssignments_GroupAssignmentId",
+                name: "FK_AssignmentResults_GivenAssignments_groupAssignmentId",
                 table: "AssignmentResults",
-                column: "GroupAssignmentId",
+                column: "groupAssignmentId",
                 principalTable: "GivenAssignments",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
@@ -62,7 +62,7 @@ namespace WebSchool.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_AssignmentResults_GivenAssignments_GroupAssignmentId",
+                name: "FK_AssignmentResults_GivenAssignments_groupAssignmentId",
                 table: "AssignmentResults");
 
             migrationBuilder.DropTable(
@@ -105,9 +105,9 @@ namespace WebSchool.Data.Migrations
                 column: "GroupId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_AssignmentResults_GroupAssignments_GroupAssignmentId",
+                name: "FK_AssignmentResults_GroupAssignments_groupAssignmentId",
                 table: "AssignmentResults",
-                column: "GroupAssignmentId",
+                column: "groupAssignmentId",
                 principalTable: "GroupAssignments",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);

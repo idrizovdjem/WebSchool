@@ -77,5 +77,12 @@ namespace WebSchool.Web.Controllers
             var joinedGroups = groupsService.GetUserGroups(userId);
             return View(joinedGroups);
         }
+
+        public IActionResult Results(string groupId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var assignmentResult = groupsService.GetResults(groupId, userId);
+            return View(assignmentResult);
+        }
     }
 }

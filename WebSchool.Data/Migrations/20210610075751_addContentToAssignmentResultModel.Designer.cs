@@ -288,7 +288,7 @@ namespace WebSchool.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("GroupAssignmentId")
+                    b.Property<string>("groupAssignmentId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -306,7 +306,7 @@ namespace WebSchool.Data.Migrations
 
                     b.HasIndex("AssignmentId");
 
-                    b.HasIndex("GroupAssignmentId");
+                    b.HasIndex("groupAssignmentId");
 
                     b.HasIndex("StudentId");
 
@@ -561,7 +561,7 @@ namespace WebSchool.Data.Migrations
 
                     b.HasOne("WebSchool.Data.Models.GivenAssignment", "GroupAssignment")
                         .WithMany("Results")
-                        .HasForeignKey("GroupAssignmentId")
+                        .HasForeignKey("groupAssignmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

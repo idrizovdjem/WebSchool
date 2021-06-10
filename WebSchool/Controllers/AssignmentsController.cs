@@ -136,7 +136,7 @@ namespace WebSchool.WebApplication.Controllers
         public IActionResult Solve(string groupAssignmentId)
         {
             var assignmentViewModel = assignmentsService.GetForSolve(groupAssignmentId);
-            ViewData["GroupAssignmentId"] = groupAssignmentId;
+            ViewData["groupAssignmentId"] = groupAssignmentId;
             return View(assignmentViewModel);
         }
 
@@ -146,8 +146,8 @@ namespace WebSchool.WebApplication.Controllers
             var validationResult = assignmentsService.ValidateSolve(input);
             if(validationResult.IsValid == false)
             {
-                var assignmentViewModel = assignmentsService.GetForSolve(input.GroupAssignmentId);
-                ViewData["GroupAssignmentId"] = input.GroupAssignmentId;
+                var assignmentViewModel = assignmentsService.GetForSolve(input.groupAssignmentId);
+                ViewData["groupAssignmentId"] = input.groupAssignmentId;
                 return View(assignmentViewModel);
             }
 

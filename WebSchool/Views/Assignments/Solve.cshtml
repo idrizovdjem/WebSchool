@@ -11,7 +11,7 @@
     <hr />
 
     <form asp-controller="Assignments" asp-action="Solve" method="post">
-        <input type="hidden" value="@ViewData["GroupAssignmentId"]" name="GroupAssignmentId" />
+        <input type="hidden" value="@ViewData["groupAssignmentId"]" name="groupAssignmentId" />
 
         @{
             var currentQuestionIndex = 0;

@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
-using System.Collections.Generic;
 
-using WebSchool.Data.Models;
 using WebSchool.ViewModels.Group;
 using WebSchool.Common.Enumerations;
+using WebSchool.ViewModels.Assignment;
 
 namespace WebSchool.Services.Groups
 {
@@ -26,5 +25,7 @@ namespace WebSchool.Services.Groups
         Task AddUserToGroupAsync(string userId, string groupId, GroupRole role);
 
         Task ChangeNameAsync(ChangeGroupNameInputModel input);
+
+        GroupAssignmentResultViewModel[] GetResults(string id, string userId);
     }
 }

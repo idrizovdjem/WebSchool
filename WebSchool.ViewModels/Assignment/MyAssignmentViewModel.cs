@@ -10,7 +10,7 @@ namespace WebSchool.ViewModels.Assignment
 
         public string GroupName { get; set; }
 
-        public string GroupAssignmentId { get; set; }
+        public string groupAssignmentId { get; set; }
 
         public GivenAssignmentStatus Status { get; set; }
 

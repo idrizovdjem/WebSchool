@@ -2,7 +2,7 @@
 
 namespace WebSchool.Data.Migrations
 {
-    public partial class AddGroupAssignmentIdToAssignmentResultTable : Migration
+    public partial class AddgroupAssignmentIdToAssignmentResultTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,21 +15,21 @@ namespace WebSchool.Data.Migrations
                 oldType: "nvarchar(450)");
 
             migrationBuilder.AddColumn<string>(
-                name: "GroupAssignmentId",
+                name: "groupAssignmentId",
                 table: "AssignmentResults",
                 type: "nvarchar(450)",
                 nullable: false,
                 defaultValue: "");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AssignmentResults_GroupAssignmentId",
+                name: "IX_AssignmentResults_groupAssignmentId",
                 table: "AssignmentResults",
-                column: "GroupAssignmentId");
+                column: "groupAssignmentId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_AssignmentResults_GroupAssignments_GroupAssignmentId",
+                name: "FK_AssignmentResults_GroupAssignments_groupAssignmentId",
                 table: "AssignmentResults",
-                column: "GroupAssignmentId",
+                column: "groupAssignmentId",
                 principalTable: "GroupAssignments",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
@@ -38,15 +38,15 @@ namespace WebSchool.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_AssignmentResults_GroupAssignments_GroupAssignmentId",
+                name: "FK_AssignmentResults_GroupAssignments_groupAssignmentId",
                 table: "AssignmentResults");
 
             migrationBuilder.DropIndex(
-                name: "IX_AssignmentResults_GroupAssignmentId",
+                name: "IX_AssignmentResults_groupAssignmentId",
                 table: "AssignmentResults");
 
             migrationBuilder.DropColumn(
-                name: "GroupAssignmentId",
+                name: "groupAssignmentId",
                 table: "AssignmentResults");
 
             migrationBuilder.AlterColumn<string>(

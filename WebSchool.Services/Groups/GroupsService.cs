@@ -8,6 +8,7 @@ using WebSchool.Services.Posts;
 using WebSchool.ViewModels.Group;
 using WebSchool.Common.Constants;
 using WebSchool.Common.Enumerations;
+using WebSchool.Services.Assignments;
 
 namespace WebSchool.Services.Groups
 {
@@ -15,13 +16,16 @@ namespace WebSchool.Services.Groups
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IPostsService postsService;
+        private readonly IAssignmentsService assignmentsService;
 
         public GroupsService(
             ApplicationDbContext dbContext, 
-            IPostsService postsService)
+            IPostsService postsService,
+            IAssignmentsService assignmentsService)
         {
             this.dbContext = dbContext;
             this.postsService = postsService;
+            this.assignmentsService = assignmentsService;
         }
 
         public async Task AddUserToGroupAsync(string userId, string groupId, GroupRole role)
@@ -99,6 +103,35 @@ namespace WebSchool.Services.Groups
         {
             return dbContext.Groups
                 .FirstOrDefault(g => g.Id == groupId)?.Name;
+        }
+
+        public GroupAssignmentResultViewModel[] GetResults(string id, string userId)
+        {
+            var giveAssignmentIds = dbContext.GivenAssignments
+                .Where(g => g.GroupId == id)
+                .Select(g => g.Id)
+                .ToArray();
+
+            var results = dbContext.AssignmentResults
+                .Where(ar => giveAssignmentIds.Contains(ar.groupAssignmentId) && ar.IsSolved == true && ar.StudentId == userId)
+                .Select(ar => new GroupAssignmentResultViewModel()
+                {
+                    AssignmentId = dbContext.GivenAssignments
+                        .Where(ga => ga.Id == ar.groupAssignmentId)
+                        .Select(ga => ga.AssignmentId)
+                        .FirstOrDefault(),
+                    Points = ar.Points,
+                })
+                .ToArray();
+
+            foreach(var result in results)
+            {
+                var assignmentModel = assignmentsService.GetById(result.AssignmentId);
+                result.MaxPoints = assignmentModel.AllPoints;
+                result.Title = assignmentModel.Title;
+            }
+
+            return results;
         }
 
         public GroupItemViewModel[] GetUserGroups(string userId)

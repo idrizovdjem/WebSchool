@@ -53,7 +53,7 @@
                                 <td>
                                     @if (assignment.Status == GivenAssignmentStatus.StillGoing && assignment.IsSolved == false)
                                     {
-                                        <a class="btn btn-primary w-100" asp-controller="Assignments" asp-action="Solve" asp-route-groupAssignmentId="@assignment.GroupAssignmentId">Solve</a>
+                                        <a class="btn btn-primary w-100" asp-controller="Assignments" asp-action="Solve" asp-route-groupAssignmentId="@assignment.groupAssignmentId">Solve</a>
                                     }
                                     else
                                     {

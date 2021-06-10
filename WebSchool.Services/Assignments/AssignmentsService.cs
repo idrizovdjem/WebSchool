@@ -109,7 +109,7 @@ namespace WebSchool.Services.Assignments
                 .Select(ga => new GivenAssignmentViewModel()
                 {
                     DueDate = ga.DueDate,
-                    GroupAssignmentId = ga.Id,
+                    groupAssignmentId = ga.Id,
                     GroupName = ga.Group.Name,
                     Title = ga.Assignment.Title,
                     Status = DateTime.UtcNow > ga.DueDate ? GivenAssignmentStatus.Finished : GivenAssignmentStatus.StillGoing
@@ -132,21 +132,21 @@ namespace WebSchool.Services.Assignments
                 .Select(ga => new MyAssignmentViewModel()
                 {
                     DueDate = ga.DueDate,
-                    GroupAssignmentId = ga.Id,
+                    groupAssignmentId = ga.Id,
                     GroupName = ga.Group.Name,
                     Title = ga.Assignment.Title,
                     Status = DateTime.UtcNow > ga.DueDate ? GivenAssignmentStatus.Finished : GivenAssignmentStatus.StillGoing,
                     IsSolved = dbContext.AssignmentResults
-                        .First(ar => ar.StudentId == userId && ar.GroupAssignmentId == ga.Id).IsSolved
+                        .First(ar => ar.StudentId == userId && ar.groupAssignmentId == ga.Id).IsSolved
                 })
                 .ToArray();
 
             foreach(var assignment in assignments)
             {
-                var assignmentViewModel = GetByGivenId(assignment.GroupAssignmentId);
+                var assignmentViewModel = GetByGivenId(assignment.groupAssignmentId);
                 assignment.MaxPoints = assignmentViewModel.AllPoints;
                 assignment.Points = dbContext.AssignmentResults
-                    .Where(ar => ar.GroupAssignmentId == assignment.GroupAssignmentId && ar.StudentId == userId)
+                    .Where(ar => ar.groupAssignmentId == assignment.groupAssignmentId && ar.StudentId == userId)
                     .Select(ar => ar.Points)
                     .First();
             }
@@ -171,7 +171,7 @@ namespace WebSchool.Services.Assignments
             };
 
              viewModel.Results = dbContext.AssignmentResults
-                .Where(ar => ar.GroupAssignmentId == groupAssignmentId)
+                .Where(ar => ar.groupAssignmentId == groupAssignmentId)
                 .Select(ar => new AssignmentResultViewModel()
                 {
                     StudentId = ar.StudentId,
@@ -203,7 +203,7 @@ namespace WebSchool.Services.Assignments
         public SolveValidationResult ValidateSolve(SolveAssignmentInputModel input)
         {
             var solveValidationResult = new SolveValidationResult();
-            var assignmentModel = GetByGivenId(input.GroupAssignmentId);
+            var assignmentModel = GetByGivenId(input.groupAssignmentId);
             if (assignmentModel == null)
             {
                 solveValidationResult.AddErrorMessage("Assignment", "Invalid assignment");
@@ -221,9 +221,9 @@ namespace WebSchool.Services.Assignments
 
         public async Task ReviewSolveAsync(SolveAssignmentInputModel input, string studentId)
         {
-            var assignmentModel = GetByGivenId(input.GroupAssignmentId);
+            var assignmentModel = GetByGivenId(input.groupAssignmentId);
             var assignmentResult = dbContext.AssignmentResults
-                .FirstOrDefault(ar => ar.StudentId == studentId && ar.GroupAssignmentId == input.GroupAssignmentId);
+                .FirstOrDefault(ar => ar.StudentId == studentId && ar.groupAssignmentId == input.groupAssignmentId);
 
             assignmentResult.Points = GetPoints(assignmentModel.Questions, input.Questions);
             assignmentResult.IsSolved = true;
@@ -259,7 +259,7 @@ namespace WebSchool.Services.Assignments
         public AssignmentResultPreviewViewModel GetPreview(string groupAssignmentId, string studentId)
         {
             var resultContent = dbContext.AssignmentResults
-                .Where(ar => ar.GroupAssignmentId == groupAssignmentId && ar.StudentId == studentId && ar.IsSolved)
+                .Where(ar => ar.groupAssignmentId == groupAssignmentId && ar.StudentId == studentId && ar.IsSolved)
                 .Select(ar => ar.Content)
                 .FirstOrDefault();
 
@@ -412,7 +412,7 @@ namespace WebSchool.Services.Assignments
             {
                 var assignmentResult = new AssignmentResult()
                 {
-                    GroupAssignmentId = groupAssignmentId,
+                    groupAssignmentId = groupAssignmentId,
                     StudentId = studentId,
                     IsSolved = false,
                     Points = 0
