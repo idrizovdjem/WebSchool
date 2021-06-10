@@ -1,5 +1,5 @@
 ﻿@using WebSchool.ViewModels.Assignment
-@model AssignmentResultViewModel[]
+@model AssignmentResultSummaryViewModel
 
 @{ 
     Layout = "_Layout";
@@ -8,6 +8,8 @@
 
 <main class="container col-md-8 col-md-2">
     <h1>Assignment results</h1>
+    <p>Assignment name: @Model.Title</p>
+    <p>Average points: @String.Format("{0:f2}", Model.AveragePoints)</p>
 
     <table class="table table-striped w-100">
         <thead>
@@ -18,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var assignmentResult in Model)
+            @foreach(var assignmentResult in Model.Results)
             {
             <tr>
                 <td class="align-middle">@assignmentResult.StudentName</td>

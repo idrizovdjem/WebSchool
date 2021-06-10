@@ -21,6 +21,6 @@ namespace WebSchool.Services.Assignments
 
         MyAssignmentViewModel[] GetMyAssignments(string userId);
 
-        AssignmentResultViewModel[] GetResults(string groupAssignmentId);
+        AssignmentResultSummaryViewModel GetResults(string groupAssignmentId);
     }
 }

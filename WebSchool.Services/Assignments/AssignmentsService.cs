@@ -138,13 +138,22 @@ namespace WebSchool.Services.Assignments
                 .ToArray();
         }
 
-        public AssignmentResultViewModel[] GetResults(string groupAssignmentId)
+        public AssignmentResultSummaryViewModel GetResults(string groupAssignmentId)
         {
             var assignmentId = dbContext.GivenAssignments
                 .First(ga => ga.Id == groupAssignmentId).AssignmentId;
+
             var maxPoints = GetById(assignmentId).AllPoints;
 
-            return dbContext.AssignmentResults
+            var viewModel = new AssignmentResultSummaryViewModel()
+            {
+                Title = dbContext.Assignments
+                    .Where(a => a.Id == assignmentId)
+                    .Select(a => a.Title)
+                    .FirstOrDefault()
+            };
+
+             viewModel.Results = dbContext.AssignmentResults
                 .Where(ar => ar.GroupAssignmentId == groupAssignmentId)
                 .Select(ar => new AssignmentResultViewModel()
                 {
@@ -154,6 +163,9 @@ namespace WebSchool.Services.Assignments
                     MaxPoints = maxPoints
                 })
                 .ToArray();
+
+            viewModel.AveragePoints = viewModel.Results.Average(r => r.Points);
+            return viewModel;
         }
 
         private async Task PopulateAssignmentResults(string groupAssignmentId, string groupId)
