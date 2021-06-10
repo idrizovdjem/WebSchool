@@ -23,3 +23,7 @@ html, body {
     right: 95px;
     width: 198px;
 }
+
+hr {
+    border: 2px solid black !important;
+}

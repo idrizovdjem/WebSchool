@@ -48,24 +48,3 @@
         }
     </form>
 </main>
-
-<style>
-    hr {
-        border: 2px solid black;
-    }
-</style>
-
-@section Scripts {
-    <script>
-        const submitAssignment = () => {
-            const answerSection = Array.from(document.getElementsByClassName('answer-section'));
-            answerSection.forEach((section, questionIndex) => {
-                Array.from(section.children).forEach((answer, answerIndex) => {
-                    const answerInput = answer.children[0];
-                    //answerInput.name = `Questions[${questionIndex}].Answers[${answerIndex}].IsCorrect`;
-                    // answerInput.value = true;
-                });
-            });
-        }
-    </script>
-}
