@@ -226,4 +226,6 @@ window.onload = () => {
 
         questions.push(question);
     });
+
+    console.log(questions);
 }

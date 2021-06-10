@@ -32,5 +32,9 @@ namespace WebSchool.Services.Assignments
         AssignmentResultPreviewViewModel GetPreview(string groupAssignmentId, string studentId);
 
         AssignmentViewModel GetByGivenId(string groupAssignmentId);
+
+        CreateAssignmentInputModel GetForEdit(string id);
+
+        Task EditAsync(CreateAssignmentInputModel input, string id);
     }
 }

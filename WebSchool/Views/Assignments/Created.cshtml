@@ -13,7 +13,8 @@
         <thead>
             <tr>
                 <th>Assignment title</th>
-                <th>Details</th>
+                <th width="20%">Details</th>
+                <th width="20%">Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -21,9 +22,29 @@
             {
                 <tr>
                     <td class="align-middle">@assignment.Title</td>
-                    <td><a class="btn btn-primary w-100" asp-controller="Assignments" asp-action="Details" asp-route-assignmentId="@assignment.Id">Details</a></td>
+                    <td>
+                        <a class="btn btn-primary w-100" asp-controller="Assignments" asp-action="Details" asp-route-assignmentId="@assignment.Id">Details</a>
+                    </td>
+                    <td>
+                        @if (assignment.CanBeEdited)
+                        {
+                            <a asp-controller="Assignments" asp-action="Edit" asp-route-assignmentId="@assignment.Id" class="btn btn-warning w-100">Edit</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-secondary w-100" data-toggle="tooltip" title="This assignment was already given to students. If you want to edit it, copy the assignment and make changes to the coppied one.">Edit</a>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 </main>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+    </script>
+}

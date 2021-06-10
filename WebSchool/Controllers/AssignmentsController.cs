@@ -167,6 +167,46 @@ namespace WebSchool.WebApplication.Controllers
 
             return View(preview);
         }
+
+        public IActionResult Edit(string assignmentId)
+        {
+            var assignment = assignmentsService.GetForEdit(assignmentId);
+            if(assignment == null)
+            {
+                return RedirectToAction(nameof(Created));
+            }
+
+            ViewData["AssignmentId"] = assignmentId;
+            return View(assignment);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(CreateAssignmentInputModel input, string assignmentId)
+        {
+            if (ModelState.IsValid == false)
+            {
+                ViewData["AssignmentId"] = assignmentId;
+                return View(input);
+            }
+
+            var validationResult = assignmentsService.ValidateAssignment(input);
+            if (validationResult.IsValid == false)
+            {
+                foreach (var key in validationResult.Errors.Keys)
+                {
+                    foreach (var message in validationResult.Errors[key])
+                    {
+                        ModelState.AddModelError(key, message);
+                    }
+                }
+
+                ViewData["AssignmentId"] = assignmentId;
+                return View(input);
+            }
+
+            await assignmentsService.EditAsync(input, assignmentId);
+            return RedirectToAction(nameof(Created));
+        }
     }
 }
 

@@ -1,16 +1,18 @@
 ﻿@using WebSchool.ViewModels.Assignment
-@model CreateAssignmentInputModel 
+@model CreateAssignmentInputModel
 
-@{ 
+@{
     Layout = "_Layout";
-    ViewData["Title"] = "Create assignment";
+    ViewData["Title"] = "Edit assignment";
 }
 
-<main class="container col-md-6 offset-md-3">
-    <h1>Create assignment</h1>
-    <form asp-controller="Assignments" asp-action="Create" method="post">
+<main class="container col-md-8 offset-md-2">
+    <h1>Edit assignment</h1>
+
+    <form asp-controller="Assignments" asp-action="Edit" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
 
+        <input type="hidden" name="assignmentId" value="@ViewData["AssignmentId"]" />
 
         <div class="mb-3">
             <label asp-for="Title" class="form-label"></label>
@@ -46,16 +48,17 @@
                                 @{
                                     if (question.Answers != null)
                                     {
+                                        var answerIndex = 0;
                                         foreach (var answer in question.Answers)
                                         {
                                             <div class="mb-3">
                                                 @if (question.HasMultipleAnswers)
                                                 {
-                                                    <input type="checkbox" class="form-check-input align-baseline me-2" checked="@answer.IsCorrect" />
+                                                    <input type="checkbox" class="form-check-input align-baseline me-2" checked="@answer.IsCorrect" name="answer-@currentQuestionIndex" />
                                                 }
                                                 else
                                                 {
-                                                    <input type="radio" class="form-check-input align-baseline me-2" checked="@answer.IsCorrect" />
+                                                    <input type="radio" class="form-check-input align-baseline me-2" checked="@answer.IsCorrect" name="answer-@currentQuestionIndex"/>
                                                 }
 
                                                 <input class="form-control w-75 d-inline-block" value="@answer.Content" placeholder="Answer" />
@@ -80,7 +83,7 @@
 
         <button onclick="addNewQuestion()" type="button" class="btn btn-primary">Add question</button>
 
-        <button class="btn btn-primary" onclick="createAssignment()">Create assignment</button>
+        <button class="btn btn-primary" onclick="createAssignment()">Edit assignment</button>
     </form>
 </main>
 

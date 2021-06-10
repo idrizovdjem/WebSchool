@@ -52,7 +52,9 @@ namespace WebSchool.Services.Assignments
                 .Select(a => new CreatedAssignmentViewModel()
                 {
                     Id = a.Id,
-                    Title = a.Title
+                    Title = a.Title,
+                    CanBeEdited = dbContext.GivenAssignments
+                        .Count(ga => ga.AssignmentId == a.Id) == 0
                 })
                 .ToArray();
         }
@@ -296,6 +298,46 @@ namespace WebSchool.Services.Assignments
             }
 
             return previewModel;
+        }
+
+        public CreateAssignmentInputModel GetForEdit(string id)
+        {
+            var assignment = GetById(id);
+            return new CreateAssignmentInputModel()
+            {
+                Title = assignment.Title,
+                Questions = assignment.Questions
+                    .Select(q => new QuestionInputModel()
+                    {
+                        HasMultipleAnswers = q.HasMultipleAnswers,
+                        Points = q.Points,
+                        Question = q.Question,
+                        Answers = q.Answers
+                            .Select(a => new AnswerInputModel()
+                            {
+                                IsCorrect = a.IsCorrect,
+                                Content = a.Content
+                            })
+                            .ToArray()
+                    })
+                    .ToArray()
+            };
+        }
+
+        public async Task EditAsync(CreateAssignmentInputModel input, string id)
+        {
+            var assignment = dbContext.Assignments
+                .FirstOrDefault(a => a.Id == id);
+
+            if(assignment == null)
+            {
+                return;
+            }
+
+            assignment.Title = input.Title;
+            assignment.Content = JsonSerializer.Serialize(input);
+
+            await dbContext.SaveChangesAsync();
         }
 
         private static int GetPoints(QuestionViewModel[] originalQuestions, SolveQuestionInputModel[] solvedQuestions)
