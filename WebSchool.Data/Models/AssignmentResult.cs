@@ -26,5 +26,7 @@ namespace WebSchool.Data.Models
         public int Points { get; set; }
 
         public bool IsSolved { get; set; }
+
+        public string Content { get; set; }
     }
 }

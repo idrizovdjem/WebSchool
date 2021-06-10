@@ -2,6 +2,8 @@
 {
     public class AssignmentResultViewModel
     {
+        public string StudentId { get; set; }
+
         public string StudentName { get; set; }
 
         public int Points { get; set; }

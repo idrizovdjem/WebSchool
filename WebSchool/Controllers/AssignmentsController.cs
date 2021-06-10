@@ -17,16 +17,13 @@ namespace WebSchool.WebApplication.Controllers
     {
         private readonly IAssignmentsService assignmentsService;
         private readonly IUsersService usersService;
-        private readonly IGivenAssignmentsService givenAssignmentsService;
 
         public AssignmentsController(
             IAssignmentsService assignmentsService,
-            IUsersService usersService,
-            IGivenAssignmentsService givenAssignmentsService)
+            IUsersService usersService)
         {
             this.assignmentsService = assignmentsService;
             this.usersService = usersService;
-            this.givenAssignmentsService = givenAssignmentsService;
         }
 
         public IActionResult Create()
@@ -138,7 +135,7 @@ namespace WebSchool.WebApplication.Controllers
 
         public IActionResult Solve(string groupAssignmentId)
         {
-            var assignmentViewModel = givenAssignmentsService.GetForSolve(groupAssignmentId);
+            var assignmentViewModel = assignmentsService.GetForSolve(groupAssignmentId);
             ViewData["GroupAssignmentId"] = groupAssignmentId;
             return View(assignmentViewModel);
         }
@@ -146,18 +143,29 @@ namespace WebSchool.WebApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Solve(SolveAssignmentInputModel input)
         {
-            var validationResult = givenAssignmentsService.ValidateSolve(input);
+            var validationResult = assignmentsService.ValidateSolve(input);
             if(validationResult.IsValid == false)
             {
-                var assignmentViewModel = givenAssignmentsService.GetForSolve(input.GroupAssignmentId);
+                var assignmentViewModel = assignmentsService.GetForSolve(input.GroupAssignmentId);
                 ViewData["GroupAssignmentId"] = input.GroupAssignmentId;
                 return View(assignmentViewModel);
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await givenAssignmentsService.ReviewSolveAsync(input, userId);
+            await assignmentsService.ReviewSolveAsync(input, userId);
 
             return RedirectToAction(nameof(My));
+        }
+
+        public IActionResult Preview(string groupAssignmentId, string studentId)
+        {
+            var preview = assignmentsService.GetPreview(groupAssignmentId, studentId);
+            if(preview == null)
+            {
+                return RedirectToAction(nameof(Created));
+            }
+
+            return View(preview);
         }
     }
 }

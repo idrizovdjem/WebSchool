@@ -15,8 +15,9 @@
         <thead>
             <tr>
                 <th>Student name</th>
-                <th width="15%" class="text-center">Is solved</th>
                 <th width="15%" class="text-center">Points</th>
+                <th width="15%" class="text-center">Is solved</th>
+                <th width="15%">Preview</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
             {
             <tr>
                 <td class="align-middle">@assignmentResult.StudentName</td>
+                <td class="align-middle text-center">@assignmentResult.Points / @assignmentResult.MaxPoints</td>
                 <td>
                     @if (assignmentResult.IsSolved)
                     {
@@ -34,7 +36,16 @@
                         <a class="btn btn-warning w-100">Not solved</a>
                     }
                 </td>
-                <td class="align-middle text-center">@assignmentResult.Points / @assignmentResult.MaxPoints</td>
+                <td>
+                    @if (assignmentResult.IsSolved)
+                    {
+                        <a asp-controller="Assignments" asp-action="Preview" asp-route-groupAssignmentId="@Model.GroupAssignmentId" asp-route-studentId="@assignmentResult.StudentId" class="btn btn-primary text-light w-100">Preview</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-secondary w-100">Preview</a>
+                    }
+                </td>
             </tr>
             }
         </tbody>

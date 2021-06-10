@@ -1,0 +1,58 @@
+﻿@using WebSchool.ViewModels.Assignment
+@model AssignmentResultPreviewViewModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Preview";
+}
+
+<main class="col-md-8 offset-md-2">
+    <h1>Result preview</h1>
+
+    @{
+        var questionIndex = 0;
+        foreach (var question in Model.Questions)
+        {
+            <div class="mb-3">
+                <label class="form-label">#@(questionIndex + 1) Question</label>
+
+                <div class="mb-3 multiple-answers">
+                    <label class="form-label">Multiple answers: </label>
+                    <input type="checkbox" checked="@question.HasMultipleAnswers" class="form-check-input ms-2 mutliple-answers" disabled />
+                </div>
+
+                <p>Points: @question.Points</p>
+
+                <textarea class="form-control mb-3" placeholder="Question" disabled >@question.Question</textarea>
+
+                <section>
+                    @{
+                        if (question.Answers != null)
+                        {
+                            foreach (var answer in question.Answers)
+                            {
+                                <div class="mb-3">
+                                    @{
+                                        var buttonColor = question.IsCorrect ? "bg-primary" : "bg-danger";
+                                    }
+
+                                    @if (question.HasMultipleAnswers)
+                                    {
+                                        <input type="checkbox" class="form-check-input align-baseline me-2 @buttonColor" checked="@answer.IsCorrect" disabled />
+                                    }
+                                    else
+                                    {
+                                        <input type="radio" class="form-check-input align-baseline me-2 @buttonColor" checked="@answer.IsCorrect" disabled />
+                                    }
+                                    <input class="form-control w-75 d-inline-block" value="@answer.Content" placeholder="Answer" disabled />
+                                </div>
+                            }
+                        }
+                        questionIndex++;
+                    }
+                </section>
+                <hr />
+            </div>
+        }
+    }
+</main>

@@ -6,6 +6,8 @@
 
         public double AveragePoints { get; set; }
 
+        public string GroupAssignmentId { get; set; }
+
         public AssignmentResultViewModel[] Results { get; set; }
     }
 }
