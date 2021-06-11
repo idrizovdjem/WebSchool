@@ -105,6 +105,14 @@ namespace WebSchool.Services.Groups
                 .FirstOrDefault(g => g.Id == groupId)?.Name;
         }
 
+        public string GetOwnerId(string groupId)
+        {
+            return dbContext.Groups
+                .Where(g => g.Id == groupId)
+                .Select(g => g.OwnerId)
+                .FirstOrDefault();
+        }
+
         public GroupAssignmentResultViewModel[] GetResults(string id, string userId)
         {
             var giveAssignmentIds = dbContext.GivenAssignments

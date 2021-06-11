@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 using WebSchool.Services.Groups;
 using WebSchool.Services.Common;
+using WebSchool.Common.Constants;
 using WebSchool.Common.Enumerations;
 using WebSchool.Services.Administration;
 
@@ -15,16 +16,19 @@ namespace WebSchool.WebApplication.Controllers
     public class ApplicationsController : Controller
     {
         private readonly IGroupsService groupsService;
-        private readonly IUsersService usersService;
         private readonly IApplicationsService applicationsService;
+        private readonly INotificationsService notificationsService;
+        private readonly IUsersService usersService;
 
         public ApplicationsController(
             IGroupsService groupsService, 
-            IApplicationsService applicationsService, 
+            IApplicationsService applicationsService,
+            INotificationsService notificationsService,
             IUsersService usersService)
         {
             this.groupsService = groupsService;
             this.applicationsService = applicationsService;
+            this.notificationsService = notificationsService;
             this.usersService = usersService;
         }
 

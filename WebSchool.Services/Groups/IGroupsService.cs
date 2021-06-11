@@ -27,5 +27,7 @@ namespace WebSchool.Services.Groups
         Task ChangeNameAsync(ChangeGroupNameInputModel input);
 
         GroupAssignmentResultViewModel[] GetResults(string id, string userId);
+
+        string GetOwnerId(string groupId);
     }
 }

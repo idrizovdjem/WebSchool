@@ -10,6 +10,7 @@ using WebSchool.Services.Groups;
 using WebSchool.Common.Enumerations;
 using WebSchool.ViewModels.Application;
 using WebSchool.Services.Administration;
+using WebSchool.Common.Constants;
 
 namespace WebSchool.WebApplication.Controllers.ApiControllers
 {
@@ -21,21 +22,29 @@ namespace WebSchool.WebApplication.Controllers.ApiControllers
         private readonly IApplicationsService applicationsService;
         private readonly IGroupsService groupsService;
         private readonly IUsersService usersService;
+        private readonly INotificationsService notificationsService;
 
         public ApiApplicationsController(
             IApplicationsService applicationsService, 
             IGroupsService groupsService,
-            IUsersService usersService)
+            IUsersService usersService,
+            INotificationsService notificationsServce)
         {
             this.applicationsService = applicationsService;
             this.groupsService = groupsService;
             this.usersService = usersService;
+            this.notificationsService = notificationsServce;
         }
 
         public async Task<IActionResult> Apply(string groupId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             await applicationsService.ApplyAsync(userId, groupId);
+
+            var groupOwnerId = groupsService.GetOwnerId(groupId);
+            var applicantEmail = usersService.GetEmail(userId);
+            await notificationsService.CreateAsync(groupOwnerId, applicantEmail + NotificationConstants.GroupApplyMessage);
+
             return Ok();
         }
 

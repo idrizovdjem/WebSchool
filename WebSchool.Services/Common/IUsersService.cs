@@ -13,5 +13,7 @@ namespace WebSchool.Services.Common
         bool ValidatePostRemove(string userId, string postId);
 
         bool ValidateCommentRemove(string userId, string commentId);
+
+        string GetEmail(string id);
     }
 }

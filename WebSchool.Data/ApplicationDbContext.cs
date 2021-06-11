@@ -25,6 +25,8 @@ namespace WebSchool.Data
 
         public DbSet<AssignmentResult> AssignmentResults { get; set; }
 
+        public DbSet<Notification> Notifications { get; set; }
+
         public DbSet<Application> Applications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

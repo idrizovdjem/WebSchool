@@ -15,6 +15,7 @@ namespace WebSchool.Data.Models
             Groups = new HashSet<UserGroup>();
             Applications = new HashSet<Application>();
             AssignmentResults = new HashSet<AssignmentResult>();
+            Notifications = new HashSet<Notification>();
         }
 
         public virtual ICollection<Post> Posts { get; set; }
@@ -26,5 +27,7 @@ namespace WebSchool.Data.Models
         public virtual ICollection<Application> Applications { get; set; }
 
         public virtual ICollection<AssignmentResult> AssignmentResults { get; set; }
+
+        public virtual ICollection<Notification> Notifications { get; set; }
     }
 }

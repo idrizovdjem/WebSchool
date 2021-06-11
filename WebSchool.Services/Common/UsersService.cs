@@ -15,6 +15,14 @@ namespace WebSchool.Services.Common
             this.dbContext = dbContext;
         }
 
+        public string GetEmail(string id)
+        {
+            return dbContext.Users
+                .Where(u => u.Id == id)
+                .Select(u => u.Email)
+                .FirstOrDefault();
+        }
+
         public GroupRole GetRoleInGroup(string userId, string groupId)
         {
             var roleId = dbContext.UserGroups

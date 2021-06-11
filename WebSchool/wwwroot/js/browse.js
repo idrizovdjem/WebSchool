@@ -29,6 +29,7 @@ const attachGroups = (groups) => {
     for (const group of groups) {
         const row = document.createElement('tr');
         const name = document.createElement('td');
+        name.classList.add('align-middle');
         name.textContent = group.name;
 
         const buttonData = document.createElement('td');
