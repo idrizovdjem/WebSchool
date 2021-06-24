@@ -47,6 +47,11 @@ namespace WebSchool.Services.Groups
         public async Task ChangeNameAsync(ChangeGroupNameInputModel input)
         {
             var group = dbContext.Groups.Find(input.Id);
+            if (group == null)
+            {
+                return;
+            }
+
             group.Name = input.Name.Trim();
             await dbContext.SaveChangesAsync();
         }
